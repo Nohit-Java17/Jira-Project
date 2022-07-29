@@ -17,7 +17,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 ### THÀNH VIÊN
 Nhóm NOHIT gồm các thành viên:
 
-<img src="https://media-exp1.licdn.com/dms/image/C5622AQGtkRfQZFA0UQ/feedshare-shrink_800/0/1659003903148?e=1661990400&v=beta&t=_XIFrJVYKHJBEvxsTHRXje4pTWWzVIxJqoJMUs-0EEU" align="left" width="18%" height="18%"></img>
+<img src="https://media-exp1.licdn.com/dms/image/C5622AQGtkRfQZFA0UQ/feedshare-shrink_800/0/1659003903148?e=1661990400&v=beta&t=_XIFrJVYKHJBEvxsTHRXje4pTWWzVIxJqoJMUs-0EEU" align="right" width="21%" height="21%"></img>
 <div style="display:flex;">
 
 - Nguyễn Đặng Trường An
