@@ -21,9 +21,9 @@ Nhóm NOHIT gồm các thành viên:
 <div style="display:flex;">
 
 - Nguyễn Đặng Trường An
-- Trần Gia Bảo
+- Trần Gia Bảo (đã rời nhóm)
 - Cao Đức Mạnh
-- Đặng Bá Quí (đã rồi nhóm)
+- Đặng Bá Quí (đã rời nhóm)
 - Nguyễn Tiến Đạt
 
 </div>
