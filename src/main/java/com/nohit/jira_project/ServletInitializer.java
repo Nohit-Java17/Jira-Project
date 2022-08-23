@@ -1,4 +1,4 @@
-package com.nothit.jira_project;
+package com.nohit.jira_project;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
