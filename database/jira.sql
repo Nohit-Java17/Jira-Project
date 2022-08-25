@@ -10,7 +10,7 @@ USE jira_project;
 
 CREATE TABLE
     IF NOT EXISTS khach_hang(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         thu_dien_tu NVARCHAR(50) NOT NULL,
         mat_khau NVARCHAR(255) NOT NULL,
         ho_ten NVARCHAR(50),
@@ -21,14 +21,14 @@ CREATE TABLE
         huyen_quan NVARCHAR(50),
         tinh_thanh NVARCHAR(50),
         vai_tro NVARCHAR(10),
-        PRIMARY KEY (ma)
+        PRIMARY KEY (id)
     );
 
 -- create table san_pham
 
 CREATE TABLE
     IF NOT EXISTS san_pham(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         ten NVARCHAR(100) NOT NULL,
         album NVARCHAR(10) NOT NULL,
         mo_ta TEXT,
@@ -40,14 +40,14 @@ CREATE TABLE
         danh_gia INT NOT NULL,
         phan_loai NVARCHAR(50) NOT NULL,
         thuong_hieu NVARCHAR(20) NOT NULL,
-        PRIMARY KEY (ma)
+        PRIMARY KEY (id)
     );
 
 -- create table nguoi_nhan
 
 CREATE TABLE
     IF NOT EXISTS nguoi_nhan(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         ho_ten NVARCHAR(50) NOT NULL,
         so_dien_thoai NVARCHAR(20) NOT NULL,
         dia_chi NVARCHAR(100) NOT NULL,
@@ -55,14 +55,14 @@ CREATE TABLE
         huyen_quan NVARCHAR(50) NOT NULL,
         tinh_thanh NVARCHAR(50) NOT NULL,
         ghi_chu TEXT,
-        PRIMARY KEY (ma)
+        PRIMARY KEY (id)
     );
 
 -- create table don_hang
 
 CREATE TABLE
     IF NOT EXISTS don_hang(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         ngay_dat DATE NOT NULL,
         ngay_giao DATE,
         tong_gio_hang INT NOT NULL,
@@ -70,58 +70,58 @@ CREATE TABLE
         tong_don_hang INT NOT NULL,
         phuong_thuc_thanh_toan NVARCHAR(50) NOT NULL,
         trang_thai NVARCHAR(20) NOT NULL,
-        ma_khach_hang INT NOT NULL,
-        ma_nguoi_nhan INT NOT NULL,
-        PRIMARY KEY (ma),
-        FOREIGN KEY (ma_khach_hang) REFERENCES khach_hang(ma),
-        FOREIGN KEY (ma_nguoi_nhan) REFERENCES nguoi_nhan(ma)
+        id_khach_hang INT NOT NULL,
+        id_nguoi_nhan INT NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (id_khach_hang) REFERENCES khach_hang(id),
+        FOREIGN KEY (id_nguoi_nhan) REFERENCES nguoi_nhan(id)
     );
 
 -- create table chi_tiet_don_hang
 
 CREATE TABLE
     IF NOT EXISTS chi_tiet_don_hang(
-        ma_don_hang INT NOT NULL,
-        ma_san_pham INT NOT NULL,
+        id_don_hang INT NOT NULL,
+        id_san_pham INT NOT NULL,
         so_luong_san_pham INT NOT NULL,
         gia_ban INT NOT NULL,
-        PRIMARY KEY (ma_don_hang, ma_san_pham),
-        FOREIGN KEY (ma_don_hang) REFERENCES don_hang(ma),
-        FOREIGN KEY (ma_san_pham) REFERENCES san_pham(ma)
+        PRIMARY KEY (id_don_hang, id_san_pham),
+        FOREIGN KEY (id_don_hang) REFERENCES don_hang(id),
+        FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
 
 -- create table phi_van_chuyen
 
 CREATE TABLE
     IF NOT EXISTS phi_van_chuyen(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         tinh_thanh NVARCHAR(50) NOT NULL,
         chi_phi_van_chuyen INT NOT NULL,
-        PRIMARY KEY (ma)
+        PRIMARY KEY (id)
     );
 
 -- create table thu_phan_hoi
 
 CREATE TABLE
     IF NOT EXISTS thu_phan_hoi(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         ho_ten NVARCHAR(50) NOT NULL,
         email NVARCHAR(50) NOT NULL,
         chu_de NVARCHAR(20),
         noi_dung TEXT,
-        PRIMARY KEY (ma)
+        PRIMARY KEY (id)
     );
 
 -- create table nhan_xet
 
 CREATE TABLE
     IF NOT EXISTS nhan_xet(
-        ma INT NOT NULL AUTO_INCREMENT,
+        id INT NOT NULL AUTO_INCREMENT,
         danh_gia INT NOT NULL,
         binh_luan TEXT,
-        ma_san_pham INT NOT NULL,
-        PRIMARY KEY (ma),
-        FOREIGN KEY (ma_san_pham) REFERENCES san_pham(ma)
+        id_san_pham INT NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
 
 -- add data to khach_hang
