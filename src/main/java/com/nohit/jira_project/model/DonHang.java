@@ -1,6 +1,8 @@
 package com.nohit.jira_project.model;
 
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +27,8 @@ public class DonHang {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma")
-	private int maDonHang;
+    @Column(name = "id")
+	private int idDonHang;
 	
 	@NonNull
 	@Column(name = "ngay_dat")
@@ -55,10 +58,13 @@ public class DonHang {
 	private String trangThai;
 	
 	@ManyToOne
-	@JoinColumn(name = "ma_khach_hang", referencedColumnName = "ma", insertable = false, updatable = false)
-	private KhachHang maKH;
+	@JoinColumn(name = "id_khach_hang", referencedColumnName = "id", insertable = false, updatable = false)
+	private KhachHang idKH;
 	
 	@ManyToOne
-	@JoinColumn(name = "ma_nguoi_nhan", referencedColumnName = "ma", insertable = false, updatable = false)
-	private NguoiNhan maNguoiNhan;
+	@JoinColumn(name = "id_nguoi_nhan", referencedColumnName = "id", insertable = false, updatable = false)
+	private NguoiNhan idNguoiNhan;
+	
+	@OneToMany(mappedBy = "donHangs")
+	private List<ChiTietDonHang> chiTietDonHangs;
 }

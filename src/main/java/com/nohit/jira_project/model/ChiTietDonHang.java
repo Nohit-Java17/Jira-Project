@@ -1,10 +1,12 @@
 package com.nohit.jira_project.model;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +20,19 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class ChiTietDonHang {
-	private int maDonHang;
-	private int maSP;
+	
+	@EmbeddedId
+	private ChiTietDonHangId id;
+	
+	@ManyToOne
+	@MapsId("id_don_hang")
+	@JoinColumn(name = "id_don_hang")
+	private DonHang donHangs;
+	
+	@ManyToOne
+	@MapsId("id_san_pham")
+	@JoinColumn(name = "id_san_pham")
+	private SanPham sanPhams;
 	
 	@NonNull
 	@Column(name = "so_luong_san_pham")

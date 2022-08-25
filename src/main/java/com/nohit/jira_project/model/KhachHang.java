@@ -1,10 +1,13 @@
 package com.nohit.jira_project.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +24,8 @@ public class KhachHang {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma")
-	private int maKH;
+    @Column(name = "id")
+	private int idKH;
 	
 	@NonNull
 	@Column(name = "thu_dien_tu")
@@ -57,4 +60,7 @@ public class KhachHang {
 	
 	@Column(name = "vai_tro")
 	private String vaiTro;
+	
+	@OneToMany(mappedBy = "idKH")
+	private List<KhachHang> khachHangs;
 }

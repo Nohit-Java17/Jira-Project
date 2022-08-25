@@ -8,15 +8,15 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ChiTietDonHangId implements Serializable{
 	
-	@Column(name = "role_id")
-	private long roleId;
+	@Column(name = "id_don_hang")
+	private long donHangId;
 	
-	@Column(name = "user_id")
-	private long userId;
+	@Column(name = "id_san_pham")
+	private long sanPhamId;
 	
-	public ChiTietDonHangId(long role_id, long user_id) {
-		this.roleId = role_id;
-		this.userId = user_id;
+	public ChiTietDonHangId(long donHangId, long sanPhamId) {
+		this.donHangId = donHangId;
+		this.sanPhamId = sanPhamId;
 	}
 	
 	public ChiTietDonHangId() {

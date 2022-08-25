@@ -23,8 +23,8 @@ public class NhanXet {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma")
-	private int maNhanXet;
+    @Column(name = "id")
+	private int idNhanXet;
 	
 	@NonNull
 	@Column(name = "danh_gia")
@@ -33,9 +33,9 @@ public class NhanXet {
 	@Column(name = "binh_luan")
 	private String binhLuan;
 	
-	@JoinColumn(name = "ma_san_pham", referencedColumnName = "ma", insertable = false, updatable = false)
+	@JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne
-	private SanPham maSP;
+	private SanPham idSP;
 	
 	
 }

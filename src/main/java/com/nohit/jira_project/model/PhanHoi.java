@@ -21,8 +21,8 @@ public class PhanHoi {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ma")
-	private int maPhanHoi;
+    @Column(name = "id")
+	private int idPhanHoi;
 	
 	@NonNull
 	@Column(name = "ho_ten")
