@@ -1,41 +1,27 @@
 package com.nohit.jira_project.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Entity(name = "nhan_xet")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class NhanXet {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-	private int idNhanXet;
-	
-	@NonNull
-	@Column(name = "danh_gia")
-	private int danhGia;
-	
-	@Column(name = "binh_luan")
-	private String binhLuan;
-	
-	@JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
+    private int idNhanXet;
+
+    @Column(name = "danh_gia")
+    private int danhGia;
+
+    @Column(name = "binh_luan")
+    private String binhLuan;
+
     @ManyToOne
-	private SanPham idSP;
-	
-	
+    @JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
+    private SanPham idSP;
 }

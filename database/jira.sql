@@ -31,7 +31,7 @@ CREATE TABLE
         id INT NOT NULL AUTO_INCREMENT,
         ten NVARCHAR(100) NOT NULL,
         album NVARCHAR(10) NOT NULL,
-        mo_ta TEXT,
+        mo_ta NVARCHAR(65535),
         gia_goc INT NOT NULL,
         giam_gia INT,
         so_luong INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE
         xa_phuong NVARCHAR(50) NOT NULL,
         huyen_quan NVARCHAR(50) NOT NULL,
         tinh_thanh NVARCHAR(50) NOT NULL,
-        ghi_chu TEXT,
+        ghi_chu NVARCHAR(65535),
         PRIMARY KEY (id)
     );
 
@@ -108,7 +108,7 @@ CREATE TABLE
         ho_ten NVARCHAR(50) NOT NULL,
         email NVARCHAR(50) NOT NULL,
         chu_de NVARCHAR(20),
-        noi_dung TEXT,
+        noi_dung NVARCHAR(65535),
         PRIMARY KEY (id)
     );
 
@@ -118,7 +118,7 @@ CREATE TABLE
     IF NOT EXISTS nhan_xet(
         id INT NOT NULL AUTO_INCREMENT,
         danh_gia INT NOT NULL,
-        binh_luan TEXT,
+        binh_luan NVARCHAR(65535),
         id_san_pham INT NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
@@ -142,12 +142,13 @@ INSERT INTO
 VALUES (
         'nguyenvana@gmail.com',
         '$2a$12$bIlMeYu4wYSQBQY/IDYfeODaLw47qaoJRMcNukFjV0nqFppUSd9Ue',
+        -- nguyenvana
         'Nguyễn Văn A',
         '1.jpg',
         '0987654321',
-        '112 đường Cao Thắng',
-        'P.4',
-        'Q.3',
+        '459 đường Sư Vạn Hạnh',
+        'P.12',
+        'Q.10',
         'Hồ Chí Minh',
         'client'
     );
@@ -450,6 +451,78 @@ VALUES (
         'ASUS'
     );
 
+-- add data to nguoi_nhan
+
+INSERT INTO
+    nguoi_nhan (
+        ho_ten,
+        so_dien_thoai,
+        dia_chi,
+        xa_phuong,
+        huyen_quan,
+        tinh_thanh,
+        ghi_chu
+    )
+VALUES (
+        'Trần Thị B',
+        '0123456789',
+        '103 đường Nguyễn Hữu Dật',
+        'P.Hoà Cường Bắc',
+        'Q.Hải Châu',
+        'Đà Nẵng',
+        'Giao ngoài giờ hành chính'
+    ), (
+        'Nguyễn Văn A',
+        '0987654321',
+        '459 đường Sư Vạn Hạnh',
+        'P.12',
+        'Q.10',
+        'Hồ Chí Minh',
+        'Hàng dễ vỡ'
+    );
+
+-- add data to don_hang
+
+INSERT INTO
+    don_hang (
+        ngay_dat,
+        ngay_giao,
+        tong_gio_hang,
+        chi_phi_van_chuyen,
+        tong_don_hang,
+        phuong_thuc_thanh_toan,
+        trang_thai,
+        id_khach_hang,
+        id_nguoi_nhan
+    )
+VALUES (
+        '2022-08-01',
+        '2022-08-08',
+        119824000,
+        0,
+        119844000,
+        'Chuyển khoản',
+        'Đã giao',
+        1,
+        1
+    ), (
+        '2022-09-01',
+        NULL,
+        64990000,
+        0,
+        64990000,
+        'Tiền mặt',
+        'Đang giao',
+        1,
+        2
+    );
+
+-- add data to chi_tiet_don_hang
+
+INSERT INTO
+    chi_tiet_don_hang ()
+VALUES (1, 1, 2, 47790000), (1, 2, 1, 24244000), (2, 16, 1, 64990000);
+
 -- add data to phi_van_chuyen
 
 INSERT INTO
@@ -458,3 +531,28 @@ INSERT INTO
         chi_phi_van_chuyen
     )
 VALUES ('An Giang', 20000), ('Bạc Liêu', 27000), ('Bắc Giang', 44000), ('Bắc Kạn', 47000), ('Bắc Ninh', 54000), ('Bến Tre', 16000), ('Bình Dương', 5000), ('Bình Định', 15000), ('Bình Phước', 3000), ('Bình Thuận', 7000), ('Cà Mau', 28000), ('Cao Bằng', 49000), ('Cần Thơ', 24000), ('Đà Nẵng', 20000), ('Đắk Lắk', 6000), ('Đắk Nông', 5000), ('Điện Biên', 38000), ('Đồng Nai', 6000), ('Đồng Tháp', 11000), ('Gia Lai', 8000), ('Hà Giang', 50000), ('Hà Nam', 52000), ('Hà Nội', 56000), ('Hà Tĩnh', 24000), ('Hải Dương', 67000), ('Hải Phòng', 65000), ('Hậu Giang', 25000), ('Hòa Bình', 34000), ('Hồ Chí Minh', 0), ('Hưng Yên', 53000), ('Khánh Hòa', 13000), ('Kiên Giang', 21000), ('Kon Tum', 10000), ('Lai Châu', 40000), ('Lạng Sơn', 45000), ('Lào Cai', 39000), ('Lâm Đồng', 4000), ('Long An', 12000), ('Nam Định', 63000), ('Nghệ An', 27000), ('Ninh Bình', 62000), ('Ninh Thuận', 11000), ('Phú Thọ', 35000), ('Phú Yên', 14000), ('Quảng Bình', 23000), ('Quảng Nam', 18000), ('Quảng Ngãi', 16000), ('Quảng Ninh', 68000), ('Quảng Trị', 22000), ('Sóc Trăng', 26000), ('Sơn La', 36000), ('Tây Ninh', 10000), ('Thái Bình', 64000), ('Thái Nguyên', 46000), ('Thanh Hóa', 28000), ('Thừa Thiên Huế', 21000), ('Tiền Giang', 14000), ('Trà Vinh', 17000), ('Tuyên Quang', 48000), ('Vĩnh Long', 15000), ('Vĩnh Phúc', 55000), ('Vũng Tàu', 8000), ('Yên Bái', 37000);
+
+-- add data to thu_phan_hoi
+
+INSERT INTO
+    thu_phan_hoi (ho_ten, email, chu_de, noi_dung)
+VALUES (
+        'Lê Văn C',
+        'levanc@gmail.com',
+        'Dịch vụ',
+        'Nhân viên tư vấn chưa tận tình.'
+    );
+
+-- add data to nhan_xet
+
+INSERT INTO
+    nhan_xet (
+        danh_gia,
+        binh_luan,
+        id_san_pham
+    )
+VALUES (
+        5,
+        'Chất lượng sản phẩm tốt.',
+        1
+    ), (5, NULL, 2), (5, NULL, 3), (5, NULL, 4), (5, NULL, 5), (5, NULL, 6), (5, NULL, 7), (5, NULL, 8), (5, NULL, 9), (5, NULL, 10), (5, NULL, 11), (5, NULL, 12), (5, NULL, 13), (5, NULL, 14), (5, NULL, 15), (5, NULL, 16), (4, NULL, 1);

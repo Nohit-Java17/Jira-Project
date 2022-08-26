@@ -1,25 +1,20 @@
 package com.nohit.jira_project.model;
 
-import java.io.Serializable;
+import java.io.*;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+
+import lombok.*;
 
 @Embeddable
-public class ChiTietDonHangId implements Serializable{
-	
-	@Column(name = "id_don_hang")
-	private long donHangId;
-	
-	@Column(name = "id_san_pham")
-	private long sanPhamId;
-	
-	public ChiTietDonHangId(long donHangId, long sanPhamId) {
-		this.donHangId = donHangId;
-		this.sanPhamId = sanPhamId;
-	}
-	
-	public ChiTietDonHangId() {
-		
-	}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ChiTietDonHangId implements Serializable {
+
+    @Column(name = "id_don_hang")
+    private long donHangId;
+
+    @Column(name = "id_san_pham")
+    private long sanPhamId;
 }

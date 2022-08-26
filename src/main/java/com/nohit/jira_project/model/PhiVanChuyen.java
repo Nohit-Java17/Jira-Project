@@ -1,16 +1,8 @@
 package com.nohit.jira_project.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Entity(name = "phi_van_chuyen")
 @Data
@@ -18,17 +10,16 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class PhiVanChuyen {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-	private int idVanChuyen;
-	
-	@NonNull
-	@Column(name = "tinh_thanh")
-	private String tinhThanh;
-	
-	@NonNull
-	@Column(name = "chi_phi_van_chuyen")
-	private int chiPhi;
+    private int idVanChuyen;
+
+    @NonNull
+    @Column(name = "tinh_thanh")
+    private String tinhThanh;
+
+    @Column(name = "chi_phi_van_chuyen")
+    private int chiPhi;
 }
