@@ -15,5 +15,4 @@ public class AttributeConstant {
     public static final String ROLE_CLAIM_KEY = "roles";
     public static final String ERROR_HEADER_KEY = "errors";
     public static final String ERROR_MESSAGE_KEY = "error_messages";
-    
 }
