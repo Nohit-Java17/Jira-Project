@@ -1254,6 +1254,7 @@ div.cart-collaterals ul.products li.product .price ins {
 }
 
 #customer_details input[type="text"],
+#customer_details input[type="email"],
 #customer_details textarea,
 .shipping_calculator input[type=text] {
     margin-bottom: 10px;
@@ -1413,6 +1414,22 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button {
 
 .contact-map>iframe {
     margin-bottom: 10px;
+}
+
+.radio {
+    margin-bottom: 25px;
+}
+
+.radio>label {
+    font-weight: bolder;
+}
+
+.contact-title {
+    text-align: right;
+}
+
+input[type="radio"] {
+    vertical-align: -1px;
 }
 
 html {

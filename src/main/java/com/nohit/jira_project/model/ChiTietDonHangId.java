@@ -11,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChiTietDonHangId implements Serializable {
-
     @Column(name = "id_don_hang")
     private long donHangId;
 

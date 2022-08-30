@@ -1,62 +1,70 @@
-// package com.nohit.jira_project.security;
+package com.nohit.jira_project.security;
 
-// import org.springframework.beans.factory.annotation.*;
-// import org.springframework.context.annotation.*;
-// import org.springframework.security.authentication.*;
-// import org.springframework.security.config.annotation.authentication.builders.*;
-// import org.springframework.security.config.annotation.method.configuration.*;
-// import org.springframework.security.config.annotation.web.builders.*;
-// import org.springframework.security.config.annotation.web.configuration.*;
-// import org.springframework.security.core.userdetails.*;
-// import org.springframework.security.crypto.password.*;
-// import org.springframework.security.web.authentication.*;
-// import org.springframework.security.web.savedrequest.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
+import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.authentication.builders.*;
+import org.springframework.security.config.annotation.method.configuration.*;
+import org.springframework.security.config.annotation.web.builders.*;
+import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.crypto.password.*;
+import org.springframework.security.web.authentication.*;
+import org.springframework.security.web.savedrequest.*;
 
-// import com.yan.crm_project.filter.*;
-// import com.yan.crm_project.filter.AuthenticationFilter;
+import com.nohit.jira_project.filter.*;
+import com.nohit.jira_project.service.*;
 
-// import static com.yan.crm_project.constant.ApplicationConstant.Role.*;
-// import static com.yan.crm_project.constant.ViewConstant.*;
+import static com.nohit.jira_project.constant.ViewConstant.*;
+import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
-// @Configuration
-// @EnableWebSecurity
-// @EnableGlobalMethodSecurity(prePostEnabled = true)
-// public class AppplicationSecurity extends WebSecurityConfigurerAdapter {
-//     @Autowired
-//     private UserDetailsService userDetailsService;
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private KhachHangService userDetailsService;
 
-//     @Autowired
-//     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-//     @Autowired
-//     private HttpSessionRequestCache httpSessionRequestCache;
+    @Autowired
+    private HttpSessionRequestCache httpSessionRequestCache;
 
-//     @Override
-//     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-//     }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    }
 
-//     @Override
-//     protected void configure(HttpSecurity http) throws Exception {
-//         var authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
-//         authenticationFilter.setFilterProcessesUrl(API_VIEW + LOGIN_VIEW);
-//         // use requestCache replace for sessionCreationPolicy stateless when formLogin
-//         http.csrf().disable().requestCache().requestCache(httpSessionRequestCache).and().authorizeRequests()
-//                 .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW, "/css/login.css").permitAll()
-//                 .antMatchers(INDEX_VIEW, PROFILE_VIEW + FREE_VIEW, BLANK_VIEW, JOB_VIEW)
-//                 .hasAnyRole(MEMBER, LEADER, ADMIN)
-//                 .antMatchers(TASK_VIEW + FREE_VIEW, PROJECT_VIEW + FREE_VIEW, USER_VIEW + FREE_VIEW)
-//                 .hasAnyRole(LEADER, ADMIN).antMatchers(ROLE_VIEW + FREE_VIEW).hasRole(ADMIN).anyRequest()
-//                 .authenticated().and().formLogin().loginPage(LOGIN_VIEW).loginProcessingUrl(LOGIN_VIEW)
-//                 .defaultSuccessUrl(INDEX_VIEW).failureUrl(LOGIN_VIEW + "?error=true").permitAll().and().logout()
-//                 .invalidateHttpSession(true).clearAuthentication(true).logoutSuccessUrl(LOGIN_VIEW).permitAll().and()
-//                 .exceptionHandling().accessDeniedPage(FORBIDDEN_VIEW).and().addFilter(authenticationFilter)
-//                 .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-//     }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                // Chống dùng session tấn công
+                .csrf().disable()
+                // cors: Không cho phép truy cập vào tài nguyên nếu không đúng domain, mặc định
+                // enable
+                // Vì enable nên nếu không quy định domain nào được phép gọi nó thì sẽ lỗi 403
+                .cors().disable()
+                // NOTE
+                // Khai báo không sử dụng Session
+                .sessionManagement().sessionCreationPolicy(STATELESS)
+                // Định nghĩa link chứng thực
+                .and().authorizeHttpRequests()
+                // Khi vào link login và refresh thì cho qua không cần Authen
+                .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW).permitAll()
+                .anyRequest().authenticated()
+                // Chạy filter jwtAuthFilter() trước filter chứng thực
+                // UsernamePasswordAuthenticationFilter
+                .and().addFilterBefore(authorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
 
-//     @Bean
-//     @Override
-//     public AuthenticationManager authenticationManagerBean() throws Exception {
-//         return super.authenticationManagerBean();
-//     }
-// }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AuthorizationFilter authorizationFilter() {
+        return new AuthorizationFilter();
+    }
+}
