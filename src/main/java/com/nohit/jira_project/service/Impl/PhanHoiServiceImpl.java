@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.nohit.jira_project.model.*;
 
-public interface PhanHoiServiceImp {
+public interface PhanHoiServiceImpl {
     public List<PhanHoi> getDsPhanHoi();
 
     public PhanHoi getPhanHoiById(int id);

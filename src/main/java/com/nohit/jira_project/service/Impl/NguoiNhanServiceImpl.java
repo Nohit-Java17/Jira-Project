@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.nohit.jira_project.model.*;
 
-public interface NguoiNhanServiceImp {
+public interface NguoiNhanServiceImpl {
     public List<NguoiNhan> getDsNguoiNhan();
 
     public NguoiNhan getNguoiNhanById(int id);

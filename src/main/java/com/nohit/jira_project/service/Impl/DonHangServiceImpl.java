@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.nohit.jira_project.model.*;
 
-public interface DonHangServiceImp {
+public interface DonHangServiceImpl {
     public List<DonHang> getDsDonHang();
 
     public DonHang getDonHangById(int id);

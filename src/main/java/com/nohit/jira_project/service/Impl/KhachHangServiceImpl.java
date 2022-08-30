@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.nohit.jira_project.model.*;
 
-public interface KhachHangServiceImp {
+public interface KhachHangServiceImpl {
     public List<KhachHang> getDsKhachHang();
 
     public KhachHang getKhachHangById(int id);

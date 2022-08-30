@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.nohit.jira_project.model.*;
 
-public interface ChiTietDonHangServiceImp {
+public interface ChiTietDonHangServiceImpl {
     public List<ChiTietDonHang> getDsChiTietDonHang();
 
     public ChiTietDonHang geTietDonHangById(int id);

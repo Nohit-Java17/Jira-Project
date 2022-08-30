@@ -4,7 +4,7 @@ import java.util.*;
 
 import com.nohit.jira_project.model.*;
 
-public interface PhiVanChuyenServiceImp {
+public interface PhiVanChuyenServiceImpl {
     public List<PhiVanChuyen> getDsPhiVanChuyen();
 
     public PhiVanChuyen getPhiVanChuyenById(int id);
