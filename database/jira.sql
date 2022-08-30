@@ -1,3 +1,7 @@
+-- dispose db
+
+DROP DATABASE IF EXISTS jira_project;
+
 -- create db
 
 CREATE DATABASE IF NOT EXISTS jira_project;
@@ -14,7 +18,6 @@ CREATE TABLE
         thu_dien_tu NVARCHAR(50) NOT NULL,
         mat_khau NVARCHAR(255) NOT NULL,
         ho_ten NVARCHAR(50),
-        hinh_anh NVARCHAR(10) NOT NULL,
         so_dien_thoai NVARCHAR(20),
         dia_chi NVARCHAR(100),
         xa_phuong NVARCHAR(50),
@@ -41,6 +44,32 @@ CREATE TABLE
         phan_loai NVARCHAR(50) NOT NULL,
         thuong_hieu NVARCHAR(20) NOT NULL,
         PRIMARY KEY (id)
+    );
+
+-- create table chi_tiet_gio_hang
+
+CREATE TABLE
+    IF NOT EXISTS chi_tiet_gio_hang(
+        id INT NOT NULL AUTO_INCREMENT,
+        id_san_pham INT NOT NULL,
+        so_luong INT NOT NULL,
+        tong_tien INT NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
+    );
+
+-- create table gio_hang
+
+CREATE TABLE
+    IF NOT EXISTS gio_hang(
+        id INT NOT NULL AUTO_INCREMENT,
+        id_chi_tiet_gio_hang INT,
+        so_luong INT NOT NULL,
+        tong_tien INT NOT NULL,
+        id_khach_hang INT NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (id) REFERENCES khach_hang(id),
+        FOREIGN KEY (id_chi_tiet_gio_hang) REFERENCES chi_tiet_gio_hang(id)
     );
 
 -- create table nguoi_nhan
@@ -131,7 +160,6 @@ INSERT INTO
         thu_dien_tu,
         mat_khau,
         ho_ten,
-        hinh_anh,
         so_dien_thoai,
         dia_chi,
         xa_phuong,
@@ -144,7 +172,6 @@ VALUES (
         '$2a$12$bIlMeYu4wYSQBQY/IDYfeODaLw47qaoJRMcNukFjV0nqFppUSd9Ue',
         -- nguyenvana
         'Nguyễn Văn A',
-        '1.jpg',
         '0987654321',
         '459 đường Sư Vạn Hạnh',
         'P.12',
