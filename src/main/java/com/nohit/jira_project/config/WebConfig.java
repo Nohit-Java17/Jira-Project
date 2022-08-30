@@ -5,23 +5,22 @@ import org.springframework.boot.web.servlet.server.*;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.*;
 
-import com.nohit.jira_project.constant.*;
-
 import static com.nohit.jira_project.constant.AttributeConstant.*;
+import static com.nohit.jira_project.constant.ViewConstant.*;
 import static org.springframework.http.HttpStatus.*;
 
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController(ViewConstant.NOT_FOUND_VIEW).setViewName(AttributeConstant.FORWARD_PREFIX + ViewConstant.INDEX_VIEW);
+        registry.addViewController(NOT_FOUND_VIEW).setViewName(FORWARD_PREFIX + INDEX_VIEW);
     }
 
     // Add error page to container
     @Bean
     public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
         return container -> {
-            container.addErrorPages(new ErrorPage(NOT_FOUND, ViewConstant.NOT_FOUND_VIEW));
+            container.addErrorPages(new ErrorPage(NOT_FOUND, NOT_FOUND_VIEW));
         };
     }
-    
+
 }
