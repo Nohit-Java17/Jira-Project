@@ -6,15 +6,16 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "don_hang")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class DonHang {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private int idDonHang;
 

@@ -4,15 +4,16 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "phi_van_chuyen")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class PhiVanChuyen {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private int idVanChuyen;
 

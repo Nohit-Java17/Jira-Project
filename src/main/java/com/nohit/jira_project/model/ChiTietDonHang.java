@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChiTietDonHang {
-
     @EmbeddedId
     private ChiTietDonHangId id;
 

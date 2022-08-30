@@ -4,14 +4,15 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.GenerationType.*;
+
 @Entity(name = "nhan_xet")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class NhanXet {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private int idNhanXet;
 

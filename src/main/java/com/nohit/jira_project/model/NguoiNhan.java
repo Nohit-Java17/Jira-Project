@@ -1,19 +1,12 @@
 package com.nohit.jira_project.model;
 
-import java.util.List;
+import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+
+import static javax.persistence.GenerationType.*;
 
 @Entity(name = "nguoi_nhan")
 @Data
@@ -21,39 +14,38 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class NguoiNhan {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-	private int idNguoiNhan;
-	
-	@NonNull
-	@Column(name = "ho_ten")
-	private String hoTen;
-	
-	@NonNull
-	@Column(name = "so_dien_thoai")
-	private String soDienThoai;
-	
-	@NonNull
-	@Column(name = "dia_chi")
-	private String diaChi;
-	
-	@NonNull
-	@Column(name = "xa_phuong")
-	private String xaPhuong;
-	
-	@NonNull
-	@Column(name = "quan_huyen")
-	private String quanHuyen;
-	
-	@NonNull
-	@Column(name = "tinh_thanh")
-	private String tinhThanh;
-	
-	@Column(name = "ghi_chu")
-	private String ghiChu;
-	
-	@OneToMany(mappedBy = "idNguoiNhan")
-	private List<NguoiNhan> nguoiNhans;
+    private int idNguoiNhan;
+
+    @NonNull
+    @Column(name = "ho_ten")
+    private String hoTen;
+
+    @NonNull
+    @Column(name = "so_dien_thoai")
+    private String soDienThoai;
+
+    @NonNull
+    @Column(name = "dia_chi")
+    private String diaChi;
+
+    @NonNull
+    @Column(name = "xa_phuong")
+    private String xaPhuong;
+
+    @NonNull
+    @Column(name = "quan_huyen")
+    private String quanHuyen;
+
+    @NonNull
+    @Column(name = "tinh_thanh")
+    private String tinhThanh;
+
+    @Column(name = "ghi_chu")
+    private String ghiChu;
+
+    @OneToMany(mappedBy = "idNguoiNhan")
+    private List<NguoiNhan> nguoiNhans;
 }
