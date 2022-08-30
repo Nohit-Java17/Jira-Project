@@ -8,11 +8,10 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface KhachHangRepository extends JpaRepository<KhachHang, Integer>{
+public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
     public List<KhachHang> findAllByhoTen(String name);
 
     public KhachHang findByidKH(String id);
 
     public KhachHang findByemail(String email);
-
 }
