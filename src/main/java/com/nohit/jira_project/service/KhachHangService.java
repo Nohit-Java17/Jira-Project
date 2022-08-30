@@ -12,6 +12,7 @@ import org.springframework.stereotype.*;
 
 import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.Impl.*;
 
 import lombok.extern.slf4j.*;
 
@@ -21,36 +22,36 @@ import static java.util.Collections.*;
 @Service
 @Transactional
 @Slf4j
-public class KhachHangService implements KhachHangServiceImp, UserDetailsService{
-	@Autowired
-	KhachHangRepository khachHangRepository;
+public class KhachHangService implements KhachHangServiceImpl, UserDetailsService {
+    @Autowired
+    private KhachHangRepository khachHangRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-	@Override
-	public List<KhachHang> getDsKhachHang() {
-		// TODO Auto-generated method stub
-		return khachHangRepository.findAll();
-	}
 
-	@Override
-	public KhachHang getKhachHangById(int id) {
-		// TODO Auto-generated method stub
-		return khachHangRepository.findById(id).orElse(null);
-	}
+    @Override
+    public List<KhachHang> getDsKhachHang() {
+        // TODO Auto-generated method stub
+        return khachHangRepository.findAll();
+    }
 
-	@Override
-	public void saveKhachHang(KhachHang khachHang) {
-		// TODO Auto-generated method stub
-		khachHangRepository.save(khachHang);
-	}
+    @Override
+    public KhachHang getKhachHangById(int id) {
+        // TODO Auto-generated method stub
+        return khachHangRepository.findById(id).orElse(null);
+    }
 
-	@Override
-	public void deleteKhachHang(int id) {
-		// TODO Auto-generated method stub
-		khachHangRepository.deleteById(id);
-	}
+    @Override
+    public void saveKhachHang(KhachHang khachHang) {
+        // TODO Auto-generated method stub
+        khachHangRepository.save(khachHang);
+    }
+
+    @Override
+    public void deleteKhachHang(int id) {
+        // TODO Auto-generated method stub
+        khachHangRepository.deleteById(id);
+    }
 
     @Override
     public KhachHang findByemail(String email) {
@@ -72,6 +73,5 @@ public class KhachHangService implements KhachHangServiceImp, UserDetailsService
                     singleton(new SimpleGrantedAuthority(ROLE_PREFIX + user.getVaiTro().toUpperCase())));
         }
     }
-	
-	
+
 }

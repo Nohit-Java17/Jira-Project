@@ -1,39 +1,40 @@
 package com.nohit.jira_project.service;
 
-import java.util.List;
+import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
-import com.nohit.jira_project.model.ChiTietDonHang;
-import com.nohit.jira_project.repository.ChiTietDonHangRepository;
+import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.Impl.*;
 
 @Service
-public class ChiTietDonHangService implements ChiTietDonHangServiceImp{
-	@Autowired
-	ChiTietDonHangRepository chiTietDonHangRepository;
+public class ChiTietDonHangService implements ChiTietDonHangServiceImpl {
+    @Autowired
+    private ChiTietDonHangRepository chiTietDonHangRepository;
 
-	@Override
-	public List<ChiTietDonHang> getDsChiTietDonHang() {
-		// TODO Auto-generated method stub
-		return chiTietDonHangRepository.findAll();
-	}
+    @Override
+    public List<ChiTietDonHang> getDsChiTietDonHang() {
+        // TODO Auto-generated method stub
+        return chiTietDonHangRepository.findAll();
+    }
 
-	@Override
-	public ChiTietDonHang geTietDonHangById(int id) {
-		// TODO Auto-generated method stub
-		return chiTietDonHangRepository.findById(id).orElse(null);
-	}
+    @Override
+    public ChiTietDonHang geTietDonHangById(int id) {
+        // TODO Auto-generated method stub
+        return chiTietDonHangRepository.findById(id).orElse(null);
+    }
 
-	@Override
-	public void saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
-		// TODO Auto-generated method stub
-		chiTietDonHangRepository.save(chiTietDonHang);
-	}
+    @Override
+    public void saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
+        // TODO Auto-generated method stub
+        chiTietDonHangRepository.save(chiTietDonHang);
+    }
 
-	@Override
-	public void deleteChiTietDonHang(int id) {
-		// TODO Auto-generated method stub
-		chiTietDonHangRepository.deleteById(id);
-	}
+    @Override
+    public void deleteChiTietDonHang(int id) {
+        // TODO Auto-generated method stub
+        chiTietDonHangRepository.deleteById(id);
+    }
 }
