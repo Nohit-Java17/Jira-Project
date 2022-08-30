@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.*;
 import com.fasterxml.jackson.databind.*;
 
 import lombok.*;
+import lombok.extern.slf4j.*;
 
 import static com.auth0.jwt.JWT.*;
 import static com.auth0.jwt.algorithms.Algorithm.*;
@@ -23,8 +24,9 @@ import static java.lang.System.*;
 import static java.util.stream.Collectors.*;
 import static org.springframework.http.MediaType.*;
 
+@Slf4j
 @RequiredArgsConstructor
-public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
     // Check login information
@@ -33,8 +35,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
             throws AuthenticationException {
         var username = request.getParameter("username");
         var password = request.getParameter("password");
-        // log.info("Email: {}", username);
-        // log.info("Password: {}", password);
+        log.info("Email: {}", username);
+        log.info("Password: {}", password);
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
@@ -47,7 +49,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
         // Algorithm to encode the secret key (to base64?)
         var algorithm = HMAC256(SECRET_KEY.getBytes());
         var tokens = new HashMap<>();
-
         var userName = user.getUsername();
         var requestUrl = request.getRequestURL().toString();
 

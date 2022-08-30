@@ -13,6 +13,8 @@ import org.springframework.web.filter.*;
 
 import com.fasterxml.jackson.databind.*;
 
+import lombok.extern.slf4j.*;
+
 import static com.auth0.jwt.JWT.*;
 import static com.auth0.jwt.algorithms.Algorithm.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
@@ -24,13 +26,13 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.security.core.context.SecurityContextHolder.*;
 
-public class AuthorizationFilter extends OncePerRequestFilter{
-    
+@Slf4j
+public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         var servletPath = request.getServletPath();
-        System.out.println(servletPath);
+
         // Urls login vs refresh pass
         if (servletPath.equals(API_VIEW + LOGIN_VIEW) || servletPath.equals(API_VIEW + TOKEN_VIEW + REFRESH_VIEW)) {
             filterChain.doFilter(request, response);
@@ -54,7 +56,7 @@ public class AuthorizationFilter extends OncePerRequestFilter{
                 } catch (Exception e) {
                     // Log error if have no Token
                     var errorMsg = e.getMessage();
-                    // log.error("Error logging in: {}", errorMsg);
+                    log.error("Error logging in: {}", errorMsg);
                     response.setHeader(ERROR_HEADER_KEY, errorMsg);
                     response.setStatus(FORBIDDEN.value());
                     var error = new HashMap<>();
