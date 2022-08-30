@@ -31,7 +31,7 @@ CREATE TABLE
         id INT NOT NULL AUTO_INCREMENT,
         ten NVARCHAR(100) NOT NULL,
         album NVARCHAR(10) NOT NULL,
-        mo_ta NVARCHAR(65535),
+        mo_ta TEXT,
         gia_goc INT NOT NULL,
         giam_gia INT,
         so_luong INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE
         xa_phuong NVARCHAR(50) NOT NULL,
         huyen_quan NVARCHAR(50) NOT NULL,
         tinh_thanh NVARCHAR(50) NOT NULL,
-        ghi_chu NVARCHAR(65535),
+        ghi_chu TEXT,
         PRIMARY KEY (id)
     );
 
@@ -108,7 +108,7 @@ CREATE TABLE
         ho_ten NVARCHAR(50) NOT NULL,
         email NVARCHAR(50) NOT NULL,
         chu_de NVARCHAR(20),
-        noi_dung NVARCHAR(65535),
+        noi_dung TEXT,
         PRIMARY KEY (id)
     );
 
@@ -118,7 +118,7 @@ CREATE TABLE
     IF NOT EXISTS nhan_xet(
         id INT NOT NULL AUTO_INCREMENT,
         danh_gia INT NOT NULL,
-        binh_luan NVARCHAR(65535),
+        binh_luan TEXT,
         id_san_pham INT NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)

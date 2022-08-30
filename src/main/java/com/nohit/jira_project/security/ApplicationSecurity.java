@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.method.configuration.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
-import org.springframework.security.config.http.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.savedrequest.*;
@@ -16,23 +15,18 @@ import com.nohit.jira_project.filter.*;
 import com.nohit.jira_project.service.*;
 
 import static com.nohit.jira_project.constant.ViewConstant.*;
+import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class ApplicationSecurity extends WebSecurityConfigurerAdapter{
+public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private KhachHangService userDetailsService;
-
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Bean
-    public AuthorizationFilter authorizationFilter(){
-        return new AuthorizationFilter();
-    }
-    
     @Autowired
     private HttpSessionRequestCache httpSessionRequestCache;
 
@@ -43,23 +37,23 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        
-
-                http
+        http
                 // Chống dùng session tấn công
                 .csrf().disable()
-                // cors: Không cho phép truy cập vào tài nguyên nếu không đúng domain, mặc định enable
+                // cors: Không cho phép truy cập vào tài nguyên nếu không đúng domain, mặc định
+                // enable
                 // Vì enable nên nếu không quy định domain nào được phép gọi nó thì sẽ lỗi 403
                 .cors().disable()
                 // NOTE
                 // Khai báo không sử dụng Session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(STATELESS)
                 // Định nghĩa link chứng thực
                 .and().authorizeHttpRequests()
                 // Khi vào link login và refresh thì cho qua không cần Authen
                 .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW).permitAll()
                 .anyRequest().authenticated()
-                // Chạy filter jwtAuthFilter() trước filter chứng thực UsernamePasswordAuthenticationFilter
+                // Chạy filter jwtAuthFilter() trước filter chứng thực
+                // UsernamePasswordAuthenticationFilter
                 .and().addFilterBefore(authorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -67,5 +61,10 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter{
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AuthorizationFilter authorizationFilter() {
+        return new AuthorizationFilter();
     }
 }
