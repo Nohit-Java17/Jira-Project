@@ -11,4 +11,14 @@ public class ViewConstant {
     public static final String CHECKOUT_VIEW 		= "/checkout";
     public static final String ABOUT_VIEW 			= "/about";
     public static final String CONTACT_VIEW 		= "/contact";
+
+    public static final String TOKEN_VIEW = "/token";
+    public static final String LOGIN_VIEW = "/login";
+    public static final String LOGOUT_VIEW = "/logout";
+    public static final String FORBIDDEN_VIEW = "/403";
+    public static final String BLANK_VIEW = "/blank";
+    public static final String API_VIEW = "/api";
+    public static final String FREE_VIEW = "/**";
+    public static final String REFRESH_VIEW = "/refresh";
+
 }

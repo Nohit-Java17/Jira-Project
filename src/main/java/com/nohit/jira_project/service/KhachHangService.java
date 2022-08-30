@@ -5,6 +5,9 @@ import java.util.*;
 import javax.transaction.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.authority.*;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
 
 import com.nohit.jira_project.model.*;
@@ -12,13 +15,19 @@ import com.nohit.jira_project.repository.*;
 
 import lombok.extern.slf4j.*;
 
+import static com.nohit.jira_project.constant.AttributeConstant.*;
+import static java.util.Collections.*;
+
 @Service
 @Transactional
 @Slf4j
-public class KhachHangService implements KhachHangServiceImp{
+public class KhachHangService implements KhachHangServiceImp, UserDetailsService{
 	@Autowired
 	KhachHangRepository khachHangRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
 	@Override
 	public List<KhachHang> getDsKhachHang() {
 		// TODO Auto-generated method stub
@@ -47,6 +56,21 @@ public class KhachHangService implements KhachHangServiceImp{
     public KhachHang findByemail(String email) {
         // TODO Auto-generated method stub
         return khachHangRepository.findByemail(email);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Query data of user
+        var user = khachHangRepository.findByemail(username);
+        // Check user exists
+        if (user == null) {
+            log.error("User not found");
+            throw new UsernameNotFoundException("User not found");
+        } else {
+            log.info("User found: {}", username);
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getMatKhau(),
+                    singleton(new SimpleGrantedAuthority(ROLE_PREFIX + user.getVaiTro().toUpperCase())));
+        }
     }
 	
 	
