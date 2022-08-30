@@ -1,6 +1,6 @@
 package com.nohit.jira_project.constant;
 
-public class TempleteConstant {
+public class TemplateConstant {
 	public static final String HOME_TEMP 			= "/home";
     public static final String SHOP_TEMP			= "/shop";
     public static final String CATEGORY_TEMP 		= "/category";
