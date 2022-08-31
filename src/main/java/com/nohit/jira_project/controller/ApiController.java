@@ -27,7 +27,7 @@ import static org.springframework.http.MediaType.*;
 @RequestMapping(API_VIEW)
 public class ApiController {
     @Autowired
-    private KhachHangServiceImpl userService;
+    private KhachHangService userService;
 
     // Refresh token
     @GetMapping(TOKEN_VIEW + REFRESH_VIEW)
@@ -40,14 +40,14 @@ public class ApiController {
             try {
                 var refreshToken = header.substring(TOKEN_PREFIX.length());
                 var algorithm = HMAC256(SECRET_KEY.getBytes());
-                var user = userService.findByemail(require(algorithm).build().verify(refreshToken).getSubject());
+                var user = userService.getKhachHang(require(algorithm).build().verify(refreshToken).getSubject());
                 var tokens = new HashMap<>();
                 tokens.put(ACCESS_TOKEN_KEY,
                         create().withSubject(user.getEmail())
                                 .withExpiresAt(new Date(currentTimeMillis() + EXPIRATION_TIME))
                                 .withIssuer(request.getRequestURL().toString())
                                 .withClaim(ROLE_CLAIM_KEY, ROLE_PREFIX + user.getVaiTro().toUpperCase())
-                                                
+
                                 .sign(algorithm));
                 tokens.put(REFRESH_TOKEN_KEY, refreshToken);
                 response.setContentType(APPLICATION_JSON_VALUE);

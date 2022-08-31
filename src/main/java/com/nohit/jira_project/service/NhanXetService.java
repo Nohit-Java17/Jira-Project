@@ -2,40 +2,14 @@ package com.nohit.jira_project.service;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-
 import com.nohit.jira_project.model.*;
-import com.nohit.jira_project.repository.*;
-import com.nohit.jira_project.service.Impl.*;
 
-@Service
-public class NhanXetService implements NhanXetServiceImpl {
-    @Autowired
-    private NhanXetRepository nhanXetRepository;
+public interface NhanXetService {
+    public List<NhanXet> getDsNhanXet();
 
-    @Override
-    public List<NhanXet> getDsNhanXet() {
-        // TODO Auto-generated method stub
-        return nhanXetRepository.findAll();
-    }
+    public NhanXet getNhanXet(int id);
 
-    @Override
-    public NhanXet getNhanXetById(int id) {
-        // TODO Auto-generated method stub
-        return nhanXetRepository.findById(id).orElse(null);
-    }
+    public void saveNhanXet(NhanXet nhanXet);
 
-    @Override
-    public void saveNhanXet(NhanXet nhanXet) {
-        // TODO Auto-generated method stub
-        nhanXetRepository.save(nhanXet);
-    }
-
-    @Override
-    public void deleteNhanXet(int id) {
-        // TODO Auto-generated method stub
-        nhanXetRepository.deleteById(id);
-    }
-
+    public void deleteNhanXet(int id);
 }
