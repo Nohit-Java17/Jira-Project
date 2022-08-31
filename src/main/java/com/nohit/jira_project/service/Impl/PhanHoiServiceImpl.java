@@ -2,14 +2,39 @@ package com.nohit.jira_project.service.Impl;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+
 import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.*;
 
-public interface PhanHoiServiceImpl {
-    public List<PhanHoi> getDsPhanHoi();
+@Service
+public class PhanHoiServiceImpl implements PhanHoiService {
+    @Autowired
+    private PhanHoiRepository phanHoiRepository;
 
-    public PhanHoi getPhanHoiById(int id);
+    @Override
+    public List<PhanHoi> getDsPhanHoi() {
+        // TODO Auto-generated method stub
+        return phanHoiRepository.findAll();
+    }
 
-    public void savePhanHoi(PhanHoi phanHoi);
+    @Override
+    public PhanHoi getPhanHoi(int id) {
+        // TODO Auto-generated method stub
+        return phanHoiRepository.findById(id).orElse(null);
+    }
 
-    public void deletePhanHoi(int id);
+    @Override
+    public void savePhanHoi(PhanHoi phanHoi) {
+        // TODO Auto-generated method stub
+        phanHoiRepository.save(phanHoi);
+    }
+
+    @Override
+    public void deletePhanHoi(int id) {
+        // TODO Auto-generated method stub
+        phanHoiRepository.deleteById(id);
+    }
 }

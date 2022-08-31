@@ -2,14 +2,39 @@ package com.nohit.jira_project.service.Impl;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+
 import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.*;
 
-public interface ChiTietDonHangServiceImpl {
-    public List<ChiTietDonHang> getDsChiTietDonHang();
+@Service
+public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
+    @Autowired
+    private ChiTietDonHangRepository chiTietDonHangRepository;
 
-    public ChiTietDonHang geTietDonHangById(int id);
+    @Override
+    public List<ChiTietDonHang> getDsChiTietDonHang() {
+        // TODO Auto-generated method stub
+        return chiTietDonHangRepository.findAll();
+    }
 
-    public void saveChiTietDonHang(ChiTietDonHang chiTietDonHang);
+    @Override
+    public ChiTietDonHang getChiTietDonHang(int id) {
+        // TODO Auto-generated method stub
+        return chiTietDonHangRepository.findById(id).orElse(null);
+    }
 
-    public void deleteChiTietDonHang(int id);
+    @Override
+    public void saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
+        // TODO Auto-generated method stub
+        chiTietDonHangRepository.save(chiTietDonHang);
+    }
+
+    @Override
+    public void deleteChiTietDonHang(int id) {
+        // TODO Auto-generated method stub
+        chiTietDonHangRepository.deleteById(id);
+    }
 }
