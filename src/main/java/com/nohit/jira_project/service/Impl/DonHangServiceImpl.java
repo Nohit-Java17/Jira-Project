@@ -2,14 +2,39 @@ package com.nohit.jira_project.service.Impl;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+
 import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.*;
 
-public interface DonHangServiceImpl {
-    public List<DonHang> getDsDonHang();
+@Service
+public class DonHangServiceImpl implements DonHangService {
+    @Autowired
+    private DonHangRepository donHangRepository;
 
-    public DonHang getDonHangById(int id);
+    @Override
+    public List<DonHang> getDsDonHang() {
+        // TODO Auto-generated method stub
+        return donHangRepository.findAll();
+    }
 
-    public void saveDonHang(DonHang donHang);
+    @Override
+    public DonHang getDonHang(int id) {
+        // TODO Auto-generated method stub
+        return donHangRepository.findById(id).orElse(null);
+    }
 
-    public void deleteDonHang(int id);
+    @Override
+    public void saveDonHang(DonHang donHang) {
+        // TODO Auto-generated method stub
+        donHangRepository.save(donHang);
+    }
+
+    @Override
+    public void deleteDonHang(int id) {
+        // TODO Auto-generated method stub
+        donHangRepository.deleteById(id);
+    }
 }

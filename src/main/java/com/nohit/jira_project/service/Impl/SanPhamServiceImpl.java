@@ -2,14 +2,39 @@ package com.nohit.jira_project.service.Impl;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+
 import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.*;
 
-public interface SanPhamServiceImpl {
-    public List<SanPham> getDsSanPham();
+@Service
+public class SanPhamServiceImpl implements SanPhamService {
+    @Autowired
+    private SanPhamRepository sanPhamRepository;
 
-    public SanPham getSanPhamById(int id);
+    @Override
+    public List<SanPham> getDsSanPham() {
+        // TODO Auto-generated method stub
+        return sanPhamRepository.findAll();
+    }
 
-    public void saveSanPham(SanPham sanPham);
+    @Override
+    public SanPham getSanPham(int id) {
+        // TODO Auto-generated method stub
+        return sanPhamRepository.findById(id).orElse(null);
+    }
 
-    public void deleteSanPham(int id);
+    @Override
+    public void saveSanPham(SanPham sanPham) {
+        // TODO Auto-generated method stub
+        sanPhamRepository.save(sanPham);
+    }
+
+    @Override
+    public void deleteSanPham(int id) {
+        // TODO Auto-generated method stub
+        sanPhamRepository.deleteById(id);
+    }
 }
