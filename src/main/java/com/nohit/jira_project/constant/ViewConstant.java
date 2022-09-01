@@ -12,7 +12,13 @@ public class ViewConstant {
     public static final String ABOUT_VIEW 			= "/about";
     public static final String CONTACT_VIEW 		= "/contact";
 
-    public static final String TOKEN_VIEW = "/token";
+    public static final String DETAIL_VIEW = "/detail";
+    public static final String HISTORY_VIEW = "/history";
+    public static final String PASSWORD_RESET_VIEW = "/password-reset";
+    public static final String PRODUCT_VIEW = "/product";
+    public static final String PROFILE_VIEW = "/profile";
+    public static final String REGISTER_VIEW = "/register";
+    
     public static final String LOGIN_VIEW = "/login";
     public static final String LOGOUT_VIEW = "/logout";
     public static final String FORBIDDEN_VIEW = "/403";
@@ -20,5 +26,6 @@ public class ViewConstant {
     public static final String API_VIEW = "/api";
     public static final String FREE_VIEW = "/**";
     public static final String REFRESH_VIEW = "/refresh";
+    public static final String TOKEN_VIEW = "/token";
 
 }

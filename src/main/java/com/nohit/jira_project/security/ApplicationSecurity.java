@@ -13,7 +13,9 @@ import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.savedrequest.*;
 
 import com.nohit.jira_project.filter.*;
+import com.nohit.jira_project.filter.AuthenticationFilter;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Role.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
@@ -37,6 +39,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        var authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
+        authenticationFilter.setFilterProcessesUrl(API_VIEW + LOGIN_VIEW);
         http
                 // Chống dùng session tấn công
                 .csrf().disable()
@@ -49,12 +53,26 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 // Định nghĩa link chứng thực
                 .and().authorizeHttpRequests()
-                // Khi vào link login và refresh thì cho qua không cần Authen
-                .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW).permitAll()
-                .anyRequest().authenticated()
+                // Khi vào link api login và refresh thì cho qua không cần Authen
+                .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW, LOGIN_VIEW).permitAll()
+                // Khi vào link cart và checkout thì cần authen
+                .antMatchers(CART_VIEW, CART_VIEW + FREE_VIEW, CHECKOUT_VIEW, CHECKOUT_VIEW + FREE_VIEW).hasRole(CLIENT)
+                .anyRequest().permitAll()
+
+                // Cho phép xác thực bằng login
+                .and().formLogin().loginPage(LOGIN_VIEW).loginProcessingUrl(LOGIN_VIEW)
+                .failureUrl(LOGIN_VIEW + "?error=true").permitAll()
+                // Cho phép logout
+                .and().logout()
+
+                // ???
+                .invalidateHttpSession(true).clearAuthentication(true).permitAll()
+                .and().exceptionHandling()
+                .accessDeniedPage(FORBIDDEN_VIEW)
+                .and().addFilter(authenticationFilter)
                 // Chạy filter jwtAuthFilter() trước filter chứng thực
                 // UsernamePasswordAuthenticationFilter
-                .and().addFilterBefore(authorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
