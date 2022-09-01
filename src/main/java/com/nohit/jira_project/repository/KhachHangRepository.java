@@ -9,9 +9,9 @@ import com.nohit.jira_project.model.*;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
-    public List<KhachHang> findAllByhoTen(String name);
+    public List<KhachHang> findAll();
 
-    public KhachHang findByidKH(String id);
+    public KhachHang findById(String id);
 
-    public KhachHang findByemail(String email);
+    public KhachHang findByEmail(String email);
 }

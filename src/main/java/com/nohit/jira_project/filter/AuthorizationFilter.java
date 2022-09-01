@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.slf4j.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.authority.*;
 import org.springframework.web.filter.*;
 
 import com.fasterxml.jackson.databind.*;
+
+import lombok.extern.slf4j.*;
 
 import static com.auth0.jwt.JWT.*;
 import static com.auth0.jwt.algorithms.Algorithm.*;
@@ -20,16 +21,13 @@ import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 import static java.util.Arrays.*;
-import static org.slf4j.LoggerFactory.*;
 import static org.springframework.http.HttpHeaders.*;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.security.core.context.SecurityContextHolder.*;
 
+@Slf4j
 public class AuthorizationFilter extends OncePerRequestFilter {
-    // Fields
-    private Logger log = getLogger(AuthorizationFilter.class);
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
