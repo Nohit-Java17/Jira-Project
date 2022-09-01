@@ -1282,6 +1282,13 @@ div.cart-collaterals ul.products li.product .price ins {
     width: 408px;
 }
 
+.col-1-ex,
+.col-2-ex {
+    float: left;
+    margin-left: 30px;
+    width: 555px;
+}
+
 #customer_details label {
     display: block;
     margin: 0 0 5px;
@@ -1289,6 +1296,7 @@ div.cart-collaterals ul.products li.product .price ins {
 
 #customer_details input[type="text"],
 #customer_details input[type="email"],
+#customer_details input[type="password"],
 #customer_details textarea,
 .shipping_calculator input[type=text] {
     margin-bottom: 10px;
@@ -1591,6 +1599,42 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button {
 
 .avatar-stacked {
     margin-left: -.5rem;
+}
+
+.about-content {
+    text-align: justify;
+}
+
+.password-update {
+    margin-bottom: 30px;
+}
+
+.dropdown-menu {
+    border: 1px solid rgba(120, 130, 140, .13);
+    border-radius: 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .05) !important;
+    -webkit-box-shadow: 0 !important;
+    -moz-box-shadow: 0 !important;
+    padding-bottom: 8px;
+    margin-top: 0
+}
+
+.dropdown-menu>li>a {
+    padding: 9px 20px;
+    margin: 0;
+}
+
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover {
+    background: #f7fafc
+}
+
+.dropdown-menu li {
+    display: block
+}
+
+.dropdown-menu li:last-child {
+    margin-right: 0
 }
 
 input[type="radio"] {

@@ -47,16 +47,25 @@
                             </a>
                         </li>
                         <li>
-                            <a href="favorite.html">
-                                <i class="fa fa-book"></i>
-                                Lịch sử
-                            </a>
-                        </li>
-                        <li>
-                            <a href="login.html">
-                                <i class="fa fa-user"></i>
-                                Đăng nhập
-                            </a>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-user"></i>
+                                    Họ và tên
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">
+                                            Thông tin cá nhân
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -240,16 +249,6 @@
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form id="coupon-collapse-wrap" method="post" class="checkout_coupon collapse">
-                                <p class="form-row form-row-first">
-                                    <input type="text" value="" id="coupon_code" placeholder="Mã giảm giá"
-                                        class="input-text" name="coupon_code">
-                                </p>
-                                <p class="form-row form-row-last">
-                                    <input type="submit" value="Áp dụng" name="apply_coupon" class="button">
-                                </p>
-                                <div class="clear"></div>
-                            </form>
                             <form enctype="multipart/form-data" action="#" class="checkout" method="post"
                                 name="checkout">
                                 <div id="customer_details" class="col2-set">
@@ -258,6 +257,7 @@
                                             <h2 class="sidebar-title">
                                                 Chi tiết thanh toán
                                             </h2>
+                                            <div class="clear"></div>
                                             <p id="billing_first_name_field"
                                                 class="form-row form-row-first validate-required">
                                                 <label class="" for="billing_first_name">
@@ -285,11 +285,18 @@
                                                     required>
                                             </p>
                                             <div class="clear"></div>
-                                            <p id="billing_address_2_field"
-                                                class="form-row form-row-wide address-field">
-                                                <input type="text" value="" placeholder=" Nhập Xã / Phường"
-                                                    id="billing_address_2" name="billing_address_2" class="input-text"
-                                                    required>
+                                            <p id="billing_city_field"
+                                                class="form-row form-row-wide address-field validate-required"
+                                                data-o_class="form-row form-row-wide address-field validate-required">
+                                                <label class="" for="billing_city">
+                                                    Xã / Phường
+                                                    <abbr title="Nhập vào tên xã hoặc phường bạn đang sinh sống"
+                                                        class="required">
+                                                        *
+                                                    </abbr>
+                                                </label>
+                                                <input type="text" value="" placeholder="Nhập Huyện / Quận"
+                                                    id="billing_city" name="billing_city" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -546,6 +553,7 @@
                                                     Giao hàng đến địa chỉ khác?
                                                 </label>
                                             </h3>
+                                            <div class="clear"></div>
                                             <div class="shipping_address" style="display: block;">
                                                 <p id="shipping_first_name_field"
                                                     class="form-row form-row-first validate-required">
@@ -576,10 +584,19 @@
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
-                                                <p id="shipping_address_2_field"
-                                                    class="form-row form-row-wide address-field">
-                                                    <input type="text" value="" placeholder="Nhập Xã / Phường"
-                                                        id="shipping_address_2" name="shipping_address_2"
+                                                <p id="shipping_city_field"
+                                                    class="form-row form-row-wide address-field validate-required"
+                                                    data-o_class="form-row form-row-wide address-field validate-required">
+                                                    <label class="" for="shipping_city">
+                                                        Xã / Phường
+                                                        <abbr
+                                                            title="Nhập vào tên xã hoặc phường người nhận đang sinh sống"
+                                                            class="required">
+                                                            *
+                                                        </abbr>
+                                                    </label>
+                                                    <input type="text" value="" placeholder="Nhập Huyện / Quận"
+                                                        id="shipping_city" name="shipping_city"
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
