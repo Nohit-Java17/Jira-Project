@@ -17,7 +17,7 @@ public class DonHang {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-    private int idDonHang;
+    private int id;
 
     @NonNull
     @Column(name = "ngay_dat")
@@ -27,17 +27,17 @@ public class DonHang {
     private String ngayGiao;
 
     @Column(name = "tong_gio_hang")
-    private int tongSoLuong;
+    private int tongGioHang;
 
     @Column(name = "chi_phi_van_chuyen")
-    private int phiVanChuyen;
+    private int chiPhiVanChuyen;
 
     @Column(name = "tong_don_hang")
-    private int tongTien;
+    private int tongDonHang;
 
     @NonNull
     @Column(name = "phuong_thuc_thanh_toan")
-    private String phuongThucTT;
+    private String phuongThucThanhToan;
 
     @NonNull
     @Column(name = "trang_thai")
@@ -45,12 +45,12 @@ public class DonHang {
 
     @ManyToOne
     @JoinColumn(name = "id_khach_hang", referencedColumnName = "id", insertable = false, updatable = false)
-    private KhachHang idKH;
+    private KhachHang idKhachHang;
 
     @ManyToOne
     @JoinColumn(name = "id_nguoi_nhan", referencedColumnName = "id", insertable = false, updatable = false)
     private NguoiNhan idNguoiNhan;
 
-    @OneToMany(mappedBy = "donHangs")
-    private List<ChiTietDonHang> chiTietDonHangs;
+    @OneToMany(mappedBy = "donHang")
+    private List<ChiTietDonHang> dsChiTietDonHang;
 }

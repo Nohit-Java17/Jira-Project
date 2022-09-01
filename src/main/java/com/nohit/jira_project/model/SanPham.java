@@ -17,11 +17,11 @@ public class SanPham {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-    private int idSP;
+    private int id;
 
     @NonNull
     @Column(name = "ten")
-    private String tenSP;
+    private String ten;
 
     @NonNull
     @Column(name = "hinh_anh")
@@ -58,9 +58,9 @@ public class SanPham {
     @Column(name = "thuong_hieu")
     private String thuongHieu;
 
-    @OneToMany(mappedBy = "idSP")
-    private List<NhanXet> nhanXets;
+    @OneToMany(mappedBy = "idSanPham")
+    private List<NhanXet> dsNhanXet;
 
-    @OneToMany(mappedBy = "sanPhams")
-    private List<ChiTietDonHang> chiTietDonHangs;
+    @OneToMany(mappedBy = "sanPham")
+    private List<ChiTietDonHang> dsChiTietDonHang;
 }

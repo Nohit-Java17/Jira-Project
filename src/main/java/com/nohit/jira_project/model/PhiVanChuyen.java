@@ -15,12 +15,12 @@ public class PhiVanChuyen {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-    private int idVanChuyen;
+    private int id;
 
     @NonNull
     @Column(name = "tinh_thanh")
     private String tinhThanh;
 
     @Column(name = "chi_phi_van_chuyen")
-    private int chiPhi;
+    private int chiPhiVanChuyen;
 }

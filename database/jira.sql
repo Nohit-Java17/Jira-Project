@@ -135,7 +135,7 @@ CREATE TABLE
     IF NOT EXISTS thu_phan_hoi(
         id INT NOT NULL AUTO_INCREMENT,
         ho_ten NVARCHAR(50) NOT NULL,
-        email NVARCHAR(50) NOT NULL,
+        thu_dien_tu NVARCHAR(50) NOT NULL,
         chu_de NVARCHAR(20),
         noi_dung TEXT,
         PRIMARY KEY (id)
@@ -562,7 +562,12 @@ VALUES ('An Giang', 20000), ('Bạc Liêu', 27000), ('Bắc Giang', 44000), ('B�
 -- add data to thu_phan_hoi
 
 INSERT INTO
-    thu_phan_hoi (ho_ten, email, chu_de, noi_dung)
+    thu_phan_hoi (
+        ho_ten,
+        thu_dien_tu,
+        chu_de,
+        noi_dung
+    )
 VALUES (
         'Lê Văn C',
         'levanc@gmail.com',

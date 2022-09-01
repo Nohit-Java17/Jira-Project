@@ -6,6 +6,6 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface PhanHoiRepository extends JpaRepository<PhanHoi, Integer> {
+public interface ThuPhanHoiRepository extends JpaRepository<ThuPhanHoi, Integer> {
 
 }
