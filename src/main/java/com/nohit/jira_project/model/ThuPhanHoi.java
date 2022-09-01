@@ -11,18 +11,18 @@ import static javax.persistence.GenerationType.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class PhanHoi {
+public class ThuPhanHoi {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-    private int idPhanHoi;
+    private int id;
 
     @NonNull
     @Column(name = "ho_ten")
     private String hoTen;
 
     @NonNull
-    @Column(name = "email")
+    @Column(name = "thu_dien_tu")
     private String email;
 
     @Column(name = "chu_de")

@@ -14,7 +14,7 @@ public class NhanXet {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-    private int idNhanXet;
+    private int id;
 
     @Column(name = "danh_gia")
     private int danhGia;
@@ -24,5 +24,5 @@ public class NhanXet {
 
     @ManyToOne
     @JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
-    private SanPham idSP;
+    private SanPham idSanPham;
 }

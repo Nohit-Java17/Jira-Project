@@ -15,15 +15,15 @@ public class ChiTietDonHang {
     @ManyToOne
     @MapsId("id_don_hang")
     @JoinColumn(name = "id_don_hang")
-    private DonHang donHangs;
+    private DonHang donHang;
 
     @ManyToOne
     @MapsId("id_san_pham")
     @JoinColumn(name = "id_san_pham")
-    private SanPham sanPhams;
+    private SanPham sanPham;
 
     @Column(name = "so_luong_san_pham")
-    private int soLuong;
+    private int soLuongSanPhan;
 
     @Column(name = "gia_ban")
     private int giaBan;

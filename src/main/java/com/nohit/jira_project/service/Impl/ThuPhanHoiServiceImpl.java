@@ -10,24 +10,24 @@ import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
 
 @Service
-public class PhanHoiServiceImpl implements PhanHoiService {
+public class ThuPhanHoiServiceImpl implements ThuPhanHoiService {
     @Autowired
-    private PhanHoiRepository phanHoiRepository;
+    private ThuPhanHoiRepository phanHoiRepository;
 
     @Override
-    public List<PhanHoi> getDsPhanHoi() {
+    public List<ThuPhanHoi> getDsPhanHoi() {
         // TODO Auto-generated method stub
         return phanHoiRepository.findAll();
     }
 
     @Override
-    public PhanHoi getPhanHoi(int id) {
+    public ThuPhanHoi getPhanHoi(int id) {
         // TODO Auto-generated method stub
         return phanHoiRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void savePhanHoi(PhanHoi phanHoi) {
+    public void savePhanHoi(ThuPhanHoi phanHoi) {
         // TODO Auto-generated method stub
         phanHoiRepository.save(phanHoi);
     }

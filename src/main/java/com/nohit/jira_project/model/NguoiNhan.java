@@ -1,7 +1,5 @@
 package com.nohit.jira_project.model;
 
-import java.util.*;
-
 import javax.persistence.*;
 
 import lombok.*;
@@ -17,7 +15,7 @@ public class NguoiNhan {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
-    private int idNguoiNhan;
+    private int id;
 
     @NonNull
     @Column(name = "ho_ten")
@@ -45,7 +43,4 @@ public class NguoiNhan {
 
     @Column(name = "ghi_chu")
     private String ghiChu;
-
-    @OneToMany(mappedBy = "idNguoiNhan")
-    private List<NguoiNhan> nguoiNhans;
 }

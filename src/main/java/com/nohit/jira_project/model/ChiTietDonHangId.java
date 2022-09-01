@@ -12,8 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 public class ChiTietDonHangId implements Serializable {
     @Column(name = "id_don_hang")
-    private long donHangId;
+    private long idDonHang;
 
     @Column(name = "id_san_pham")
-    private long sanPhamId;
+    private long idSanPham;
 }
