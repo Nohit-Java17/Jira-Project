@@ -22,4 +22,7 @@ public class AttributeConstant {
 
     // TODO
     public static final String USER_PARAM = "user"; // Marked user in setObject (to return to View)
+    public static final String PRODUCTS_PARAM = "products";
+    
+
 }
