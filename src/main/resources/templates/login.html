@@ -29,7 +29,7 @@
             <div class="login-content">
                 <div class="login-logo">
                     <h1>
-                        <a href="index.html">
+                        <a th:href="@{/index}">
                             nohit
                             <span>
                                 Electronics
@@ -38,18 +38,18 @@
                     </h1>
                 </div>
                 <div class="login-form">
-                    <form>
+                    <form th:action="@{/login}" method="post" class="form">
                         <div class="form-group">
                             <label>
                                 Email
                             </label>
-                            <input type="email" class="form-control" placeholder="Nhập thư điện tử">
+                            <input type="email" name="username" class="form-control" placeholder="Nhập thư điện tử">
                         </div>
                         <div class="form-group">
                             <label>
                                 Mật khẩu
                             </label>
-                            <input type="password" class="form-control" placeholder="Nhập mật khẩu">
+                            <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu">
                         </div>
                         <div class="checkbox">
                             <label>
@@ -57,7 +57,7 @@
                                 Ghi Nhớ
                             </label>
                             <label class="pull-right">
-                                <a href="password-reset.html">
+                                <a th:href="@{/password-reset}">
                                     Quên mật khẩu?
                                 </a>
                             </label>
@@ -68,7 +68,7 @@
                         <div class="register-link m-t-15 text-center">
                             <p>
                                 Bạn mới biết đến nohitElectronics?
-                                <a href="register.html">
+                                <a th:href="@{/register}">
                                     Đăng Ký
                                 </a>
                             </p>

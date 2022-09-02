@@ -13,9 +13,23 @@ import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.savedrequest.*;
 
 import com.nohit.jira_project.filter.*;
+import com.nohit.jira_project.filter.AuthenticationFilter;
 
+// import org.springframework.beans.factory.annotation.*;
+// import org.springframework.context.annotation.*;
+// import org.springframework.security.authentication.*;
+// import org.springframework.security.config.annotation.authentication.builders.*;
+// import org.springframework.security.config.annotation.method.configuration.*;
+// import org.springframework.security.config.annotation.web.builders.*;
+// import org.springframework.security.config.annotation.web.configuration.*;
+// import org.springframework.security.core.userdetails.*;
+// import org.springframework.security.crypto.password.*;
+// import org.springframework.security.web.savedrequest.*;
+
+// import com.nohit.jira_project.filter.*;
+
+import static com.nohit.jira_project.constant.ApplicationConstant.Role.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
-import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +51,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        var authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
+        authenticationFilter.setFilterProcessesUrl(API_VIEW + LOGIN_VIEW);
         http
                 // Chống dùng session tấn công
                 .csrf().disable()
@@ -45,16 +61,25 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 // Vì enable nên nếu không quy định domain nào được phép gọi nó thì sẽ lỗi 403
                 .cors().disable()
                 // NOTE
-                // Khai báo không sử dụng Session
-                .sessionManagement().sessionCreationPolicy(STATELESS)
+                .requestCache().requestCache(httpSessionRequestCache)
                 // Định nghĩa link chứng thực
                 .and().authorizeHttpRequests()
-                // Khi vào link login và refresh thì cho qua không cần Authen
+                // Khi vào link api login và refresh thì cho qua không cần Authen
                 .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW).permitAll()
-                .anyRequest().authenticated()
+                // Khi vào link cart và checkout thì cần authen
+                .antMatchers(CART_VIEW, CART_VIEW + FREE_VIEW, CHECKOUT_VIEW, CHECKOUT_VIEW + FREE_VIEW, PROFILE_VIEW, PROFILE_VIEW + FREE_VIEW).hasRole(CLIENT)
+                .anyRequest().permitAll()
+
+                // Cho phép xác thực bằng login
+                .and().formLogin().loginPage(LOGIN_VIEW).loginProcessingUrl(LOGIN_VIEW)
+                .defaultSuccessUrl(INDEX_VIEW).failureUrl(LOGIN_VIEW + "?error=true").permitAll().and().logout()
+                .invalidateHttpSession(true).clearAuthentication(true).permitAll().and().exceptionHandling()
+                .accessDeniedPage(FORBIDDEN_VIEW).and().addFilter(authenticationFilter)
                 // Chạy filter jwtAuthFilter() trước filter chứng thực
                 // UsernamePasswordAuthenticationFilter
-                .and().addFilterBefore(authorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+                
     }
 
     @Bean

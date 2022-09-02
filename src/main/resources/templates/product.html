@@ -35,13 +35,13 @@
                 <div class="user-menu">
                     <ul>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 <i class="fa fa-shopping-cart"></i>
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 <i class="fa fa-credit-card"></i>
                                 Thanh toán
                             </a>
@@ -54,13 +54,13 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/profile}">
                                             Thông tin cá nhân
                                         </a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/logout}">
                                             Đăng xuất
                                         </a>
                                     </li>
@@ -78,7 +78,7 @@
                 <div class="col-sm-6">
                     <div class="logo">
                         <h1>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 nohit
                                 <span>
                                     Electronics
@@ -89,7 +89,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">
+                        <a th:href="@{/cart}">
                             Giỏ -
                             <span class="cart-amunt">
                                 64.990.000 ₫
@@ -120,42 +120,42 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 Trang chủ
                             </a>
                         </li>
                         <li class="active">
-                            <a href="product.html">
+                            <a th:href="@{/product}">
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="category.html">
+                            <a th:href="@{/category}">
                                 Phân Loại
                             </a>
                         </li>
                         <li>
-                            <a href="detail.html">
+                            <a th:href="@{/detail}">
                                 Chi tiết
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 Thanh toán
                             </a>
                         </li>
                         <li>
-                            <a href="about.html">
+                            <a th:href="@{/about}">
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="contact.html">
+                            <a th:href="@{/contact}">
                                 Liên hệ
                             </a>
                         </li>
@@ -249,32 +249,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="single-shop-product">
-                                <div class="product-upper">
-                                    <img src="img/191005936/0.jpg" alt="">
-                                </div>
-                                <h2>
-                                    <a href="">
-                                        Bàn phím cơ Logitech Gaming G813
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        3.289.000 ₫
-                                    </ins>
-                                    <del>
-                                        4.699.000 ₫
-                                    </del>
-                                </div>
-                                <div class="product-option-shop">
-                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                        data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">
-                                        Thêm vào giỏ
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -354,12 +329,12 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="profile.html">
+                                <a th:href="@{/profile}">
                                     Tài khoản cá nhân
                                 </a>
                             </li>
                             <li>
-                                <a href="history.html">
+                                <a th:href="@{/history}">
                                     Lịch sử đặt hàng
                                 </a>
                             </li>
@@ -369,7 +344,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="contact.html">
+                                <a th:href="@{/contact}">
                                     Liên hệ nhà cung cấp
                                 </a>
                             </li>
