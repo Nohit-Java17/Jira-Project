@@ -9,9 +9,24 @@ import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.*;
+import org.springframework.security.web.authentication.*;
 import org.springframework.security.web.savedrequest.*;
 
 import com.nohit.jira_project.filter.*;
+import com.nohit.jira_project.filter.AuthenticationFilter;
+
+// import org.springframework.beans.factory.annotation.*;
+// import org.springframework.context.annotation.*;
+// import org.springframework.security.authentication.*;
+// import org.springframework.security.config.annotation.authentication.builders.*;
+// import org.springframework.security.config.annotation.method.configuration.*;
+// import org.springframework.security.config.annotation.web.builders.*;
+// import org.springframework.security.config.annotation.web.configuration.*;
+// import org.springframework.security.core.userdetails.*;
+// import org.springframework.security.crypto.password.*;
+// import org.springframework.security.web.savedrequest.*;
+
+// import com.nohit.jira_project.filter.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.Role.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -59,10 +74,10 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .and().formLogin().loginPage(LOGIN_VIEW).loginProcessingUrl(LOGIN_VIEW)
                 .defaultSuccessUrl(INDEX_VIEW).failureUrl(LOGIN_VIEW + "?error=true").permitAll().and().logout()
                 .invalidateHttpSession(true).clearAuthentication(true).permitAll().and().exceptionHandling()
-                .accessDeniedPage(FORBIDDEN_VIEW).and().addFilter(authenticationFilter);
+                .accessDeniedPage(FORBIDDEN_VIEW).and().addFilter(authenticationFilter)
                 // Chạy filter jwtAuthFilter() trước filter chứng thực
                 // UsernamePasswordAuthenticationFilter
-                // .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
                 
     }
