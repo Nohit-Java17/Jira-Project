@@ -26,6 +26,8 @@
     <link href="css/owl.carousel.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
+    <!-- Toastify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -932,7 +934,7 @@
                                                 <input type="radio" data-order_button_text="" value="bacs"
                                                     name="payment_method" class="input-radio" id="payment_method_bacs">
                                                 <label style="cursor:pointer" for="payment_method_bacs">
-                                                    Chuyển khoản trực tiếp
+                                                    Chuyển khoản
                                                 </label>
                                                 <div class="payment_box payment_method_bacs">
                                                     <p>
@@ -948,7 +950,7 @@
                                                     value="paypal" name="payment_method" class="input-radio"
                                                     id="payment_method_paypal">
                                                 <label style="cursor:pointer" for="payment_method_paypal">
-                                                    PayPal
+                                                    Trực tuyến
                                                     <img alt="PayPal Acceptance Mark"
                                                         src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_mc_vs_ms_ae_UK.png"><a
                                                         title="Tìm hiểu về PayPal?"
@@ -1150,6 +1152,15 @@
                 }
             });
         });
+    </script>
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js" type="text/javascript"></script>
+    <script th:inline="javascript">
+        var flag = /*[[${flag}]]*/ false;
+        var msg = /*[[${msg}]]*/ null;
+        if (flag) {
+            Toastify({ text: msg, position: "center" }).showToast();
+        }
     </script>
 </body>
 
