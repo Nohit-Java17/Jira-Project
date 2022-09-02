@@ -63,4 +63,7 @@ public class SanPham {
 
     @OneToMany(mappedBy = "sanPham")
     private List<ChiTietDonHang> dsChiTietDonHang;
+    
+    @OneToMany(mappedBy = "idSanPham")
+    private List<ChiTietGioHang> dsChiTietGioHang;
 }

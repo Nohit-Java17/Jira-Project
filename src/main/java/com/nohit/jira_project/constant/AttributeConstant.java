@@ -15,4 +15,14 @@ public class AttributeConstant {
     public static final String ROLE_CLAIM_KEY = "roles";
     public static final String ERROR_HEADER_KEY = "errors";
     public static final String ERROR_MESSAGE_KEY = "error_messages";
+
+    // Message
+    public static final String FLAG_MSG_PARAM = "flag";
+    public static final String MSG_PARAM = "msg";
+
+    // TODO
+    public static final String USER_PARAM = "user"; // Marked user in setObject (to return to View)
+    public static final String PRODUCTS_PARAM = "products";
+    
+
 }

@@ -690,6 +690,21 @@ body {
     border: 1px solid #1abc9c;
 }
 
+.footer-social a {
+    background: none repeat scroll 0 0 #1abc9c;
+    color: #fff;
+    display: inline-block;
+    font-size: 20px;
+    height: 40px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding-top: 5px;
+    text-align: center;
+    width: 40px;
+    border: 1px solid #1abc9c;
+}
+
 .footer-social a:hover {
     background-color: #222;
     border-color: #666;
@@ -1635,6 +1650,102 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button {
 
 .dropdown-menu li:last-child {
     margin-right: 0
+}
+
+.bg-primary {
+    background-color: #4fbfa8 !important;
+}
+
+.bg-secondary {
+    background-color: #949494 !important;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.bg-dark {
+    background-color: #414141 !important;
+}
+
+.bg-body {
+    background-color: #fff !important;
+}
+
+.bg-white {
+    background-color: #fff !important;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.bg-gradient {
+    background-image: var(--bs-gradient) !important;
+}
+
+.btn-outline-primary {
+    color: #4fbfa8;
+    border-color: #4fbfa8;
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    background-color: #4fbfa8;
+    border-color: #4fbfa8;
+}
+
+.btn-check:focus+.btn-outline-primary,
+.btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(79, 191, 168, 0.5);
+}
+
+.btn-check:checked+.btn-outline-primary,
+.btn-check:active+.btn-outline-primary,
+.btn-outline-primary:active,
+.btn-outline-primary.active,
+.btn-outline-primary.dropdown-toggle.show {
+    color: white;
+    background-color: #4fbfa8;
+    border-color: #4fbfa8;
+}
+
+.btn-check:checked+.btn-outline-primary:focus,
+.btn-check:active+.btn-outline-primary:focus,
+.btn-outline-primary:active:focus,
+.btn-outline-primary.active:focus,
+.btn-outline-primary.dropdown-toggle.show:focus {
+    box-shadow: 0 0 0 0.2rem rgba(79, 191, 168, 0.5);
+}
+
+.btn-outline-primary:disabled,
+.btn-outline-primary.disabled {
+    color: #4fbfa8;
+    background-color: transparent;
+}
+
+.align-middle {
+    vertical-align: middle !important;
+}
+
+.text-end {
+    text-align: right !important;
 }
 
 input[type="radio"] {

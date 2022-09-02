@@ -13,6 +13,7 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
+import com.nohit.jira_project.util.StringUtil;
 
 import lombok.extern.slf4j.*;
 
@@ -28,6 +29,9 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    StringUtil stringUtil;
 
     @Override
     public List<KhachHang> getDsKhachHang() {
@@ -50,6 +54,8 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     @Override
     public void saveKhachHang(KhachHang khachHang) {
         // TODO Auto-generated method stub
+    	khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(khachHang.getMatKhau())));
+    	log.info("Saving user with email: {}", khachHang.getEmail());
         khachHangRepository.save(khachHang);
     }
 

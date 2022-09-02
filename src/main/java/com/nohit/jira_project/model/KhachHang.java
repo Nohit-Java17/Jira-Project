@@ -6,6 +6,8 @@ import lombok.*;
 
 import static javax.persistence.GenerationType.*;
 
+import java.util.List;
+
 @Entity(name = "khach_hang")
 @Data
 @AllArgsConstructor
@@ -29,10 +31,6 @@ public class KhachHang {
     @Column(name = "ho_ten")
     private String hoTen;
 
-    @NonNull
-    @Column(name = "hinh_anh")
-    private String avatar;
-
     @Column(name = "dia_chi")
     private String diaChi;
 
@@ -50,4 +48,7 @@ public class KhachHang {
 
     @Column(name = "vai_tro")
     private String vaiTro;
+    
+    @OneToOne(mappedBy = "idKhachHang")
+    private GioHang gioHang;
 }
