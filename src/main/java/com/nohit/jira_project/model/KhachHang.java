@@ -6,6 +6,8 @@ import lombok.*;
 
 import static javax.persistence.GenerationType.*;
 
+import java.util.List;
+
 @Entity(name = "khach_hang")
 @Data
 @AllArgsConstructor
@@ -50,4 +52,7 @@ public class KhachHang {
 
     @Column(name = "vai_tro")
     private String vaiTro;
+    
+    @OneToOne(mappedBy = "idKhachHang")
+    private GioHang gioHang;
 }
