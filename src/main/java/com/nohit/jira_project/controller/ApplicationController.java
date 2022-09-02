@@ -76,6 +76,17 @@ public class ApplicationController {
 
     }
 
+    // Load about
+    @GetMapping(value = { REGISTER_VIEW})
+    public ModelAndView register() {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(REGISTER_TEMP);
+        mIsByPass = false;
+        return mav;
+
+    }
+
     // Load product
     @GetMapping(value = { CONTACT_VIEW })
     public ModelAndView contact() {
@@ -188,6 +199,7 @@ public class ApplicationController {
             return true;
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
+            // System.out.print(mCurrentAccount.getHoTen());
             return mCurrentAccount != null;
         }
     }
