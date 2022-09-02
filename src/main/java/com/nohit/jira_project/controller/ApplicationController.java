@@ -13,6 +13,10 @@ import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.MessagingException;
+
 
 @Controller
 @RequestMapping("")
@@ -155,7 +159,24 @@ public class ApplicationController {
             return REDIRECT_PREFIX + LOGIN_VIEW;
         }
     }
-
+    
+    //quên mật khẩu
+    @PutMapping(PASSWORD_RESET_VIEW)
+    public String resetPassword(@RequestParam("email") String email) throws UnsupportedEncodingException, MessagingException{
+    	mIsMsgShow = true;
+        mIsByPass = true;
+        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(email).toLowerCase();
+        // check email is already exist
+        if (khachHangService.getKhachHang(trueEmail) == null) {
+            mMsg = "Email này chưa được đăng ký. Vui lòng thử lại!";
+            return null;
+        } else {
+            khachHangService.resetPassword(email);
+            mMsg = "Mật khẩu mới đã gửi về email. Vui lòng kiểm tra lại!";
+            return REDIRECT_PREFIX + LOGIN_VIEW;
+        }
+    }
+    
     // Load blank page (Can be deleted)
     // (Have no Blank View YET)
     @GetMapping(BLANK_VIEW)
