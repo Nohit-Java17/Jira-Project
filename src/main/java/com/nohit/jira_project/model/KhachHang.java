@@ -31,10 +31,6 @@ public class KhachHang {
     @Column(name = "ho_ten")
     private String hoTen;
 
-    @NonNull
-    @Column(name = "hinh_anh")
-    private String avatar;
-
     @Column(name = "dia_chi")
     private String diaChi;
 

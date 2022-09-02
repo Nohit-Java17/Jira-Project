@@ -4,13 +4,17 @@ public class ViewConstant {
     public static final String INDEX_VIEW 			= "/index";
     public static final String NOT_FOUND_VIEW 		= "/404";
     public static final String HOME_VIEW 			= "/home";
-    public static final String SHOP_VIEW			= "/shop";
     public static final String CATEGORY_VIEW 		= "/category";
-    public static final String SINGLE_PRODUCT_VIEW 	= "/single-product";
     public static final String CART_VIEW 			= "/cart";
     public static final String CHECKOUT_VIEW 		= "/checkout";
     public static final String ABOUT_VIEW 			= "/about";
     public static final String CONTACT_VIEW 		= "/contact";
+    public static final String DETAIL_VIEW 			= "/detail";
+    public static final String HISTORY_VIEW 		= "/history";
+    public static final String PASS_RESET_VIEW 		= "/password-reset";
+    public static final String PROFILE_VIEW 		= "/profile";
+    public static final String REGISTER_VIEW 		= "/register";
+    public static final String PRODUCT_VIEW 		= "/product";
 
     public static final String TOKEN_VIEW = "/token";
     public static final String LOGIN_VIEW = "/login";
