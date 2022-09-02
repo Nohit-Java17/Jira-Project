@@ -65,7 +65,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 // Định nghĩa link chứng thực
                 .and().authorizeHttpRequests()
                 // Khi vào link api login và refresh thì cho qua không cần Authen
-                .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW).permitAll()
+                .antMatchers(REGISTER_VIEW, REGISTER_VIEW + FREE_VIEW, API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW).permitAll()
                 // Khi vào link cart và checkout thì cần authen
                 .antMatchers(CART_VIEW, CART_VIEW + FREE_VIEW, CHECKOUT_VIEW, CHECKOUT_VIEW + FREE_VIEW, PROFILE_VIEW, PROFILE_VIEW + FREE_VIEW).hasRole(CLIENT)
                 .anyRequest().permitAll()

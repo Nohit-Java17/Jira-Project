@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
 import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.service.KhachHangService;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
+
 
 @Controller
 @RequestMapping("")
@@ -18,6 +20,12 @@ public class ApplicationController {
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
+    
+    @Autowired
+    StringUtil stringUtil;
+    
+    @Autowired
+    KhachHangService khachHangService;
 
     // Fields
     private KhachHang mCurrentAccount;
@@ -117,46 +125,25 @@ public class ApplicationController {
             return new ModelAndView(REDIRECT_PREFIX + CHECKOUT_VIEW);
         }
     }
-
-    // @GetMapping("/home")
-    // public String index() {
-    // return "index";
-    // }
-
-    // @GetMapping("/shop")
-    // public String shop() {
-    //     return "shop";
-    // }
-
-    // @GetMapping("/category")
-    // public String category() {
-    //     return "category";
-    // }
-
-    // @GetMapping("/single-product")
-    // public String singleProduct() {
-    //     return "single-product";
-    // }
-
-    // @GetMapping("/cart")
-    // public String cart() {
-    //     return "cart";
-    // }
-
-    // @GetMapping("/checkout")
-    // public String checkout() {
-    //     return "checkout";
-    // }
-
-    // @GetMapping("/about")
-    // public String about() {
-    //     return "about";
-    // }
-
-    // @GetMapping("/contact")
-    // public String contact() {
-    //     return "contact";
-    // }
+    
+    //đăng ký
+    @PostMapping(REGISTER_VIEW)
+    public String register(@RequestBody KhachHang khachHang) {
+    	mIsMsgShow = true;
+        mIsByPass = true;
+        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(khachHang.getEmail()).toLowerCase();
+        System.out.println(trueEmail);
+        // check email is already exist
+        if (khachHangService.getKhachHang(trueEmail) != null) {
+            mMsg = "Email này đã được đăng ký!";
+            return null;
+        } else {
+            khachHang.setEmail(trueEmail);
+            khachHangService.saveKhachHang(khachHang);
+            mMsg = "Tài khoản đã được tạo thành công!";
+            return REDIRECT_PREFIX + LOGIN_VIEW;
+        }
+    }
 
     // Load blank page (Can be deleted)
     // (Have no Blank View YET)
