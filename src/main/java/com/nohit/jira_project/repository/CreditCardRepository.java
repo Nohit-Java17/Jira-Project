@@ -6,5 +6,5 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface ThuPhanHoiRepository extends JpaRepository<ThuPhanHoi, Integer> {
+public interface CreditCardRepository extends JpaRepository<CreditCard, Integer> {
 }

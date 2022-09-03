@@ -7,5 +7,4 @@ import com.nohit.jira_project.model.GioHang;
 
 @Repository
 public interface GioHangRepository extends JpaRepository<GioHang, Integer>{
-
 }
