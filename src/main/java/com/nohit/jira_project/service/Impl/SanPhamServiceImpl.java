@@ -37,4 +37,46 @@ public class SanPhamServiceImpl implements SanPhamService {
         // TODO Auto-generated method stub
         sanPhamRepository.deleteById(id);
     }
+
+    @Override
+    public List<SanPham> getDsSanPhamTopSale() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        listProductTemp.sort((firstProduct, secondProduct) -> {
+            return firstProduct.getTonKho() < secondProduct.getTonKho() ? 1 : -1;});
+
+        return listProductTemp;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamDescendingPriceOrder() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        listProductTemp.sort((firstProduct, secondProduct) -> {
+            return firstProduct.getKhuyenMai() < secondProduct.getKhuyenMai() ? 1 : -1;});
+
+        return listProductTemp;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamAscendingPriceOrder() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        listProductTemp.sort((firstProduct, secondProduct) -> {
+            return firstProduct.getKhuyenMai() > secondProduct.getKhuyenMai() ? 1 : -1;});
+
+        return listProductTemp;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamNewestOrder() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+    
+        listProductTemp.sort((firstProduct, secondProduct) -> { 
+            return firstProduct.getNgayNhap().compareTo(secondProduct.getNgayNhap());
+        });
+
+        return listProductTemp;
+    }
 }

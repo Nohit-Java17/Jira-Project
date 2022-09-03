@@ -1,21 +1,21 @@
 package com.nohit.jira_project.controller;
 
+import java.io.*;
+
+import javax.mail.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
 import com.nohit.jira_project.model.*;
-import com.nohit.jira_project.service.KhachHangService;
+import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
-
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.MessagingException;
 
 
 @Controller
@@ -123,6 +123,16 @@ public class ApplicationController {
             mIsByPass = true;
             return new ModelAndView(REDIRECT_PREFIX + CART_VIEW);
         }
+    }
+
+    // Load category
+    @GetMapping(value = { CATEGORY_VIEW })
+    public ModelAndView category() {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(CATEGORY_TEMP);
+        mIsByPass = false;
+        return mav;
     }
 
     // Load product

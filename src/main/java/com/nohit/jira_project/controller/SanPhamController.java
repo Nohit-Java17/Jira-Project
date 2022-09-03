@@ -40,7 +40,29 @@ public class SanPhamController {
             mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
         mIsByPass = false;
         return mav;
+    }
 
+    // Load top sale products
+    @GetMapping(value = {"/sort"})
+    public ModelAndView topsaleProduct(@RequestParam("sort") String criteria) {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(PRODUCT_TEMP);
+        mav.addObject(USER_PARAM, mCurrentAccount);
+        if(criteria.equals("topSale")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamTopSale());
+        } else if (criteria.equals("newOrder")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder());
+        } else if (criteria.equals("ascendingPriceOrder")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamAscendingPriceOrder());
+        } else if (criteria.equals("descendingPriceOrder")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamDescendingPriceOrder());
+        } else{
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
+        }
+        
+        mIsByPass = false;
+        return mav;
     }
 
     // Re-check choosen one

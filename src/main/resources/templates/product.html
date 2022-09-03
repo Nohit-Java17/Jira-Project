@@ -23,9 +23,9 @@
     <!-- Font Awesome -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/owl.carousel.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/owl.carousel.css" rel="stylesheet" type='text/css'>
+    <link href="css/style.css" rel="stylesheet" type='text/css'>
+    <link href="css/responsive.css" rel="stylesheet" type='text/css'>
 </head>
 
 <body>
@@ -189,34 +189,37 @@
                             </h2>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form th:action="@{/product/sort}" method="get" class="form">
                                 <div class="form-group">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" checked="true" name="payment_method"> Bán chạy
+                                            <input type="radio" name="sort" value=""> Tất cả
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="payment_method"> Khuyến mãi
+                                            <input type="radio" name="sort" value="topSale" > Bán chạy
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="payment_method"> Mới nhất
+                                            <input type="radio" name="sort" value="newOrder" > Mới nhất
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="payment_method"> Giá tăng dần
+                                            <input type="radio" name="sort" value="ascendingPriceOrder" > Giá tăng dần
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="payment_method"> Giá giảm dần
+                                            <input type="radio" name="sort" value="descendingPriceOrder" > Giá giảm dần
                                         </label>
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
+                                    Sort
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -224,10 +227,10 @@
                 <div class="col-lg-9 tab-content">
                     <div class="row">
                             <div th:each="element: ${products}" class="col-md-3 col-sm-6">
-                                <div class="single-shop-product">
+                                <div th:if="${element.tonKho != 0}" class="single-shop-product">
                                     <div class="product-upper">
-                                        <img src="img/191005936/0.jpg" alt="">
-                                        <!-- <img th:src="@{${'/img/' + element.hinhAnh + '/0.jpg'}}" alt=""> -->
+                                        <!-- <img src="img/191005936/0.jpg" alt=""> -->
+                                        <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                     </div>
                                     <h2>
                                         <a th:text="${element.ten}" href="">
@@ -235,7 +238,7 @@
                                         </a>
                                     </h2>
                                     <div class="product-carousel-price">
-                                        <ins th:text="${element.giamGia}">
+                                        <ins th:text="${element.khuyenMai}">
                                             3.289.000 ₫
                                         </ins>
                                         <del th:text="${element.giaGoc}">
@@ -341,7 +344,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="favorite.html">
+                                <a th:href="@{/about}">
                                     Giới thiệu về trang
                                 </a>
                             </li>
@@ -365,27 +368,27 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/laptop}">
                                     Máy tính xách tay
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/pc}">
                                     Máy tính để bàn
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/tablet}">
                                     Máy tính bảng
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/devices}">
                                     Thiết bị ngoại vi
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/smartphone}">
                                     Điện thoại di động
                                 </a>
                             </li>
