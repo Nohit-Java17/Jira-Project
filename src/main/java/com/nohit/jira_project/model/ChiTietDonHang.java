@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity(name = "chi_tiet_don_hang")
 @Data
 @AllArgsConstructor
@@ -12,12 +14,12 @@ public class ChiTietDonHang {
     @EmbeddedId
     private ChiTietDonHangId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @MapsId("id_don_hang")
     @JoinColumn(name = "id_don_hang")
     private DonHang donHang;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @MapsId("id_san_pham")
     @JoinColumn(name = "id_san_pham")
     private SanPham sanPham;
@@ -25,6 +27,9 @@ public class ChiTietDonHang {
     @Column(name = "so_luong_san_pham")
     private int soLuongSanPhan;
 
-    @Column(name = "gia_ban")
-    private int giaBan;
+    @Column(name = "gia_ban_san_pham")
+    private int giaBanSanPham;
+
+    @Column(name = "tong_tien_san_pham")
+    private int tongTienSanPham;
 }

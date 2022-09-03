@@ -10,9 +10,9 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChiTietDonHangId implements Serializable {
-    @Column(name = "id_don_hang")
-    private int idDonHang;
+public class ChiTietGioHangId implements Serializable {
+    @Column(name = "id_gio_hang")
+    private int idGioHang;
 
     @Column(name = "id_san_pham")
     private int idSanPham;

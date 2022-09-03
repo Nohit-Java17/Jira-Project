@@ -1,5 +1,7 @@
 package com.nohit.jira_project.model;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 import lombok.*;
@@ -43,4 +45,7 @@ public class NguoiNhan {
 
     @Column(name = "ghi_chu")
     private String ghiChu;
+
+    @OneToMany(mappedBy = "nguoiNhan")
+    private List<DonHang> dsDonHang;
 }

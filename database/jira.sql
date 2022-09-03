@@ -27,6 +27,19 @@ CREATE TABLE
         PRIMARY KEY (id)
     );
 
+-- create table credit_card
+
+CREATE TABLE
+    IF NOT EXISTS credit_card(
+        id INT NOT NULL,
+        name_on_card NVARCHAR(50) NOT NULL,
+        card_number NVARCHAR(20) NOT NULL,
+        expiration NVARCHAR(5),
+        security_code NVARCHAR(5),
+        PRIMARY KEY (id),
+        FOREIGN KEY (id) REFERENCES khach_hang(id)
+    );
+
 -- create table san_pham
 
 CREATE TABLE
@@ -36,7 +49,7 @@ CREATE TABLE
         album NVARCHAR(10) NOT NULL,
         mo_ta TEXT,
         gia_goc INT NOT NULL,
-        giam_gia INT,
+        khuyen_mai INT NOT NULL,
         so_luong INT NOT NULL,
         ngay_nhap DATE NOT NULL,
         ton_kho INT NOT NULL,
@@ -46,14 +59,14 @@ CREATE TABLE
         PRIMARY KEY (id)
     );
 
--- create table chi_tiet_gio_hang
+-- create table nhan_xet
 
 CREATE TABLE
-    IF NOT EXISTS chi_tiet_gio_hang(
+    IF NOT EXISTS nhan_xet(
         id INT NOT NULL AUTO_INCREMENT,
+        danh_gia INT NOT NULL,
+        binh_luan TEXT,
         id_san_pham INT NOT NULL,
-        so_luong INT NOT NULL,
-        tong_tien INT NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
@@ -62,14 +75,26 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS gio_hang(
-        id INT NOT NULL AUTO_INCREMENT,
-        id_chi_tiet_gio_hang INT,
-        so_luong INT NOT NULL,
-        tong_tien INT NOT NULL,
-        id_khach_hang INT NOT NULL,
+        id INT NOT NULL,
+        tong_so_luong INT NOT NULL,
+        giam_gia INT NOT NULL,
+        tong_gio_hang INT NOT NULL,
         PRIMARY KEY (id),
-        FOREIGN KEY (id) REFERENCES khach_hang(id),
-        FOREIGN KEY (id_chi_tiet_gio_hang) REFERENCES chi_tiet_gio_hang(id)
+        FOREIGN KEY (id) REFERENCES khach_hang(id)
+    );
+
+-- create table chi_tiet_gio_hang
+
+CREATE TABLE
+    IF NOT EXISTS chi_tiet_gio_hang(
+        id_gio_hang INT NOT NULL,
+        id_san_pham INT NOT NULL,
+        so_luong_san_pham INT NOT NULL,
+        gia_ban_san_pham INT NOT NULL,
+        tong_tien_san_pham INT NOT NULL,
+        PRIMARY KEY (id_gio_hang, id_san_pham),
+        FOREIGN KEY (id_gio_hang) REFERENCES gio_hang(id),
+        FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
 
 -- create table nguoi_nhan
@@ -93,9 +118,10 @@ CREATE TABLE
     IF NOT EXISTS don_hang(
         id INT NOT NULL AUTO_INCREMENT,
         ngay_dat DATE NOT NULL,
-        ngay_giao DATE,
+        ngay_nhan DATE,
         tong_gio_hang INT NOT NULL,
         chi_phi_van_chuyen INT NOT NULL,
+        giam_gia INT NOT NULL,
         tong_don_hang INT NOT NULL,
         phuong_thuc_thanh_toan NVARCHAR(50) NOT NULL,
         trang_thai NVARCHAR(20) NOT NULL,
@@ -113,7 +139,8 @@ CREATE TABLE
         id_don_hang INT NOT NULL,
         id_san_pham INT NOT NULL,
         so_luong_san_pham INT NOT NULL,
-        gia_ban INT NOT NULL,
+        gia_ban_san_pham INT NOT NULL,
+        tong_tien_san_pham INT NOT NULL,
         PRIMARY KEY (id_don_hang, id_san_pham),
         FOREIGN KEY (id_don_hang) REFERENCES don_hang(id),
         FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
@@ -139,18 +166,6 @@ CREATE TABLE
         chu_de NVARCHAR(20),
         noi_dung TEXT,
         PRIMARY KEY (id)
-    );
-
--- create table nhan_xet
-
-CREATE TABLE
-    IF NOT EXISTS nhan_xet(
-        id INT NOT NULL AUTO_INCREMENT,
-        danh_gia INT NOT NULL,
-        binh_luan TEXT,
-        id_san_pham INT NOT NULL,
-        PRIMARY KEY (id),
-        FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
 
 -- add data to khach_hang
@@ -180,6 +195,17 @@ VALUES (
         'client'
     );
 
+-- add data to credit_card
+
+INSERT INTO credit_card
+VALUES (
+        1,
+        'NGUYEN VAN A',
+        '1111222233334444',
+        '01/25',
+        '012'
+    );
+
 -- add data to san_pham
 
 INSERT INTO
@@ -188,7 +214,7 @@ INSERT INTO
         album,
         mo_ta,
         gia_goc,
-        giam_gia,
+        khuyen_mai,
         so_luong,
         ngay_nhap,
         ton_kho,
@@ -210,7 +236,7 @@ VALUES (
         2100000,
         10,
         '2022-01-01',
-        1,
+        8,
         5,
         'Máy tính xách tay',
         'APPLE'
@@ -224,7 +250,7 @@ VALUES (
         2480000,
         10,
         '2022-01-01',
-        1,
+        9,
         5,
         'Thiết bị ngoại vi',
         'HP'
@@ -239,7 +265,7 @@ VALUES (
         801000,
         10,
         '2022-01-01',
-        2,
+        10,
         5,
         'Thiết bị ngoại vi',
         'LOGITECH'
@@ -254,7 +280,7 @@ VALUES (
         1410000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Thiết bị ngoại vi',
         'LOGITECH'
@@ -273,7 +299,7 @@ VALUES (
         3840000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Máy tính bảng',
         'APPLE'
@@ -289,7 +315,7 @@ VALUES (
         5400000,
         10,
         '2022-01-01',
-        2,
+        10,
         5,
         'Máy tính để bàn',
         'LENOVO'
@@ -308,7 +334,7 @@ VALUES (
         4400000,
         10,
         '2022-01-01',
-        3,
+        10,
         5,
         'Máy tính xách tay',
         'HP'
@@ -323,7 +349,7 @@ VALUES (
         91000,
         10,
         '2022-01-01',
-        2,
+        10,
         5,
         'Thiết bị ngoại vi',
         'MSI'
@@ -342,7 +368,7 @@ VALUES (
         3790000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Máy tính xách tay',
         'MSI'
@@ -361,7 +387,7 @@ VALUES (
         4600000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Máy tính xách tay',
         'DELL'
@@ -377,7 +403,7 @@ VALUES (
         400000,
         10,
         '2022-01-01',
-        4,
+        10,
         5,
         'Thiết bị ngoại vi',
         'MSI'
@@ -396,7 +422,7 @@ VALUES (
         6000000,
         10,
         '2022-01-01',
-        2,
+        10,
         5,
         'Máy tính xách tay',
         'ACER'
@@ -415,7 +441,7 @@ VALUES (
         700000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Điện thoại di động',
         'ASUS'
@@ -434,7 +460,7 @@ VALUES (
         591000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Thiết bị ngoại vi',
         'ASUS'
@@ -453,7 +479,7 @@ VALUES (
         1000000,
         10,
         '2022-01-01',
-        1,
+        10,
         5,
         'Máy tính xách tay',
         'LENOVO'
@@ -472,11 +498,34 @@ VALUES (
         1000000,
         10,
         '2022-01-01',
-        1,
+        9,
         5,
         'Máy tính xách tay',
         'ASUS'
     );
+
+-- add data to nhan_xet
+
+INSERT INTO
+    nhan_xet (
+        danh_gia,
+        binh_luan,
+        id_san_pham
+    )
+VALUES (
+        5,
+        'Chất lượng sản phẩm tốt.',
+        1
+    ), (5, NULL, 2), (5, NULL, 3), (5, NULL, 4), (5, NULL, 5), (5, NULL, 6), (5, NULL, 7), (5, NULL, 8), (5, NULL, 9), (5, NULL, 10), (5, NULL, 11), (5, NULL, 12), (5, NULL, 13), (5, NULL, 14), (5, NULL, 15), (5, NULL, 16), (4, NULL, 1);
+
+-- add data to gio_hang
+
+INSERT INTO gio_hang VALUES (1, 6, 100000, 39989000);
+
+-- add data to chi_tiet_gio_hang
+
+INSERT INTO chi_tiet_gio_hang
+VALUES (1, 2, 1, 24244000, 24244000), (1, 3, 2, 2989000, 5978000), (1, 4, 3, 3289000, 9867000);
 
 -- add data to nguoi_nhan
 
@@ -497,7 +546,7 @@ VALUES (
         'P.Hoà Cường Bắc',
         'Q.Hải Châu',
         'Đà Nẵng',
-        'Giao ngoài giờ hành chính'
+        'Hàng dễ vỡ'
     ), (
         'Nguyễn Văn A',
         '0987654321',
@@ -505,7 +554,7 @@ VALUES (
         'P.12',
         'Q.10',
         'Hồ Chí Minh',
-        'Hàng dễ vỡ'
+        NULL
     );
 
 -- add data to don_hang
@@ -513,9 +562,10 @@ VALUES (
 INSERT INTO
     don_hang (
         ngay_dat,
-        ngay_giao,
+        ngay_nhan,
         tong_gio_hang,
         chi_phi_van_chuyen,
+        giam_gia,
         tong_don_hang,
         phuong_thuc_thanh_toan,
         trang_thai,
@@ -526,6 +576,7 @@ VALUES (
         '2022-08-01',
         '2022-08-08',
         119824000,
+        20000,
         0,
         119844000,
         'Chuyển khoản',
@@ -537,6 +588,7 @@ VALUES (
         NULL,
         64990000,
         0,
+        0,
         64990000,
         'Tiền mặt',
         'Đang giao',
@@ -546,9 +598,8 @@ VALUES (
 
 -- add data to chi_tiet_don_hang
 
-INSERT INTO
-    chi_tiet_don_hang ()
-VALUES (1, 1, 2, 47790000), (1, 2, 1, 24244000), (2, 16, 1, 64990000);
+INSERT INTO chi_tiet_don_hang
+VALUES (1, 1, 2, 47790000, 95580000), (1, 2, 1, 24244000, 24244000), (2, 16, 1, 64990000, 64990000);
 
 -- add data to phi_van_chuyen
 
@@ -574,17 +625,3 @@ VALUES (
         'Dịch vụ',
         'Nhân viên tư vấn chưa tận tình.'
     );
-
--- add data to nhan_xet
-
-INSERT INTO
-    nhan_xet (
-        danh_gia,
-        binh_luan,
-        id_san_pham
-    )
-VALUES (
-        5,
-        'Chất lượng sản phẩm tốt.',
-        1
-    ), (5, NULL, 2), (5, NULL, 3), (5, NULL, 4), (5, NULL, 5), (5, NULL, 6), (5, NULL, 7), (5, NULL, 8), (5, NULL, 9), (5, NULL, 10), (5, NULL, 11), (5, NULL, 12), (5, NULL, 13), (5, NULL, 14), (5, NULL, 15), (5, NULL, 16), (4, NULL, 1);

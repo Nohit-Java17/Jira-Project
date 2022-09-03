@@ -4,8 +4,11 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.*;
+
 import lombok.*;
 
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
 @Entity(name = "don_hang")
@@ -20,17 +23,22 @@ public class DonHang {
     private int id;
 
     @NonNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "ngay_dat")
-    private String ngayDat;
+    private Date ngayDat;
 
-    @Column(name = "ngay_giao")
-    private String ngayGiao;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "ngay_nhan")
+    private Date ngayNhan;
 
     @Column(name = "tong_gio_hang")
     private int tongGioHang;
 
     @Column(name = "chi_phi_van_chuyen")
     private int chiPhiVanChuyen;
+
+    @Column(name = "giam_gia")
+    private int giamGia;
 
     @Column(name = "tong_don_hang")
     private int tongDonHang;
@@ -43,13 +51,13 @@ public class DonHang {
     @Column(name = "trang_thai")
     private String trangThai;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id_khach_hang", referencedColumnName = "id", insertable = false, updatable = false)
-    private KhachHang idKhachHang;
+    private KhachHang khachHang;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id_nguoi_nhan", referencedColumnName = "id", insertable = false, updatable = false)
-    private NguoiNhan idNguoiNhan;
+    private NguoiNhan nguoiNhan;
 
     @OneToMany(mappedBy = "donHang")
     private List<ChiTietDonHang> dsChiTietDonHang;

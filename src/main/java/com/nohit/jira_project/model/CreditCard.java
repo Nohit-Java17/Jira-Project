@@ -1,36 +1,34 @@
 package com.nohit.jira_project.model;
 
-import java.util.*;
-
 import javax.persistence.*;
 
 import lombok.*;
 
 import static javax.persistence.FetchType.*;
 
-@Entity(name = "gio_hang")
+@Entity(name = "credit_card")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GioHang {
+public class CreditCard {
     @Id
     @GeneratedValue
     @Column(name = "id")
     private int id;
 
-    @Column(name = "tong_so_luong")
-    private int tongSoLuong;
+    @Column(name = "name_on_card")
+    private int nameOnCard;
 
-    @Column(name = "giam_gia")
-    private int giamGia;
+    @Column(name = "card_number")
+    private int cardNumber;
 
-    @Column(name = "tong_gio_hang")
-    private int tongGioHang;
+    @Column(name = "expiration")
+    private int expiration;
+
+    @Column(name = "security_code")
+    private int securityCode;
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     private KhachHang khachHang;
-
-    @OneToMany(mappedBy = "gioHang")
-    private List<ChiTietGioHang> dsChiTietGioHang;
 }
