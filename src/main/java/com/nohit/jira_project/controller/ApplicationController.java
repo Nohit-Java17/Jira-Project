@@ -141,19 +141,36 @@ public class ApplicationController {
         }
     }
     
+ // Load password-reset
+    @GetMapping(value = { PASSWORD_RESET_VIEW })
+    public ModelAndView passwordReset() {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+
+        // Check current account still valid
+        
+        var mav = new ModelAndView(PASSWORD_RESET_TEMP);
+        mIsByPass = false;
+        return mav;
+        
+    }
+    
     //đăng ký
     @PostMapping(REGISTER_VIEW)
-    public String register(@RequestBody KhachHang khachHang) {
+    public String register(@RequestParam("email") String email, @RequestParam("matKhau") String matKhau) {
     	mIsMsgShow = true;
         mIsByPass = true;
-        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(khachHang.getEmail()).toLowerCase();
-        System.out.println(trueEmail);
+        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(email).toLowerCase();
         // check email is already exist
         if (khachHangService.getKhachHang(trueEmail) != null) {
             mMsg = "Email này đã được đăng ký!";
             return null;
         } else {
+        	KhachHang khachHang = new KhachHang();
+        	
+        	khachHang.setMatKhau(matKhau);
             khachHang.setEmail(trueEmail);
+            khachHang.setIdTinhThanh(1);
             khachHangService.saveKhachHang(khachHang);
             mMsg = "Tài khoản đã được tạo thành công!";
             return REDIRECT_PREFIX + LOGIN_VIEW;
@@ -161,7 +178,7 @@ public class ApplicationController {
     }
     
     //quên mật khẩu
-    @PutMapping(PASSWORD_RESET_VIEW)
+    @PostMapping(PASSWORD_RESET_VIEW)
     public String resetPassword(@RequestParam("email") String email) throws UnsupportedEncodingException, MessagingException{
     	mIsMsgShow = true;
         mIsByPass = true;
