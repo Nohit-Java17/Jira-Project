@@ -1,7 +1,5 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -18,7 +16,7 @@ public class NguoiNhanServiceImpl implements NguoiNhanService {
     private NguoiNhanRepository nguoiNhanRepository;
 
     @Override
-    public List<NguoiNhan> getDsNguoiNhan() {
+    public Iterable<NguoiNhan> getDsNguoiNhan() {
         log.info("Fetching all nguoi_nhan");
         return nguoiNhanRepository.findAll();
     }

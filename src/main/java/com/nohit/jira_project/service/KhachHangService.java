@@ -1,14 +1,13 @@
 package com.nohit.jira_project.service;
 
 import java.io.*;
-import java.util.*;
 
 import javax.mail.*;
 
 import com.nohit.jira_project.model.*;
 
 public interface KhachHangService {
-    public List<KhachHang> getDsKhachHang();
+    public Iterable<KhachHang> getDsKhachHang();
 
     public KhachHang getKhachHang(int id);
 

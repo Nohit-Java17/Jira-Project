@@ -1,7 +1,5 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -18,7 +16,7 @@ public class ThuPhanHoiServiceImpl implements ThuPhanHoiService {
     private ThuPhanHoiRepository phanHoiRepository;
 
     @Override
-    public List<ThuPhanHoi> getDsThuPhanHoi() {
+    public Iterable<ThuPhanHoi> getDsThuPhanHoi() {
         log.info("Fetching all thu_phan_hoi");
         return phanHoiRepository.findAll();
     }

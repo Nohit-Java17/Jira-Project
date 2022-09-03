@@ -1,7 +1,5 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -18,7 +16,7 @@ public class NhanXetServiceImpl implements NhanXetService {
     private NhanXetRepository nhanXetRepository;
 
     @Override
-    public List<NhanXet> getDsNhanXet() {
+    public Iterable<NhanXet> getDsNhanXet() {
         log.info("Fetching all nhan_xet");
         return nhanXetRepository.findAll();
     }
