@@ -37,13 +37,13 @@
                 <div class="user-menu">
                     <ul>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 <i class="fa fa-shopping-cart"></i>
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 <i class="fa fa-credit-card"></i>
                                 Thanh toán
                             </a>
@@ -56,13 +56,13 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/profile}">
                                             Thông tin cá nhân
                                         </a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/logout}">
                                             Đăng xuất
                                         </a>
                                     </li>
@@ -80,7 +80,7 @@
                 <div class="col-sm-6">
                     <div class="logo">
                         <h1>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 nohit
                                 <span>
                                     Electronics
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">
+                        <a th:href="@{/cart}">
                             Giỏ -
                             <span class="cart-amunt">
                                 64.990.000 ₫
@@ -121,43 +121,43 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>
-                            <a href="index.html">
+                        <li class="active">
+                            <a th:href="@{/index}">
                                 Trang chủ
                             </a>
                         </li>
                         <li>
-                            <a href="product.html">
+                            <a th:href="@{/product}">
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="category.html">
+                            <a th:href="@{/category}">
                                 Phân Loại
                             </a>
                         </li>
                         <li>
-                            <a href="detail.html">
+                            <a th:href="@{/detail}">
                                 Chi tiết
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 Thanh toán
                             </a>
                         </li>
                         <li>
-                            <a href="about.html">
+                            <a th:href="@{/about}">
                                 Giới thiệu
                             </a>
                         </li>
-                        <li class="active">
-                            <a href="contact.html">
+                        <li>
+                            <a th:href="@{/contact}">
                                 Liên hệ
                             </a>
                         </li>
@@ -208,7 +208,7 @@
                         Thư phản hồi
                     </h2>
                     <div class="contact-form-wrapper">
-                        <form class="form-horizontal" role="form">
+                        <form th:action=@{/contact} method="post" class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label for="Name" class="col-sm-4 control-label">
                                     <b>
@@ -216,7 +216,7 @@
                                     </b>
                                 </label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" id="Name" type="text" placeholder="Nhập họ và tên"
+                                    <input class="form-control" name="hoTen" id="Name" type="text" placeholder="Nhập họ và tên"
                                         required>
                                 </div>
                             </div>
@@ -227,7 +227,7 @@
                                     </b>
                                 </label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" id="contact-email" type="email"
+                                    <input class="form-control" name="email" id="contact-email" type="email"
                                         placeholder="Nhập thư điện tử" required>
                                 </div>
                             </div>
@@ -238,17 +238,17 @@
                                     </b>
                                 </label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="prependedInput">
-                                        <option selected>
+                                    <select class="form-control" name="chuDe" id="prependedInput">
+                                        <option value="chung" selected>
                                             Chung
                                         </option>
-                                        <option>
+                                        <option value="dich-vu">
                                             Dịch vụ
                                         </option>
-                                        <option>
+                                        <option value="san-pham">
                                             Sản phẩm
                                         </option>
-                                        <option>
+                                        <option value="khac">
                                             Khác
                                         </option>
                                     </select>
@@ -261,7 +261,7 @@
                                     </b>
                                 </label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" rows="5" id="contact-message"
+                                    <textarea class="form-control" name="noiDung" rows="5" id="contact-message"
                                         placeholder="Nhập tin nhắn..." required></textarea>
                                 </div>
                             </div>
@@ -316,22 +316,22 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="profile.html">
+                                <a th:href="@{/profile}">
                                     Tài khoản cá nhân
                                 </a>
                             </li>
                             <li>
-                                <a href="history.html">
+                                <a th:href="@{/history}">
                                     Lịch sử đặt hàng
                                 </a>
                             </li>
                             <li>
-                                <a href="favorite.html">
+                                <a href="#">
                                     Giới thiệu về trang
                                 </a>
                             </li>
                             <li>
-                                <a href="contact.html">
+                                <a th:href="@{/contact}">
                                     Liên hệ nhà cung cấp
                                 </a>
                             </li>
