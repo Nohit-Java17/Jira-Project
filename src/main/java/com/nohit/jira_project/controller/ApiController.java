@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.core.exc.*;
 import com.fasterxml.jackson.databind.*;
 import com.nohit.jira_project.service.*;
-import com.nohit.jira_project.service.Impl.*;
 
 import static com.auth0.jwt.JWT.*;
 import static com.auth0.jwt.algorithms.Algorithm.*;

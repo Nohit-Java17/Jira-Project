@@ -24,4 +24,12 @@ public class ApplicationConstant {
         public static final String RECEIVED = "Đã giao";
         public static final String CANCELLED = "Đã hủy";
     }
+
+    public class Category {
+        public static final String LAPTOP = "Máy tính xách tay";
+        public static final String COMPUTER = "Máy tính để bàn";
+        public static final String SMART_PHONE = "Điện thoại di động";
+        public static final String TABLET = "Máy tính bảng";
+        public static final String DEVICES = "Thiết bị ngoại vi";
+    }
 }

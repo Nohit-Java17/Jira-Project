@@ -5,7 +5,7 @@ import java.util.*;
 import com.nohit.jira_project.model.*;
 
 public interface SanPhamService {
-    public List<SanPham> getDsSanPham();
+    public Iterable<SanPham> getDsSanPham();
 
     public SanPham getSanPham(int id);
 
@@ -23,14 +23,14 @@ public interface SanPhamService {
     public List<SanPham> getDsSanPhamNewestOrder();
 
     // Methods to sort in Category Controller
-    public List<SanPham> getDsSanPhamLaptop();
+    public Iterable<SanPham> getDsSanPhamLaptop();
 
-    public List<SanPham> getDsSanPhamComputer();
+    public Iterable<SanPham> getDsSanPhamComputer();
 
-    public List<SanPham> getDsSanPhamSmartPhone();
+    public Iterable<SanPham> getDsSanPhamSmartPhone();
 
-    public List<SanPham> getDsSanPhamTablet();
+    public Iterable<SanPham> getDsSanPhamTablet();
 
-    public List<SanPham> getDsSanPhamDevices();
-    
+    public Iterable<SanPham> getDsSanPhamDevices();
+
 }

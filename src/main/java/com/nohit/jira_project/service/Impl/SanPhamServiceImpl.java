@@ -11,6 +11,9 @@ import com.nohit.jira_project.service.*;
 
 import lombok.extern.slf4j.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Category.*;
+import static java.util.stream.Collectors.*;
+
 @Service
 @Slf4j
 public class SanPhamServiceImpl implements SanPhamService {
@@ -18,7 +21,7 @@ public class SanPhamServiceImpl implements SanPhamService {
     private SanPhamRepository sanPhamRepository;
 
     @Override
-    public List<SanPham> getDsSanPham() {
+    public Iterable<SanPham> getDsSanPham() {
         log.info("Fetching all san_pham");
         return sanPhamRepository.findAll();
     }
@@ -43,118 +46,76 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public List<SanPham> getDsSanPhamTopSale() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        listProductTemp.sort((firstProduct, secondProduct) -> {
-            return firstProduct.getTonKho() < secondProduct.getTonKho() ? 1 : -1;});
-
-        return listProductTemp;
+        var dsSanPham = sanPhamRepository.findAll();
+        dsSanPham.sort((firstProduct, secondProduct) -> {
+            return firstProduct.getTonKho() < secondProduct.getTonKho() ? 1 : -1;
+        });
+        log.info("Fetching san_pham with top sale");
+        return dsSanPham;
     }
 
     @Override
     public List<SanPham> getDsSanPhamDescendingPriceOrder() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        listProductTemp.sort((firstProduct, secondProduct) -> {
-            return firstProduct.getKhuyenMai() < secondProduct.getKhuyenMai() ? 1 : -1;});
-
-        return listProductTemp;
+        var dsSanPham = sanPhamRepository.findAll();
+        dsSanPham.sort((firstProduct, secondProduct) -> {
+            return firstProduct.getKhuyenMai() < secondProduct.getKhuyenMai() ? 1 : -1;
+        });
+        log.info("Fetching san_pham with descending price order");
+        return dsSanPham;
     }
 
     @Override
     public List<SanPham> getDsSanPhamAscendingPriceOrder() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        listProductTemp.sort((firstProduct, secondProduct) -> {
-            return firstProduct.getKhuyenMai() > secondProduct.getKhuyenMai() ? 1 : -1;});
-
-        return listProductTemp;
+        var dsSanPham = sanPhamRepository.findAll();
+        dsSanPham.sort((firstProduct, secondProduct) -> {
+            return firstProduct.getKhuyenMai() > secondProduct.getKhuyenMai() ? 1 : -1;
+        });
+        log.info("Fetching san_pham with ascending price order");
+        return dsSanPham;
     }
 
     @Override
     public List<SanPham> getDsSanPhamNewestOrder() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-    
-        listProductTemp.sort((firstProduct, secondProduct) -> { 
+        var dsSanPham = sanPhamRepository.findAll();
+        dsSanPham.sort((firstProduct, secondProduct) -> {
             return firstProduct.getNgayNhap().compareTo(secondProduct.getNgayNhap());
         });
-
-        return listProductTemp;
+        log.info("Fetching san_pham with newest order");
+        return dsSanPham;
     }
 
     @Override
-    public List<SanPham> getDsSanPhamLaptop() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        List<SanPham> listProductFinal = new ArrayList<SanPham>();
-    
-        for(SanPham element : listProductTemp){
-            if(element.getPhanLoai().equals("Máy tính xách tay")){
-                listProductFinal.add(element);
-            }
-        }
-
-        return listProductFinal;
+    public Iterable<SanPham> getDsSanPhamLaptop() {
+        log.info("Fetching san_pham with category {}", LAPTOP);
+        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(LAPTOP))
+                .collect(toList());
     }
 
     @Override
-    public List<SanPham> getDsSanPhamComputer() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        List<SanPham> listProductFinal = new ArrayList<SanPham>();
-    
-        for(SanPham element : listProductTemp){
-            if(element.getPhanLoai().equals("Máy tính để bàn")){
-                listProductFinal.add(element);
-            }
-        }
-
-        return listProductFinal;
+    public Iterable<SanPham> getDsSanPhamComputer() {
+        log.info("Fetching san_pham with category {}", COMPUTER);
+        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(COMPUTER))
+                .collect(toList());
     }
 
     @Override
-    public List<SanPham> getDsSanPhamSmartPhone() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        List<SanPham> listProductFinal = new ArrayList<SanPham>();
-    
-        for(SanPham element : listProductTemp){
-            if(element.getPhanLoai().equals("Điện thoại di động")){
-                listProductFinal.add(element);
-            }
-        }
-
-        return listProductFinal;
+    public Iterable<SanPham> getDsSanPhamSmartPhone() {
+        log.info("Fetching san_pham with category {}", SMART_PHONE);
+        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(SMART_PHONE))
+                .collect(toList());
     }
 
     @Override
-    public List<SanPham> getDsSanPhamTablet() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        List<SanPham> listProductFinal = new ArrayList<SanPham>();
-    
-        for(SanPham element : listProductTemp){
-            if(element.getPhanLoai().equals("Máy tính bảng")){
-                listProductFinal.add(element);
-            }
-        }
-
-        return listProductFinal;
+    public Iterable<SanPham> getDsSanPhamTablet() {
+        log.info("Fetching san_pham with category {}", TABLET);
+        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(TABLET))
+                .collect(toList());
     }
 
     @Override
-    public List<SanPham> getDsSanPhamDevices() {
-        // TODO Auto-generated method stub
-        List<SanPham> listProductTemp = sanPhamRepository.findAll();
-        List<SanPham> listProductFinal = new ArrayList<SanPham>();
-    
-        for(SanPham element : listProductTemp){
-            if(element.getPhanLoai().equals("Thiết bị ngoại vi")){
-                listProductFinal.add(element);
-            }
-        }
-
-        return listProductFinal;
+    public Iterable<SanPham> getDsSanPhamDevices() {
+        log.info("Fetching san_pham with category {}", DEVICES);
+        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(DEVICES))
+                .collect(toList());
     }
 }

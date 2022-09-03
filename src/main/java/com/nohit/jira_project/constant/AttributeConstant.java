@@ -1,9 +1,6 @@
 package com.nohit.jira_project.constant;
 
 public class AttributeConstant {
-    public static final String ACCESS_TOKEN_KEY = "access_token";
-    public static final String REFRESH_TOKEN_KEY = "refresh_token";
-
     // Prefixs
     public static final String AVATAR_PREFIX = "avatar_";
     public static final String TOKEN_PREFIX = "Bearer ";
@@ -12,6 +9,8 @@ public class AttributeConstant {
     public static final String FORWARD_PREFIX = "forward:";
 
     // Keys
+    public static final String ACCESS_TOKEN_KEY = "access_token";
+    public static final String REFRESH_TOKEN_KEY = "refresh_token";
     public static final String ROLE_CLAIM_KEY = "roles";
     public static final String ERROR_HEADER_KEY = "errors";
     public static final String ERROR_MESSAGE_KEY = "error_messages";
@@ -19,14 +18,4 @@ public class AttributeConstant {
     // Message
     public static final String FLAG_MSG_PARAM = "flag";
     public static final String MSG_PARAM = "msg";
-
-    // TODO
-    public static final String USER_PARAM = "user"; // Marked user in setObject (to return to View)
-    public static final String PRODUCTS_PARAM = "products";
-    public static final String NEWEST_PRODUCTS_PARAM = "newProducts";
-    public static final String SOME_PRODUCTS_PARAM = "some_products";
-    public static final String SOME_NEWEST_PRODUCTS_PARAM = "some_newProducts";
-    public static final String SOME_TOP_SALE_PRODUCTS_PARAM = "some_topsaleProducts";
-    
-
 }

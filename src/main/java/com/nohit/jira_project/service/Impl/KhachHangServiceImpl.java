@@ -1,7 +1,6 @@
 package com.nohit.jira_project.service.Impl;
 
 import java.io.*;
-import java.util.*;
 
 import javax.mail.*;
 import javax.transaction.*;
@@ -56,7 +55,7 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     }
 
     @Override
-    public List<KhachHang> getDsKhachHang() {
+    public Iterable<KhachHang> getDsKhachHang() {
         log.info("Fetching all khach_hang");
         return khachHangRepository.findAll();
     }

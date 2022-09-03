@@ -15,8 +15,7 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Controller
 @RequestMapping(CATEGORY_VIEW)
-public class LoaiSanPhamController {
-
+public class PhanLoaiController {
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
@@ -31,51 +30,39 @@ public class LoaiSanPhamController {
     private boolean mIsMsgShow;
 
     // Load category
-    @GetMapping(value = {""})
+    @GetMapping(value = { "" })
     public ModelAndView category() {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(CATEGORY_TEMP);
-        mav.addObject(USER_PARAM, mCurrentAccount);
-        mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
+        mav.addObject("user", mCurrentAccount);
+        mav.addObject("products", productService.getDsSanPham());
         mIsByPass = false;
         return mav;
     }
 
     // Load top sale products
-    @GetMapping(value = {"/sort"})
+    @GetMapping(value = { "/sort" })
     public ModelAndView topsaleProduct(@RequestParam("sort") String criteria) {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(CATEGORY_TEMP);
-        mav.addObject(USER_PARAM, mCurrentAccount);
-        if(criteria.equals("pc")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamComputer());
-        } else if (criteria.equals("devices")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamDevices());
-        } else if (criteria.equals("laptop")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamLaptop());
-        } else if (criteria.equals("smartphone")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamSmartPhone());
-        } else if (criteria.equals("tablet")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamTablet());
-        } else{
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
+        mav.addObject("user", mCurrentAccount);
+        if (criteria.equals("pc")) {
+            mav.addObject("products", productService.getDsSanPhamComputer());
+        } else if (criteria.equals("devices")) {
+            mav.addObject("products", productService.getDsSanPhamDevices());
+        } else if (criteria.equals("laptop")) {
+            mav.addObject("products", productService.getDsSanPhamLaptop());
+        } else if (criteria.equals("smartphone")) {
+            mav.addObject("products", productService.getDsSanPhamSmartPhone());
+        } else if (criteria.equals("tablet")) {
+            mav.addObject("products", productService.getDsSanPhamTablet());
+        } else {
+            mav.addObject("products", productService.getDsSanPham());
         }
-        
         mIsByPass = false;
         return mav;
-    }
-    
-    // Re-check choosen one
-    private boolean isAliveChoosenOne() {
-        // check the project has been declared
-        if (mChoosenOne == null) {
-            return false;
-        } else {
-            mChoosenOne = productService.getSanPham(mChoosenOne.getId());
-            return mChoosenOne != null;
-        }
     }
 
     // Check valid account

@@ -1,11 +1,9 @@
 package com.nohit.jira_project.service;
 
-import java.util.*;
-
 import com.nohit.jira_project.model.*;
 
 public interface CreditCardService {
-    public List<CreditCard> getDsCreditCard();
+    public Iterable<CreditCard> getDsCreditCard();
 
     public CreditCard getCreditCard(int id);
 

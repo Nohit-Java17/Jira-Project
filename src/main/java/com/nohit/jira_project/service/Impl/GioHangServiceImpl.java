@@ -1,7 +1,5 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -18,7 +16,7 @@ public class GioHangServiceImpl implements GioHangService {
     private GioHangRepository gioHangRepository;
 
     @Override
-    public List<GioHang> getDsGioHang() {
+    public Iterable<GioHang> getDsGioHang() {
         log.info("Fetching all gio_hang");
         return gioHangRepository.findAll();
     }

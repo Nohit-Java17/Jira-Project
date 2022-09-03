@@ -1,7 +1,5 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -18,7 +16,7 @@ public class DonHangServiceImpl implements DonHangService {
     private DonHangRepository donHangRepository;
 
     @Override
-    public List<DonHang> getDsDonHang() {
+    public Iterable<DonHang> getDsDonHang() {
         log.info("Fetching all don_hang");
         return donHangRepository.findAll();
     }

@@ -36,12 +36,12 @@ public class IndexController {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(INDEX_TEMP);
-        mav.addObject(USER_PARAM, mCurrentAccount);
-        mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
-        mav.addObject(NEWEST_PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder());
-        mav.addObject(SOME_PRODUCTS_PARAM, productService.getDsSanPhamAscendingPriceOrder().subList(0, 3));
-        mav.addObject(SOME_NEWEST_PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder().subList(0, 3));
-        mav.addObject(SOME_TOP_SALE_PRODUCTS_PARAM, productService.getDsSanPhamTopSale().subList(0, 3));
+        mav.addObject("user", mCurrentAccount);
+        mav.addObject("products", productService.getDsSanPham());
+        mav.addObject("newProducts", productService.getDsSanPhamNewestOrder());
+        mav.addObject("some_products", productService.getDsSanPhamAscendingPriceOrder().subList(0, 3));
+        mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 3));
+        mav.addObject("some_topsaleProducts", productService.getDsSanPhamTopSale().subList(0, 3));
         mIsByPass = false;
         return mav;
     }

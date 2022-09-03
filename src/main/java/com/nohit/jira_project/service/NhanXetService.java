@@ -1,11 +1,9 @@
 package com.nohit.jira_project.service;
 
-import java.util.*;
-
 import com.nohit.jira_project.model.*;
 
 public interface NhanXetService {
-    public List<NhanXet> getDsNhanXet();
+    public Iterable<NhanXet> getDsNhanXet();
 
     public NhanXet getNhanXet(int id);
 

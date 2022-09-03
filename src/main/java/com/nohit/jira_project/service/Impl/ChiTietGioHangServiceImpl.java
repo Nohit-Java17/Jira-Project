@@ -1,7 +1,5 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -18,7 +16,7 @@ public class ChiTietGioHangServiceImpl implements ChiTietGioHangService {
     private ChiTietGioHangRepository chiTietGioHangRepository;
 
     @Override
-    public List<ChiTietGioHang> getDsChiTietGioHang() {
+    public Iterable<ChiTietGioHang> getDsChiTietGioHang() {
         log.info("Fetching all chi_tiet_gio_hang");
         return chiTietGioHangRepository.findAll();
     }

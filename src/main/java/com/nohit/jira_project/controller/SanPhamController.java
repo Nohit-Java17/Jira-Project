@@ -36,8 +36,8 @@ public class SanPhamController {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(PRODUCT_TEMP);
-        mav.addObject(USER_PARAM, mCurrentAccount);
-        mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
+        mav.addObject("user", mCurrentAccount);
+        mav.addObject("products", productService.getDsSanPham());
         mIsByPass = false;
         return mav;
     }
@@ -48,17 +48,17 @@ public class SanPhamController {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(PRODUCT_TEMP);
-        mav.addObject(USER_PARAM, mCurrentAccount);
+        mav.addObject("user", mCurrentAccount);
         if(criteria.equals("topSale")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamTopSale());
+            mav.addObject("products", productService.getDsSanPhamTopSale());
         } else if (criteria.equals("newOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder());
+            mav.addObject("products", productService.getDsSanPhamNewestOrder());
         } else if (criteria.equals("ascendingPriceOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamAscendingPriceOrder());
+            mav.addObject("products", productService.getDsSanPhamAscendingPriceOrder());
         } else if (criteria.equals("descendingPriceOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamDescendingPriceOrder());
+            mav.addObject("products", productService.getDsSanPhamDescendingPriceOrder());
         } else{
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
+            mav.addObject("products", productService.getDsSanPham());
         }
         
         mIsByPass = false;
