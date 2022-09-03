@@ -1,10 +1,10 @@
 package com.nohit.jira_project.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
 
-import com.nohit.jira_project.model.ChiTietGioHang;
+import com.nohit.jira_project.model.*;
 
 @Repository
-public interface ChiTietGioHangRepository extends JpaRepository<ChiTietGioHang, Integer>{
+public interface ChiTietGioHangRepository extends JpaRepository<ChiTietGioHang, Integer> {
 }

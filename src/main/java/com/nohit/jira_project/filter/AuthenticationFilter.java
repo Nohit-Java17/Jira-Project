@@ -30,7 +30,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     // Fields
     private final AuthenticationManager authenticationManager;
 
-    // Check login information
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
@@ -41,18 +40,15 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
-    // If login successfully then create token
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
         var user = (User) authResult.getPrincipal();
-
         // Algorithm to encode the secret key (to base64?)
         var algorithm = HMAC256(SECRET_KEY.getBytes());
         var tokens = new HashMap<>();
         var userName = user.getUsername();
         var requestUrl = request.getRequestURL().toString();
-
         // Create Token with params
         tokens.put(ACCESS_TOKEN_KEY,
                 create().withSubject(userName).withExpiresAt(new Date(currentTimeMillis() + EXPIRATION_TIME))

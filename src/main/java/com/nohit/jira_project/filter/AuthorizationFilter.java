@@ -32,7 +32,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         var servletPath = request.getServletPath();
-
         // Urls login vs refresh pass
         if (servletPath.equals(API_VIEW + LOGIN_VIEW) || servletPath.equals(API_VIEW + TOKEN_VIEW + REFRESH_VIEW)) {
             filterChain.doFilter(request, response);
@@ -46,7 +45,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     var decodedJwt = require(HMAC256(SECRET_KEY.getBytes())).build()
                             .verify(header.substring(TOKEN_PREFIX.length()));
                     var authorities = new ArrayList<SimpleGrantedAuthority>();
-
                     // Add role
                     stream(decodedJwt.getClaim(ROLE_CLAIM_KEY).asArray(String.class))
                             .forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));

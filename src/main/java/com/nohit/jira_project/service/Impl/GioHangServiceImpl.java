@@ -1,41 +1,43 @@
 package com.nohit.jira_project.service.Impl;
 
-import java.util.List;
+import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
-import com.nohit.jira_project.model.GioHang;
-import com.nohit.jira_project.repository.GioHangRepository;
-import com.nohit.jira_project.service.GioHangService;
+import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.repository.*;
+import com.nohit.jira_project.service.*;
+
+import lombok.extern.slf4j.*;
 
 @Service
-public class GioHangServiceImpl implements GioHangService{
-	@Autowired
-	GioHangRepository gioHangRepository;
-	
-	@Override
-	public List<GioHang> getDsGioHang() {
-		// TODO Auto-generated method stub
-		return gioHangRepository.findAll();
-	}
+@Slf4j
+public class GioHangServiceImpl implements GioHangService {
+    @Autowired
+    private GioHangRepository gioHangRepository;
 
-	@Override
-	public GioHang getGioHang(int id) {
-		// TODO Auto-generated method stub
-		return gioHangRepository.findById(id).orElse(null);
-	}
+    @Override
+    public List<GioHang> getDsGioHang() {
+        log.info("Fetching all gio_hang");
+        return gioHangRepository.findAll();
+    }
 
-	@Override
-	public void saveGioHang(GioHang gioHang) {
-		// TODO Auto-generated method stub
-		gioHangRepository.save(gioHang);
-	}
+    @Override
+    public GioHang getGioHang(int id) {
+        log.info("Fetching gio_hang with id {}", id);
+        return gioHangRepository.findById(id).orElse(null);
+    }
 
-	@Override
-	public void deleteGioHang(int id) {
-		// TODO Auto-generated method stub
-		gioHangRepository.deleteById(id);
-	}
+    @Override
+    public void saveGioHang(GioHang gioHang) {
+        log.info("Saving gio_hang with id: {}", gioHang.getId());
+        gioHangRepository.save(gioHang);
+    }
 
+    @Override
+    public void deleteGioHang(int id) {
+        log.info("Deleting gio_hang with id: {}", id);
+        gioHangRepository.deleteById(id);
+    }
 }

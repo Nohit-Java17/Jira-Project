@@ -9,32 +9,35 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
 
+import lombok.extern.slf4j.*;
+
 @Service
+@Slf4j
 public class DonHangServiceImpl implements DonHangService {
     @Autowired
     private DonHangRepository donHangRepository;
 
     @Override
     public List<DonHang> getDsDonHang() {
-        // TODO Auto-generated method stub
+        log.info("Fetching all don_hang");
         return donHangRepository.findAll();
     }
 
     @Override
     public DonHang getDonHang(int id) {
-        // TODO Auto-generated method stub
+        log.info("Fetching don_hang with id {}", id);
         return donHangRepository.findById(id).orElse(null);
     }
 
     @Override
     public void saveDonHang(DonHang donHang) {
-        // TODO Auto-generated method stub
+        log.info("Saving don_hang with id: {}", donHang.getId());
         donHangRepository.save(donHang);
     }
 
     @Override
     public void deleteDonHang(int id) {
-        // TODO Auto-generated method stub
+        log.info("Deleting don_hang with id: {}", id);
         donHangRepository.deleteById(id);
     }
 }
