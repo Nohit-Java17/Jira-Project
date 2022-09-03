@@ -71,6 +71,7 @@ public class ThongTinCaNhanController {
             mav.addObject("creditCard", creditCard);
             mav.addObject("gioHang", gioHang);
             mav.addObject("tongGioHang", format("%,d", gioHang.getTongGioHang()) + " ₫");
+            mav.addObject("login", mCurrentAccount != null);
             showMessageBox(mav);
             mIsByPass = false;
             return mav;
@@ -103,6 +104,7 @@ public class ThongTinCaNhanController {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
             mIsMsgShow = true;
+            // check valid password
             if (passwordEncoder.matches(oldPassword, mCurrentAccount.getMatKhau()) && rePassword.equals(newPassword)) {
                 mMsg = "Mật khẩu đã được cập nhật thành công!";
                 khachHangService.updatePassword(mCurrentAccount.getId(), newPassword);
