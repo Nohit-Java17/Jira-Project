@@ -24,8 +24,8 @@ public class SanPham {
     private String ten;
 
     @NonNull
-    @Column(name = "hinh_anh")
-    private String hinhAnh;
+    @Column(name = "album")
+    private String album;
 
     @NonNull
     @Column(name = "mo_ta")
