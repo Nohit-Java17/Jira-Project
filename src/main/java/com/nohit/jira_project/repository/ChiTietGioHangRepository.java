@@ -7,5 +7,4 @@ import com.nohit.jira_project.model.ChiTietGioHang;
 
 @Repository
 public interface ChiTietGioHangRepository extends JpaRepository<ChiTietGioHang, Integer>{
-
 }

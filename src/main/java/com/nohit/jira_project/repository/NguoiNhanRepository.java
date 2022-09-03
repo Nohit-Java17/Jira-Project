@@ -7,5 +7,4 @@ import com.nohit.jira_project.model.*;
 
 @Repository
 public interface NguoiNhanRepository extends JpaRepository<NguoiNhan, Integer> {
-
 }
