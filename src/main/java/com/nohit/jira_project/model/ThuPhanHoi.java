@@ -17,7 +17,6 @@ public class ThuPhanHoi {
     @Column(name = "id")
     private int id;
 
-    @NonNull
     @Column(name = "ho_ten")
     private String hoTen;
 

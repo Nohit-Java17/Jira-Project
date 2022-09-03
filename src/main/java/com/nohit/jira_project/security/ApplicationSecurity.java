@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
-import org.springframework.security.config.annotation.method.configuration.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.userdetails.*;
@@ -15,25 +14,11 @@ import org.springframework.security.web.savedrequest.*;
 import com.nohit.jira_project.filter.*;
 import com.nohit.jira_project.filter.AuthenticationFilter;
 
-// import org.springframework.beans.factory.annotation.*;
-// import org.springframework.context.annotation.*;
-// import org.springframework.security.authentication.*;
-// import org.springframework.security.config.annotation.authentication.builders.*;
-// import org.springframework.security.config.annotation.method.configuration.*;
-// import org.springframework.security.config.annotation.web.builders.*;
-// import org.springframework.security.config.annotation.web.configuration.*;
-// import org.springframework.security.core.userdetails.*;
-// import org.springframework.security.crypto.password.*;
-// import org.springframework.security.web.savedrequest.*;
-
-// import com.nohit.jira_project.filter.*;
-
 import static com.nohit.jira_project.constant.ApplicationConstant.Role.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -66,12 +51,15 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .and().authorizeHttpRequests()
                 // Khi vào link api login và refresh thì cho qua không cần Authen
 
-                .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW, 
-                REGISTER_VIEW, PRODUCT_VIEW, CATEGORY_VIEW, 
-                ABOUT_VIEW, CONTACT_VIEW, "css/**").permitAll()
+                .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW,
+                        REGISTER_VIEW, PRODUCT_VIEW, CATEGORY_VIEW,
+                        ABOUT_VIEW, CONTACT_VIEW, "css/**")
+                .permitAll()
 
                 // Khi vào link cart và checkout thì cần authen
-                .antMatchers(CART_VIEW, CART_VIEW + FREE_VIEW, CHECKOUT_VIEW, CHECKOUT_VIEW + FREE_VIEW, PROFILE_VIEW, PROFILE_VIEW + FREE_VIEW).hasRole(CLIENT)
+                .antMatchers(CART_VIEW, CART_VIEW + FREE_VIEW, CHECKOUT_VIEW, CHECKOUT_VIEW + FREE_VIEW, PROFILE_VIEW,
+                        PROFILE_VIEW + FREE_VIEW)
+                .hasRole(CLIENT)
                 .anyRequest().permitAll()
 
                 // Cho phép xác thực bằng login
@@ -83,17 +71,11 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 // UsernamePasswordAuthenticationFilter
                 .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-                
     }
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public AuthorizationFilter authorizationFilter() {
-        return new AuthorizationFilter();
     }
 }

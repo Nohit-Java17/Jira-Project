@@ -10,6 +10,16 @@ CREATE DATABASE IF NOT EXISTS jira_project;
 
 USE jira_project;
 
+-- create table tinh_thanh
+
+CREATE TABLE
+    IF NOT EXISTS tinh_thanh(
+        id INT NOT NULL AUTO_INCREMENT,
+        ten NVARCHAR(50) NOT NULL,
+        chi_phi_van_chuyen INT NOT NULL,
+        PRIMARY KEY (id)
+    );
+
 -- create table khach_hang
 
 CREATE TABLE
@@ -22,9 +32,10 @@ CREATE TABLE
         dia_chi NVARCHAR(100),
         xa_phuong NVARCHAR(50),
         huyen_quan NVARCHAR(50),
-        tinh_thanh NVARCHAR(50),
+        id_tinh_thanh INT,
         vai_tro NVARCHAR(10),
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        FOREIGN KEY (id_tinh_thanh) REFERENCES tinh_thanh(id)
     );
 
 -- create table credit_card
@@ -107,9 +118,10 @@ CREATE TABLE
         dia_chi NVARCHAR(100) NOT NULL,
         xa_phuong NVARCHAR(50) NOT NULL,
         huyen_quan NVARCHAR(50) NOT NULL,
-        tinh_thanh NVARCHAR(50) NOT NULL,
+        id_tinh_thanh INT NOT NULL,
         ghi_chu TEXT,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        FOREIGN KEY (id_tinh_thanh) REFERENCES tinh_thanh(id)
     );
 
 -- create table don_hang
@@ -146,27 +158,23 @@ CREATE TABLE
         FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
 
--- create table phi_van_chuyen
-
-CREATE TABLE
-    IF NOT EXISTS phi_van_chuyen(
-        id INT NOT NULL AUTO_INCREMENT,
-        tinh_thanh NVARCHAR(50) NOT NULL,
-        chi_phi_van_chuyen INT NOT NULL,
-        PRIMARY KEY (id)
-    );
-
 -- create table thu_phan_hoi
 
 CREATE TABLE
     IF NOT EXISTS thu_phan_hoi(
         id INT NOT NULL AUTO_INCREMENT,
-        ho_ten NVARCHAR(50) NOT NULL,
+        ho_ten NVARCHAR(50),
         thu_dien_tu NVARCHAR(50) NOT NULL,
         chu_de NVARCHAR(20),
         noi_dung TEXT,
         PRIMARY KEY (id)
     );
+
+-- add data to phi_van_chuyen
+
+INSERT INTO
+    tinh_thanh (ten, chi_phi_van_chuyen)
+VALUES ('An Giang', 20000), ('Bạc Liêu', 27000), ('Bắc Giang', 44000), ('Bắc Kạn', 47000), ('Bắc Ninh', 54000), ('Bến Tre', 16000), ('Bình Dương', 5000), ('Bình Định', 15000), ('Bình Phước', 3000), ('Bình Thuận', 7000), ('Cà Mau', 28000), ('Cao Bằng', 49000), ('Cần Thơ', 24000), ('Đà Nẵng', 20000), ('Đắk Lắk', 6000), ('Đắk Nông', 5000), ('Điện Biên', 38000), ('Đồng Nai', 6000), ('Đồng Tháp', 11000), ('Gia Lai', 8000), ('Hà Giang', 50000), ('Hà Nam', 52000), ('Hà Nội', 56000), ('Hà Tĩnh', 24000), ('Hải Dương', 67000), ('Hải Phòng', 65000), ('Hậu Giang', 25000), ('Hòa Bình', 34000), ('Hồ Chí Minh', 0), ('Hưng Yên', 53000), ('Khánh Hòa', 13000), ('Kiên Giang', 21000), ('Kon Tum', 10000), ('Lai Châu', 40000), ('Lạng Sơn', 45000), ('Lào Cai', 39000), ('Lâm Đồng', 4000), ('Long An', 12000), ('Nam Định', 63000), ('Nghệ An', 27000), ('Ninh Bình', 62000), ('Ninh Thuận', 11000), ('Phú Thọ', 35000), ('Phú Yên', 14000), ('Quảng Bình', 23000), ('Quảng Nam', 18000), ('Quảng Ngãi', 16000), ('Quảng Ninh', 68000), ('Quảng Trị', 22000), ('Sóc Trăng', 26000), ('Sơn La', 36000), ('Tây Ninh', 10000), ('Thái Bình', 64000), ('Thái Nguyên', 46000), ('Thanh Hóa', 28000), ('Thừa Thiên Huế', 21000), ('Tiền Giang', 14000), ('Trà Vinh', 17000), ('Tuyên Quang', 48000), ('Vĩnh Long', 15000), ('Vĩnh Phúc', 55000), ('Vũng Tàu', 8000), ('Yên Bái', 37000);
 
 -- add data to khach_hang
 
@@ -179,7 +187,7 @@ INSERT INTO
         dia_chi,
         xa_phuong,
         huyen_quan,
-        tinh_thanh,
+        id_tinh_thanh,
         vai_tro
     )
 VALUES (
@@ -191,7 +199,7 @@ VALUES (
         '459 đường Sư Vạn Hạnh',
         'P.12',
         'Q.10',
-        'Hồ Chí Minh',
+        29,
         'client'
     );
 
@@ -536,7 +544,7 @@ INSERT INTO
         dia_chi,
         xa_phuong,
         huyen_quan,
-        tinh_thanh,
+        id_tinh_thanh,
         ghi_chu
     )
 VALUES (
@@ -545,7 +553,7 @@ VALUES (
         '103 đường Nguyễn Hữu Dật',
         'P.Hoà Cường Bắc',
         'Q.Hải Châu',
-        'Đà Nẵng',
+        14,
         'Hàng dễ vỡ'
     ), (
         'Nguyễn Văn A',
@@ -553,7 +561,7 @@ VALUES (
         '459 đường Sư Vạn Hạnh',
         'P.12',
         'Q.10',
-        'Hồ Chí Minh',
+        29,
         NULL
     );
 
@@ -600,15 +608,6 @@ VALUES (
 
 INSERT INTO chi_tiet_don_hang
 VALUES (1, 1, 2, 47790000, 95580000), (1, 2, 1, 24244000, 24244000), (2, 16, 1, 64990000, 64990000);
-
--- add data to phi_van_chuyen
-
-INSERT INTO
-    phi_van_chuyen (
-        tinh_thanh,
-        chi_phi_van_chuyen
-    )
-VALUES ('An Giang', 20000), ('Bạc Liêu', 27000), ('Bắc Giang', 44000), ('Bắc Kạn', 47000), ('Bắc Ninh', 54000), ('Bến Tre', 16000), ('Bình Dương', 5000), ('Bình Định', 15000), ('Bình Phước', 3000), ('Bình Thuận', 7000), ('Cà Mau', 28000), ('Cao Bằng', 49000), ('Cần Thơ', 24000), ('Đà Nẵng', 20000), ('Đắk Lắk', 6000), ('Đắk Nông', 5000), ('Điện Biên', 38000), ('Đồng Nai', 6000), ('Đồng Tháp', 11000), ('Gia Lai', 8000), ('Hà Giang', 50000), ('Hà Nam', 52000), ('Hà Nội', 56000), ('Hà Tĩnh', 24000), ('Hải Dương', 67000), ('Hải Phòng', 65000), ('Hậu Giang', 25000), ('Hòa Bình', 34000), ('Hồ Chí Minh', 0), ('Hưng Yên', 53000), ('Khánh Hòa', 13000), ('Kiên Giang', 21000), ('Kon Tum', 10000), ('Lai Châu', 40000), ('Lạng Sơn', 45000), ('Lào Cai', 39000), ('Lâm Đồng', 4000), ('Long An', 12000), ('Nam Định', 63000), ('Nghệ An', 27000), ('Ninh Bình', 62000), ('Ninh Thuận', 11000), ('Phú Thọ', 35000), ('Phú Yên', 14000), ('Quảng Bình', 23000), ('Quảng Nam', 18000), ('Quảng Ngãi', 16000), ('Quảng Ninh', 68000), ('Quảng Trị', 22000), ('Sóc Trăng', 26000), ('Sơn La', 36000), ('Tây Ninh', 10000), ('Thái Bình', 64000), ('Thái Nguyên', 46000), ('Thanh Hóa', 28000), ('Thừa Thiên Huế', 21000), ('Tiền Giang', 14000), ('Trà Vinh', 17000), ('Tuyên Quang', 48000), ('Vĩnh Long', 15000), ('Vĩnh Phúc', 55000), ('Vũng Tàu', 8000), ('Yên Bái', 37000);
 
 -- add data to thu_phan_hoi
 
