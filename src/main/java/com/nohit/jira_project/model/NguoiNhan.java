@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
 @Entity(name = "nguoi_nhan")
@@ -36,15 +37,18 @@ public class NguoiNhan {
     private String xaPhuong;
 
     @NonNull
-    @Column(name = "quan_huyen")
-    private String quanHuyen;
+    @Column(name = "huyen_quan")
+    private String huyenQuan;
 
-    @NonNull
-    @Column(name = "tinh_thanh")
-    private String tinhThanh;
+    @Column(name = "id_tinh_thanh")
+    private int idTinhThanh;
 
     @Column(name = "ghi_chu")
     private String ghiChu;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "id_tinh_thanh", referencedColumnName = "id", insertable = false, updatable = false)
+    private TinhThanh tinhThanh;
 
     @OneToMany(mappedBy = "nguoiNhan")
     private List<DonHang> dsDonHang;

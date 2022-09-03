@@ -37,13 +37,13 @@
                 <div class="user-menu">
                     <ul>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 <i class="fa fa-shopping-cart"></i>
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 <i class="fa fa-credit-card"></i>
                                 Thanh toán
                             </a>
@@ -51,18 +51,23 @@
                         <li>
                             <div class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-user"></i>
-                                    Họ và tên
+                                    <i th:text="${khachHang.hoTen}" class="fa fa-user"></i>
+                                    Đăng nhập
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/profile}">
                                             Thông tin cá nhân
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/history}">
+                                            Lịch sử mua hàng
                                         </a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/logout}">
                                             Đăng xuất
                                         </a>
                                     </li>
@@ -80,7 +85,7 @@
                 <div class="col-sm-6">
                     <div class="logo">
                         <h1>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 nohit
                                 <span>
                                     Electronics
@@ -91,13 +96,13 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">
+                        <a th:href="@{/cart}">
                             Giỏ -
-                            <span class="cart-amunt">
+                            <span th:text="${tongGioHang}" class="cart-amunt">
                                 64.990.000 ₫
                             </span>
                             <i class="fa fa-shopping-cart"></i>
-                            <span class="product-count">
+                            <span th:text="${gioHang.tongSoLuong}" class="product-count">
                                 1
                             </span>
                         </a>
@@ -122,42 +127,42 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 Trang chủ
                             </a>
                         </li>
                         <li>
-                            <a href="product.html">
+                            <a th:href="@{/product}">
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="category.html">
+                            <a th:href="@{/category}">
                                 Phân Loại
                             </a>
                         </li>
                         <li>
-                            <a href="detail.html">
+                            <a th:href="@{/detail}">
                                 Chi tiết
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 Thanh toán
                             </a>
                         </li>
                         <li>
-                            <a href="about.html">
+                            <a th:href="@{/about}">
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="contact.html">
+                            <a th:href="@{/contact}">
                                 Liên hệ
                             </a>
                         </li>
@@ -190,7 +195,7 @@
                                 <div class="col-1-ex">
                                     <div class="woocommerce-billing-fields">
                                         <div class="col-md-12">
-                                            <form action="#">
+                                            <form th:action="@{/profile/info}" method="put">
                                                 <div class="row">
                                                     <h2 class="sidebar-title">
                                                         Thông tin cơ bản
@@ -206,8 +211,8 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập họ và tên"
-                                                            id="billing_first_name" name="billing_first_name"
-                                                            class="input-text" required>
+                                                            th:value="${khachHang.hoTen}" id="billing_first_name"
+                                                            name="hoTen" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p id="billing_address_1_field"
@@ -221,8 +226,8 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập địa chỉ"
-                                                            id="billing_address_1" name="billing_address_1"
-                                                            class="input-text" required>
+                                                            th:value="${khachHang.diaChi}" id="billing_address_1"
+                                                            name="diaChi" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p id="billing_city_field"
@@ -235,9 +240,9 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input type="text" value="" placeholder="Nhập Huyện / Quận"
-                                                            id="billing_city" name="billing_city" class="input-text"
-                                                            required>
+                                                        <input type="text" value="" placeholder="Nhập Xã / Phường"
+                                                            th:value="${khachHang.xaPhuong}" id="billing_city"
+                                                            name="xaPhuong" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p id="billing_city_field"
@@ -252,8 +257,8 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập Huyện / Quận"
-                                                            id="billing_city" name="billing_city" class="input-text"
-                                                            required>
+                                                            th:value="${khachHang.huyenQuan}" id="billing_city"
+                                                            name="huyenQuan" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p id="billing_country_field"
@@ -267,195 +272,10 @@
                                                             </abbr>
                                                         </label>
                                                         <select class="country_to_state country_select"
-                                                            id="billing_country" name="billing_country">
-                                                            <option value="AG">
-                                                                An Giang
-                                                            </option>
-                                                            <option value="BL">
-                                                                Bạc Liêu
-                                                            </option>
-                                                            <option value="BG">
-                                                                Bắc Giang
-                                                            </option>
-                                                            <option value="BK">
-                                                                Bắc Kạn
-                                                            </option>
-                                                            <option value="BN">
-                                                                Bắc Ninh
-                                                            </option>
-                                                            <option value="BE">
-                                                                Bến Tre
-                                                            </option>
-                                                            <option value="BD">
-                                                                Bình Dương
-                                                            </option>
-                                                            <option value="BH">
-                                                                Bình Định
-                                                            </option>
-                                                            <option value="BP">
-                                                                Bình Phước
-                                                            </option>
-                                                            <option value="BT">
-                                                                Bình Thuận
-                                                            </option>
-                                                            <option value="CM">
-                                                                Cà Mau
-                                                            </option>
-                                                            <option value="CB">
-                                                                Cao Bằng
-                                                            </option>
-                                                            <option value="CT">
-                                                                Cần Thơ
-                                                            </option>
-                                                            <option value="DN">
-                                                                Đà Nẵng
-                                                            </option>
-                                                            <option value="DL">
-                                                                Đắk Lắk
-                                                            </option>
-                                                            <option value="DG">
-                                                                Đắk Nông
-                                                            </option>
-                                                            <option value="DB">
-                                                                Điện Biên
-                                                            </option>
-                                                            <option value="DI">
-                                                                Đồng Nai
-                                                            </option>
-                                                            <option value="DT">
-                                                                Đồng Tháp
-                                                            </option>
-                                                            <option value="GL">
-                                                                Gia Lai
-                                                            </option>
-                                                            <option value="HG">
-                                                                Hà Giang
-                                                            </option>
-                                                            <option value="HN">
-                                                                Hà Nam
-                                                            </option>
-                                                            <option value="HI">
-                                                                Hà Nội
-                                                            </option>
-                                                            <option value="HT">
-                                                                Hà Tĩnh
-                                                            </option>
-                                                            <option value="HD">
-                                                                Hải Dương
-                                                            </option>
-                                                            <option value="HP">
-                                                                Hải Phòng
-                                                            </option>
-                                                            <option value="UG">
-                                                                Hậu Giang
-                                                            </option>
-                                                            <option value="HB">
-                                                                Hòa Bình
-                                                            </option>
-                                                            <option value="SG" selected>
-                                                                Hồ Chí Minh
-                                                            </option>
-                                                            <option value="HY">
-                                                                Hưng Yên
-                                                            </option>
-                                                            <option value="KH">
-                                                                Khánh Hòa
-                                                            </option>
-                                                            <option value="KG">
-                                                                Kiên Giang
-                                                            </option>
-                                                            <option value="KT">
-                                                                Kon Tum
-                                                            </option>
-                                                            <option value="LC">
-                                                                Lai Châu
-                                                            </option>
-                                                            <option value="LS">
-                                                                Lạng Sơn
-                                                            </option>
-                                                            <option value="LI">
-                                                                Lào Cai
-                                                            </option>
-                                                            <option value="LD">
-                                                                Lâm Đồng
-                                                            </option>
-                                                            <option value="LA">
-                                                                Long An
-                                                            </option>
-                                                            <option value="ND">
-                                                                Nam Định
-                                                            </option>
-                                                            <option value="NA">
-                                                                Nghệ An
-                                                            </option>
-                                                            <option value="NB">
-                                                                Ninh Bình
-                                                            </option>
-                                                            <option value="NT">
-                                                                Ninh Thuận
-                                                            </option>
-                                                            <option value="PT">
-                                                                Phú Thọ
-                                                            </option>
-                                                            <option value="PY">
-                                                                Phú Yên
-                                                            </option>
-                                                            <option value="QB">
-                                                                Quảng Bình
-                                                            </option>
-                                                            <option value="QN">
-                                                                Quảng Nam
-                                                            </option>
-                                                            <option value="QI">
-                                                                Quảng Ngãi
-                                                            </option>
-                                                            <option value="QH">
-                                                                Quảng Ninh
-                                                            </option>
-                                                            <option value="QT">
-                                                                Quảng Trị
-                                                            </option>
-                                                            <option value="ST">
-                                                                Sóc Trăng
-                                                            </option>
-                                                            <option value="SL">
-                                                                Sơn La
-                                                            </option>
-                                                            <option value="TN">
-                                                                Tây Ninh
-                                                            </option>
-                                                            <option value="TB">
-                                                                Thái Bình
-                                                            </option>
-                                                            <option value="IN">
-                                                                Thái Nguyên
-                                                            </option>
-                                                            <option value="TH">
-                                                                Thanh Hóa
-                                                            </option>
-                                                            <option value="TT">
-                                                                Thừa Thiên Huế
-                                                            </option>
-                                                            <option value="TG">
-                                                                Tiền Giang
-                                                            </option>
-                                                            <option value="TV">
-                                                                Trà Vinh
-                                                            </option>
-                                                            <option value="TQ">
-                                                                Tuyên Quang
-                                                            </option>
-                                                            <option value="VL">
-                                                                Vĩnh Long
-                                                            </option>
-                                                            <option value="VP">
-                                                                Vĩnh Phúc
-                                                            </option>
-                                                            <option value="VT">
-                                                                Vũng Tàu
-                                                            </option>
-                                                            <option value="YB">
-                                                                Yên Bái
+                                                            id="billing_country" name="idTinhThanh">
+                                                            <option th:each="tinhThanh : ${dsTinhThanh}"
+                                                                th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
+                                                                th:selected="${tinhThanh.id}==${khachHang.idTinhThanh}">
                                                             </option>
                                                         </select>
                                                     </p>
@@ -470,7 +290,7 @@
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập số điện thoại"
                                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                                            id="billing_phone" name="billing_phone" class="input-text"
+                                                            id="billing_phone" name="soDienThoai" class="input-text"
                                                             required>
                                                     </p>
                                                     <div class="clear"></div>
@@ -492,7 +312,7 @@
                                 <div class="col-2-ex">
                                     <div class="woocommerce-shipping-fields">
                                         <div class="password-update">
-                                            <form action="#">
+                                            <form th:action="@{/profile/password}" method="post">
                                                 <div class="row">
                                                     <h2 class="col-md-12 sidebar-title">
                                                         Cập nhật mật khẩu
@@ -506,9 +326,9 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="password"
+                                                        <input id="cc-payment" name="oldPassword" type="password"
                                                             class="form-control" aria-required="true"
-                                                            aria-invalid="false" value="" required>
+                                                            aria-invalid="false" required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p class="col-md-6" id="billing_address_1_field"
@@ -519,9 +339,9 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="password"
+                                                        <input id="cc-payment" name="newPassword" type="password"
                                                             class="form-control" aria-required="true"
-                                                            aria-invalid="false" value="" required>
+                                                            aria-invalid="false" required>
                                                     </p>
                                                     <p class="col-md-6" id="billing_city_field"
                                                         class="form-row form-row-wide address-field validate-required"
@@ -532,9 +352,9 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="password"
+                                                        <input id="cc-payment" name="rePassword" type="password"
                                                             class="form-control" aria-required="true"
-                                                            aria-invalid="false" value="" required>
+                                                            aria-invalid="false" required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <div class="col-md-12">
@@ -551,7 +371,7 @@
                                             </form>
                                         </div>
                                         <div>
-                                            <form action="#">
+                                            <form th:action="@{/profile/card}" method="post">
                                                 <div class="row">
                                                     <h2 class="col-md-12 sidebar-title">
                                                         Thanh toán qua thẻ
@@ -565,9 +385,10 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="text"
+                                                        <input id="cc-payment" name="nameOnCard" type="text"
                                                             class="form-control" aria-required="true"
-                                                            aria-invalid="false" value="" required>
+                                                            aria-invalid="false" th:value="${creditCard.nameOnCard}"
+                                                            required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p class="col-md-12" id="billing_first_name_field"
@@ -578,10 +399,11 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="text"
+                                                        <input id="cc-payment" name="cardNumber" type="text"
                                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                             class="form-control" aria-required="true"
-                                                            aria-invalid="false" value="" required>
+                                                            aria-invalid="false" th:value="${creditCard.cardNumber}"
+                                                            required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <p class="col-md-6" id="billing_address_1_field"
@@ -592,9 +414,10 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="text"
+                                                        <input id="cc-payment" name="expiration" type="text"
                                                             placeholder="MM / YY" class="form-control"
-                                                            aria-required="true" aria-invalid="false" value="" required>
+                                                            aria-required="true" aria-invalid="false"
+                                                            th:value="${creditCard.expiration}" required>
                                                     </p>
                                                     <p class="col-md-6" id="billing_address_1_field"
                                                         class="form-row form-row-wide address-field validate-required">
@@ -604,10 +427,11 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input id="cc-payment" name="cc-payment" type="password"
+                                                        <input id="cc-payment" name="securityCode" type="password"
                                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                             class="form-control" aria-required="true"
-                                                            aria-invalid="false" value="" required>
+                                                            aria-invalid="false" th:value="${creditCard.securityCode}"
+                                                            required>
                                                     </p>
                                                     <div class="clear"></div>
                                                     <div class="col-md-12">
@@ -672,22 +496,22 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="profile.html">
+                                <a th:href="@{/profile}">
                                     Tài khoản cá nhân
                                 </a>
                             </li>
                             <li>
-                                <a href="history.html">
-                                    Lịch sử đặt hàng
+                                <a th:href="@{/history}">
+                                    Lịch sử mua hàng
                                 </a>
                             </li>
                             <li>
-                                <a href="favorite.html">
+                                <a th:href="@{/about}">
                                     Giới thiệu về trang
                                 </a>
                             </li>
                             <li>
-                                <a href="contact.html">
+                                <a th:href="@{/contact}">
                                     Liên hệ nhà cung cấp
                                 </a>
                             </li>
@@ -743,7 +567,7 @@
                             bất kỳ nơi nào khác ngay trong hộp thư đến của bạn!
                         </p>
                         <div class="newsletter-form">
-                            <form action="#">
+                            <form th:action="@{/contact/feedback}" method="post">
                                 <input type="email" placeholder="Nhập thư điện tử" required>
                                 <input type="submit" value="Đăng ký" class="btn-sub pull-right">
                             </form>

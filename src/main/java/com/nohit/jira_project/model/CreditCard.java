@@ -17,16 +17,16 @@ public class CreditCard {
     private int id;
 
     @Column(name = "name_on_card")
-    private int nameOnCard;
+    private String nameOnCard;
 
     @Column(name = "card_number")
-    private int cardNumber;
+    private String cardNumber;
 
     @Column(name = "expiration")
-    private int expiration;
+    private String expiration;
 
     @Column(name = "security_code")
-    private int securityCode;
+    private String securityCode;
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)

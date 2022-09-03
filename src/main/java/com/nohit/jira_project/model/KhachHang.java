@@ -40,14 +40,18 @@ public class KhachHang {
     @Column(name = "xa_phuong")
     private String xaPhuong;
 
-    @Column(name = "quan_huyen")
-    private String quanHuyen;
+    @Column(name = "huyen_quan")
+    private String huyenQuan;
 
-    @Column(name = "tinh_thanh")
-    private String tinhThanh;
+    @Column(name = "id_tinh_thanh")
+    private int idTinhThanh;
 
     @Column(name = "vai_tro")
     private String vaiTro;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "id_tinh_thanh", referencedColumnName = "id", insertable = false, updatable = false)
+    private TinhThanh tinhThanh;
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
