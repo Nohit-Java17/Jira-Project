@@ -223,35 +223,36 @@
                 </div>
                 <div class="col-lg-9 tab-content">
                     <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="single-shop-product">
-                                <div class="product-upper">
-                                    <img src="img/191005936/0.jpg" alt="">
-                                </div>
-                                <h2>
-                                    <a href="">
-                                        Bàn phím cơ Logitech Gaming G813
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        3.289.000 ₫
-                                    </ins>
-                                    <del>
-                                        4.699.000 ₫
-                                    </del>
-                                </div>
-                                <div class="product-option-shop">
-                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                        data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">
-                                        Thêm vào giỏ
-                                    </a>
+                            <div th:each="element: ${products}" class="col-md-3 col-sm-6">
+                                <div class="single-shop-product">
+                                    <div class="product-upper">
+                                        <img src="img/191005936/0.jpg" alt="">
+                                        <!-- <img th:src="@{${'/img/' + element.hinhAnh + '/0.jpg'}}" alt=""> -->
+                                    </div>
+                                    <h2>
+                                        <a th:text="${element.ten}" href="">
+                                            Bàn phím cơ Logitech Gaming G813
+                                        </a>
+                                    </h2>
+                                    <div class="product-carousel-price">
+                                        <ins th:text="${element.giamGia}">
+                                            3.289.000 ₫
+                                        </ins>
+                                        <del th:text="${element.giaGoc}">
+                                            4.699.000 ₫
+                                        </del>
+                                    </div>
+                                    <div class="product-option-shop">
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                                            data-product_id="70" rel="nofollow" th:href="@{/canvas/shop/?add-to-cart={id}(id=${element.id})}">
+                                            Thêm vào giỏ
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
                     </div>
-                    <div class="row">
+                    <!-- Dư tg sẽ làm tiếp :(( -->
+                    <!-- <div class="row">
                         <div class="col-md-12">
                             <div class="product-pagination text-center">
                                 <nav>
@@ -284,7 +285,8 @@
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                 </div>
             </div>
         </div>
