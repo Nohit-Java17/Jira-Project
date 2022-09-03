@@ -13,7 +13,6 @@ import com.nohit.jira_project.util.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
-import static java.lang.String.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
@@ -70,7 +69,6 @@ public class ThongTinCaNhanController {
             mav.addObject("khachHang", mCurrentAccount);
             mav.addObject("creditCard", creditCard);
             mav.addObject("gioHang", gioHang);
-            mav.addObject("tongGioHang", format("%,d", gioHang.getTongGioHang()) + " ₫");
             mav.addObject("login", mCurrentAccount != null);
             showMessageBox(mav);
             mIsByPass = false;

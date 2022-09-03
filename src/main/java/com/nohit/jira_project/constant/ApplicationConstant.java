@@ -14,14 +14,14 @@ public class ApplicationConstant {
     }
 
     public class Payment {
-        public static final String TRANSFER = "chuyển khoản";
-        public static final String CARD = "thẻ tín dụng";
-        public static final String CASH = "tiền mặt";
+        public static final String TRANSFER = "Chuyển khoản";
+        public static final String CARD = "Thẻ tín dụng";
+        public static final String CASH = "Tiền mặt";
     }
 
     public class Status {
-        public static final String PREPARED = "chưa giao";
-        public static final String RECEIVED = "đã giao";
-        public static final String CANCELLED = "đã hủy";
+        public static final String PREPARED = "Đang giao";
+        public static final String RECEIVED = "Đã giao";
+        public static final String CANCELLED = "Đã hủy";
     }
 }
