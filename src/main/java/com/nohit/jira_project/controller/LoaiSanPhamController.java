@@ -14,8 +14,8 @@ import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Controller
-@RequestMapping(PRODUCT_VIEW)
-public class SanPhamController {
+@RequestMapping(CATEGORY_VIEW)
+public class LoaiSanPhamController {
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -30,12 +30,12 @@ public class SanPhamController {
     private boolean mIsByPass;
     private boolean mIsMsgShow;
 
-    // Load product
+    // Load category
     @GetMapping(value = {""})
-    public ModelAndView product() {
+    public ModelAndView category() {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(PRODUCT_TEMP);
+        var mav = new ModelAndView(CATEGORY_TEMP);
         mav.addObject(USER_PARAM, mCurrentAccount);
         mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
         mIsByPass = false;
@@ -47,16 +47,18 @@ public class SanPhamController {
     public ModelAndView topsaleProduct(@RequestParam("sort") String criteria) {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(PRODUCT_TEMP);
+        var mav = new ModelAndView(CATEGORY_TEMP);
         mav.addObject(USER_PARAM, mCurrentAccount);
-        if(criteria.equals("topSale")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamTopSale());
-        } else if (criteria.equals("newOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder());
-        } else if (criteria.equals("ascendingPriceOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamAscendingPriceOrder());
-        } else if (criteria.equals("descendingPriceOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamDescendingPriceOrder());
+        if(criteria.equals("pc")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamComputer());
+        } else if (criteria.equals("devices")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamDevices());
+        } else if (criteria.equals("laptop")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamLaptop());
+        } else if (criteria.equals("smartphone")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamSmartPhone());
+        } else if (criteria.equals("tablet")){
+            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamTablet());
         } else{
             mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
         }
@@ -64,7 +66,7 @@ public class SanPhamController {
         mIsByPass = false;
         return mav;
     }
-
+    
     // Re-check choosen one
     private boolean isAliveChoosenOne() {
         // check the project has been declared
@@ -96,4 +98,5 @@ public class SanPhamController {
             mIsMsgShow = false;
         }
     }
+
 }

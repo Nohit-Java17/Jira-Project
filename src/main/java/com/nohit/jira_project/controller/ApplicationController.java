@@ -1,21 +1,21 @@
 package com.nohit.jira_project.controller;
 
+import java.io.*;
+
+import javax.mail.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
 import com.nohit.jira_project.model.*;
-import com.nohit.jira_project.service.KhachHangService;
+import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
-
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.MessagingException;
 
 
 @Controller
@@ -55,17 +55,6 @@ public class ApplicationController {
         }
     }
 
-    // Load dashboard
-    @GetMapping(value = { INDEX_VIEW, "/", "" })
-    public ModelAndView index() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(INDEX_TEMP);
-        mIsByPass = false;
-        return mav;
-
-    }
-
     // Load detail
     @GetMapping(value = { DETAIL_VIEW })
     public ModelAndView detail() {
@@ -88,7 +77,7 @@ public class ApplicationController {
 
     }
 
-    // Load about
+    // Load register
     @GetMapping(value = { REGISTER_VIEW})
     public ModelAndView register() {
         // All can go to pages: homepage/product/details/about/contact
@@ -99,7 +88,21 @@ public class ApplicationController {
 
     }
 
+<<<<<<< HEAD
     // Load product
+=======
+    // Load contact
+    @GetMapping(value = { CONTACT_VIEW })
+    public ModelAndView contact() {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(CONTACT_TEMP);
+        mIsByPass = false;
+        return mav;
+    }
+
+    // Load cart
+>>>>>>> origin/feCategory
     @GetMapping(value = { CART_VIEW })
     public ModelAndView cart() {
         // All can go to pages: homepage/product/details/about/contact
@@ -115,7 +118,8 @@ public class ApplicationController {
         }
     }
 
-    // Load product
+
+    // Load checkout
     @GetMapping(value = { CHECKOUT_VIEW })
     public ModelAndView checkout() {
         // All can go to pages: homepage/product/details/about/contact

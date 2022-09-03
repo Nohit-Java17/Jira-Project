@@ -12,4 +12,25 @@ public interface SanPhamService {
     public void saveSanPham(SanPham sanPham);
 
     public void deleteSanPham(int id);
+
+    // Methods to sort in Product Controller
+    public List<SanPham> getDsSanPhamTopSale();
+
+    public List<SanPham> getDsSanPhamDescendingPriceOrder();
+
+    public List<SanPham> getDsSanPhamAscendingPriceOrder();
+
+    public List<SanPham> getDsSanPhamNewestOrder();
+
+    // Methods to sort in Category Controller
+    public List<SanPham> getDsSanPhamLaptop();
+
+    public List<SanPham> getDsSanPhamComputer();
+
+    public List<SanPham> getDsSanPhamSmartPhone();
+
+    public List<SanPham> getDsSanPhamTablet();
+
+    public List<SanPham> getDsSanPhamDevices();
+    
 }
