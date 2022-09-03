@@ -1,11 +1,11 @@
 package com.nohit.jira_project.service;
 
-import java.util.List;
+import java.util.*;
 
-import com.nohit.jira_project.model.GioHang;
+import com.nohit.jira_project.model.*;
 
 public interface GioHangService {
-	public List<GioHang> getDsGioHang();
+    public List<GioHang> getDsGioHang();
 
     public GioHang getGioHang(int id);
 

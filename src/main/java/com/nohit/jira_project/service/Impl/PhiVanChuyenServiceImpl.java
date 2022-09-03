@@ -3,36 +3,41 @@ package com.nohit.jira_project.service.Impl;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
 import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
 
+import lombok.extern.slf4j.*;
+
+@Service
+@Slf4j
 public class PhiVanChuyenServiceImpl implements PhiVanChuyenService {
     @Autowired
     private PhiVanChuyenRepository phiVanChuyenRepository;
 
     @Override
     public List<PhiVanChuyen> getDsPhiVanChuyen() {
-        // TODO Auto-generated method stub
+        log.info("Fetching all phi_van_chuyen");
         return phiVanChuyenRepository.findAll();
     }
 
     @Override
     public PhiVanChuyen getPhiVanChuyen(int id) {
-        // TODO Auto-generated method stub
+        log.info("Fetching phi_van_chuyen with id {}", id);
         return phiVanChuyenRepository.findById(id).orElse(null);
     }
 
     @Override
     public void savePhiVanChuyen(PhiVanChuyen phiVanChuyen) {
-        // TODO Auto-generated method stub
+        log.info("Saving phi_van_chuyen with name: {}", phiVanChuyen.getTinhThanh());
         phiVanChuyenRepository.save(phiVanChuyen);
     }
 
     @Override
     public void deletePhiVanChuyen(int id) {
-        // TODO Auto-generated method stub
+        log.info("Deleting phi_van_chuyen with id: {}", id);
         phiVanChuyenRepository.deleteById(id);
     }
 }

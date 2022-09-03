@@ -9,32 +9,35 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
 
+import lombok.extern.slf4j.*;
+
 @Service
+@Slf4j
 public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
     @Autowired
     private ChiTietDonHangRepository chiTietDonHangRepository;
 
     @Override
     public List<ChiTietDonHang> getDsChiTietDonHang() {
-        // TODO Auto-generated method stub
+        log.info("Fetching all chi_tiet_don_hang");
         return chiTietDonHangRepository.findAll();
     }
 
     @Override
     public ChiTietDonHang getChiTietDonHang(int id) {
-        // TODO Auto-generated method stub
+        log.info("Fetching chi_tiet_don_hang with id {}", id);
         return chiTietDonHangRepository.findById(id).orElse(null);
     }
 
     @Override
     public void saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
-        // TODO Auto-generated method stub
+        log.info("Saving chi_tiet_don_hang with id: {}", chiTietDonHang.getId());
         chiTietDonHangRepository.save(chiTietDonHang);
     }
 
     @Override
     public void deleteChiTietDonHang(int id) {
-        // TODO Auto-generated method stub
+        log.info("Deleting chi_tiet_don_hang with id: {}", id);
         chiTietDonHangRepository.deleteById(id);
     }
 }

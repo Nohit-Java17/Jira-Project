@@ -9,32 +9,35 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
 
+import lombok.extern.slf4j.*;
+
 @Service
+@Slf4j
 public class NhanXetServiceImpl implements NhanXetService {
     @Autowired
     private NhanXetRepository nhanXetRepository;
 
     @Override
     public List<NhanXet> getDsNhanXet() {
-        // TODO Auto-generated method stub
+        log.info("Fetching all nhan_xet");
         return nhanXetRepository.findAll();
     }
 
     @Override
     public NhanXet getNhanXet(int id) {
-        // TODO Auto-generated method stub
+        log.info("Fetching nhan_xet with id {}", id);
         return nhanXetRepository.findById(id).orElse(null);
     }
 
     @Override
     public void saveNhanXet(NhanXet nhanXet) {
-        // TODO Auto-generated method stub
+        log.info("Saving nhan_xet with id: {}", nhanXet.getId());
         nhanXetRepository.save(nhanXet);
     }
 
     @Override
     public void deleteNhanXet(int id) {
-        // TODO Auto-generated method stub
+        log.info("Deleting nhan_xet with id: {}", id);
         nhanXetRepository.deleteById(id);
     }
 }

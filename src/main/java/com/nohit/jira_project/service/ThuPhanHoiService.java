@@ -5,11 +5,11 @@ import java.util.*;
 import com.nohit.jira_project.model.*;
 
 public interface ThuPhanHoiService {
-    public List<ThuPhanHoi> getDsPhanHoi();
+    public List<ThuPhanHoi> getDsThuPhanHoi();
 
-    public ThuPhanHoi getPhanHoi(int id);
+    public ThuPhanHoi getThuPhanHoi(int id);
 
-    public void savePhanHoi(ThuPhanHoi phanHoi);
+    public void saveThuPhanHoi(ThuPhanHoi phanHoi);
 
-    public void deletePhanHoi(int id);
+    public void deleteThuPhanHoi(int id);
 }

@@ -1,12 +1,12 @@
 package com.nohit.jira_project.service;
 
-import java.util.List;
+import java.util.*;
 
-import com.nohit.jira_project.model.ChiTietGioHang;
+import com.nohit.jira_project.model.*;
 
 public interface ChiTietGioHangService {
 
-	public List<ChiTietGioHang> getDsChiTietGioHang();
+    public List<ChiTietGioHang> getDsChiTietGioHang();
 
     public ChiTietGioHang getChiTietGioHang(int id);
 

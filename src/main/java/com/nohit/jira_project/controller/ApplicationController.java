@@ -176,29 +176,6 @@ public class ApplicationController {
             return REDIRECT_PREFIX + LOGIN_VIEW;
         }
     }
-    
-    // Load blank page (Can be deleted)
-    // (Have no Blank View YET)
-    @GetMapping(BLANK_VIEW)
-    public ModelAndView blank() {
-        // check current account still valid
-        if (!isValidAccount()) {
-            return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
-        } else {
-            var mav = new ModelAndView(BLANK_TEMP);
-            mav.addObject(USER_PARAM, mCurrentAccount);
-            mIsByPass = false;
-            return mav;
-        }
-    }
-
-    // Load forbidden page (Can be deleted)
-    // (Have no Forbidden View YET)
-    @GetMapping(FORBIDDEN_VIEW)
-    public String forbidden() {
-        mIsByPass = false;
-        return FORBIDDEN_TEMP;
-    }
 
     // Check valid account
     private boolean isValidAccount() {
