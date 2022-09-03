@@ -14,13 +14,10 @@ import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Controller
-@RequestMapping(CONTACT_VIEW)
-public class LienHeController {
+@RequestMapping(HISTORY_VIEW)
+public class LichSuMuaHangController {
     @Autowired
     private GioHangService gioHangService;
-
-    @Autowired
-    private ThuPhanHoiService thuPhanHoiService;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -31,39 +28,29 @@ public class LienHeController {
     private boolean mIsByPass;
     private boolean mIsMsgShow;
 
-    // Load contact
+    // Load history
     @GetMapping("")
-    public ModelAndView contact() {
-        var mav = new ModelAndView(CONTACT_TEMP);
-        GioHang gioHang;
+    public ModelAndView history() {
         // check current account still valid
         if (!isValidAccount()) {
-            gioHang = new GioHang();
+            return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
         } else {
+            var mav = new ModelAndView(HISTORY_TEMP);
             var id = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(id);
+            var gioHang = gioHangService.getGioHang(id);
             // check gio_hang exist
             if (gioHang == null) {
                 gioHang = new GioHang();
                 gioHang.setId(id);
                 gioHangService.saveGioHang(gioHang);
             }
+            mav.addObject("khachHang", mCurrentAccount);
+            mav.addObject("gioHang", gioHang);
+            mav.addObject("login", mCurrentAccount != null);
+            showMessageBox(mav);
+            mIsByPass = false;
+            return mav;
         }
-        mav.addObject("khachHang", mCurrentAccount);
-        mav.addObject("gioHang", gioHang);
-        mav.addObject("login", mCurrentAccount != null);
-        showMessageBox(mav);
-        mIsByPass = false;
-        return mav;
-    }
-
-    // Add thu_phan_hoi
-    @PostMapping("")
-    public String guiPhanHoi(ThuPhanHoi thuPhanHoi) {
-        thuPhanHoiService.saveThuPhanHoi(thuPhanHoi);
-        mIsMsgShow = true;
-        mMsg = "Cảm ơn quý khách đã liên hệ với chúng tôi!";
-        return REDIRECT_PREFIX + CONTACT_VIEW;
     }
 
     // Check valid account
