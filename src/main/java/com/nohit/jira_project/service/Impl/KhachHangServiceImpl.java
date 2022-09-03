@@ -114,9 +114,9 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
         khachHangRepository.save(khachHang);
         var message = mailSender.createMimeMessage();
         var helper = new MimeMessageHelper(message);
-        helper.setFrom("nohit@gmail.com", "Nohit Shop");
+        helper.setFrom("nohitshop@gmail.com", "Nohit Shop");
         helper.setTo(email);
-        helper.setSubject("Reset mật khẩu");
+        helper.setSubject("Quên mật khẩu");
         helper.setText("Mật khẩu mới của quý khách là:<br>" + "<h3>" + randomCode + "</h3>", true);
         mailSender.send(message);
     }
