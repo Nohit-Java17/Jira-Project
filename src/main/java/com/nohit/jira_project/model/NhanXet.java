@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
 @Entity(name = "nhan_xet")
@@ -22,7 +23,7 @@ public class NhanXet {
     @Column(name = "binh_luan")
     private String binhLuan;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
-    private SanPham idSanPham;
+    private SanPham sanPham;
 }

@@ -1,12 +1,13 @@
 package com.nohit.jira_project.model;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 import lombok.*;
 
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
-
-import java.util.List;
 
 @Entity(name = "khach_hang")
 @Data
@@ -27,15 +28,14 @@ public class KhachHang {
     @Column(name = "mat_khau")
     private String matKhau;
 
-    @NonNull
     @Column(name = "ho_ten")
     private String hoTen;
 
-    @Column(name = "dia_chi")
-    private String diaChi;
-
     @Column(name = "so_dien_thoai")
     private String soDienThoai;
+
+    @Column(name = "dia_chi")
+    private String diaChi;
 
     @Column(name = "xa_phuong")
     private String xaPhuong;
@@ -48,7 +48,15 @@ public class KhachHang {
 
     @Column(name = "vai_tro")
     private String vaiTro;
-    
-    @OneToOne(mappedBy = "idKhachHang")
+
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     private GioHang gioHang;
+
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    private CreditCard creditCard;
+
+    @OneToMany(mappedBy = "khachHang")
+    private List<DonHang> dsDonHang;
 }

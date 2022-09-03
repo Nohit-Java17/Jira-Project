@@ -24,18 +24,17 @@ public class SanPham {
     private String ten;
 
     @NonNull
-    @Column(name = "hinh_anh")
-    private String hinhAnh;
+    @Column(name = "album")
+    private String album;
 
-    @NonNull
     @Column(name = "mo_ta")
     private String moTa;
 
     @Column(name = "gia_goc")
     private int giaGoc;
 
-    @Column(name = "giam_gia")
-    private int giamGia;
+    @Column(name = "khuyen_mai")
+    private int khuyenMai;
 
     @Column(name = "so_luong")
     private int soLuong;
@@ -58,12 +57,12 @@ public class SanPham {
     @Column(name = "thuong_hieu")
     private String thuongHieu;
 
-    @OneToMany(mappedBy = "idSanPham")
+    @OneToMany(mappedBy = "sanPham")
     private List<NhanXet> dsNhanXet;
 
     @OneToMany(mappedBy = "sanPham")
     private List<ChiTietDonHang> dsChiTietDonHang;
-    
-    @OneToMany(mappedBy = "idSanPham")
+
+    @OneToMany(mappedBy = "sanPham")
     private List<ChiTietGioHang> dsChiTietGioHang;
 }
