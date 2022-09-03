@@ -11,8 +11,8 @@
         Trang Chủ | nohitElectronics
     </title>
     <!-- Icon -->
-    <link href="img/logo.png" rel="apple-touch-icon">
-    <link href="img/logo.png" rel="shortcut icon">
+    <link th:href="@{img/logo.png}" rel="apple-touch-icon">
+    <link th:href="@{img/logo.png}" rel="shortcut icon">
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet'
         type='text/css'>
@@ -23,9 +23,9 @@
     <!-- Font Awesome -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/owl.carousel.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
+    <link th:href="@{css/owl.carousel.css}" rel="stylesheet">
+    <link th:href="@{css/style.css}" rel="stylesheet">
+    <link th:href="@{css/responsive.css}" rel="stylesheet">
     <!-- Toastify CSS -->
     <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet" type="text/css">
 </head>
@@ -37,13 +37,13 @@
                 <div class="user-menu">
                     <ul>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 <i class="fa fa-shopping-cart"></i>
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 <i class="fa fa-credit-card"></i>
                                 Thanh toán
                             </a>
@@ -56,13 +56,13 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/profile}">
                                             Thông tin cá nhân
                                         </a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="#">
+                                        <a th:href="@{/logout}">
                                             Đăng xuất
                                         </a>
                                     </li>
@@ -80,7 +80,7 @@
                 <div class="col-sm-6">
                     <div class="logo">
                         <h1>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 nohit
                                 <span>
                                     Electronics
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">
+                        <a th:href="@{/cart}">
                             Giỏ -
                             <span class="cart-amunt">
                                 64.990.000 ₫
@@ -122,42 +122,42 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 Trang chủ
                             </a>
                         </li>
                         <li>
-                            <a href="product.html">
+                            <a th:href="@{/product}">
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="category.html">
+                            <a th:href="@{/category}">
                                 Phân Loại
                             </a>
                         </li>
                         <li>
-                            <a href="detail.html">
+                            <a th:href="@{/detail}">
                                 Chi tiết
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 Giỏ hàng
                             </a>
                         </li>
                         <li>
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 Thanh toán
                             </a>
                         </li>
                         <li>
-                            <a href="about.html">
+                            <a th:href="@{/about}">
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="contact.html">
+                            <a th:href="@{/contact}">
                                 Liên hệ
                             </a>
                         </li>
@@ -336,175 +336,37 @@
                         <h2 class="section-title">
                             Sản phẩm mới nhất
                         </h2>
-                        <div class="product-carousel">
-                            <div class="single-product">
+                        <div  class="product-carousel">
+
+                            <div th:each="element: ${newProducts}" th:if="${element.tonKho != 0}" class="single-product">
                                 <div class="product-f-image">
-                                    <img src="img/220503385/0.jpg" alt="">
+                                    <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link">
                                             <i class="fa fa-shopping-cart"></i>
                                             Thêm vào giỏ
                                         </a>
-                                        <a href="detail.html" class="view-details-link">
+                                        <a th:href="@{/detail}" class="view-details-link">
                                             <i class="fa fa-link"></i>
                                             Xem thông tin
                                         </a>
                                     </div>
                                 </div>
                                 <h2>
-                                    <a href="detail.html">
+                                    <a th:text="${element.ten}" th:href="@{/detail}">
                                         Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                     </a>
                                 </h2>
                                 <div class="product-carousel-price">
-                                    <ins>
+                                    <ins th:text="${element.khuyenMai}" >
                                         64.990.000 ₫
                                     </ins>
-                                    <del>
+                                    <del th:text="${element.giaGoc}">
                                         65.990.000 ₫
                                     </del>
                                 </div>
                             </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/220503385/0.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Thêm vào giỏ
-                                        </a>
-                                        <a href="detail.html" class="view-details-link">
-                                            <i class="fa fa-link"></i>
-                                            Xem thông tin
-                                        </a>
-                                    </div>
-                                </div>
-                                <h2>
-                                    <a href="detail.html">
-                                        Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        64.990.000 ₫
-                                    </ins>
-                                    <del>
-                                        65.990.000 ₫
-                                    </del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/220503385/0.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Thêm vào giỏ
-                                        </a>
-                                        <a href="detail.html" class="view-details-link">
-                                            <i class="fa fa-link"></i>
-                                            Xem thông tin
-                                        </a>
-                                    </div>
-                                </div>
-                                <h2>
-                                    <a href="detail.html">
-                                        Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        64.990.000 ₫
-                                    </ins>
-                                    <del>
-                                        65.990.000 ₫
-                                    </del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/220503385/0.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Thêm vào giỏ
-                                        </a>
-                                        <a href="detail.html" class="view-details-link">
-                                            <i class="fa fa-link"></i>
-                                            Xem thông tin
-                                        </a>
-                                    </div>
-                                </div>
-                                <h2>
-                                    <a href="detail.html">
-                                        Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        64.990.000 ₫
-                                    </ins>
-                                    <del>
-                                        65.990.000 ₫
-                                    </del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/220503385/0.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Thêm vào giỏ
-                                        </a>
-                                        <a href="detail.html" class="view-details-link">
-                                            <i class="fa fa-link"></i>
-                                            Xem thông tin
-                                        </a>
-                                    </div>
-                                </div>
-                                <h2>
-                                    <a href="detail.html">
-                                        Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        64.990.000 ₫
-                                    </ins>
-                                    <del>
-                                        65.990.000 ₫
-                                    </del>
-                                </div>
-                            </div>
-                            <div class="single-product">
-                                <div class="product-f-image">
-                                    <img src="img/220503385/0.jpg" alt="">
-                                    <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Thêm vào giỏ
-                                        </a>
-                                        <a href="detail.html" class="view-details-link">
-                                            <i class="fa fa-link"></i>
-                                            Xem thông tin
-                                        </a>
-                                    </div>
-                                </div>
-                                <h2>
-                                    <a href="detail.html">
-                                        Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                    </a>
-                                </h2>
-                                <div class="product-carousel-price">
-                                    <ins>
-                                        64.990.000 ₫
-                                    </ins>
-                                    <del>
-                                        65.990.000 ₫
-                                    </del>
-                                </div>
-                            </div>
+                    
                         </div>
                     </div>
                 </div>
@@ -544,15 +406,16 @@
                         <h2 class="product-wid-title">
                             Bán chạy
                         </h2>
-                        <a href="" class="wid-view-more">
+                        <a th:href="@{/product/sort?sort=topSale}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220503385/1.jpg" alt="" class="product-thumb">
+
+                        <div th:each="element: ${some_topsaleProducts}" th:if="${element.tonKho != 0}" class="single-wid-product">
+                            <a th:href="@{/detail}">
+                                <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb">
                             </a>
                             <h2>
-                                <a href="detail.html">
+                                <a th:text="${element.ten}" th:href="@{/detail}">
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
@@ -564,64 +427,15 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>
+                                <ins th:text="${element.khuyenMai}">
                                     64.990.000 ₫
                                 </ins>
-                                <del>
+                                <del th:text="${element.giaGoc}">
                                     65.990.000 ₫
                                 </del>
                             </div>
                         </div>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220503385/1.jpg" alt="" class="product-thumb">
-                            </a>
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                </a>
-                            </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>
-                                    64.990.000 ₫
-                                </ins>
-                                <del>
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220503385/1.jpg" alt="" class="product-thumb">
-                            </a>
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                </a>
-                            </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>
-                                    64.990.000 ₫
-                                </ins>
-                                <del>
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -629,14 +443,14 @@
                         <h2 class="product-wid-title">
                             Khuyến mãi
                         </h2>
-                        <a href="#" class="wid-view-more">
+                        <a th:href="@{/product}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220202046/1.jpg" alt="" class="product-thumb"></a>
+                        <div th:each="element: ${some_products}" th:if="${element.tonKho != 0}" class="single-wid-product">
+                            <a th:href="@{/detail}">
+                                <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
-                                <a href="detail.html">
+                                <a th:text="${element.ten}" th:href="@{/detail}">
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
@@ -648,58 +462,10 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>
+                                <ins th:text="${element.khuyenMai}">
                                     54.200.000 ₫
                                 </ins>
-                                <del>
-                                    57.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220202046/1.jpg" alt="" class="product-thumb"></a>
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay MSI Vector GP76 12UGS
-                                </a>
-                            </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>
-                                    54.200.000 ₫
-                                </ins>
-                                <del>
-                                    57.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220202046/1.jpg" alt="" class="product-thumb"></a>
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay MSI Vector GP76 12UGS
-                                </a>
-                            </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>
-                                    54.200.000 ₫
-                                </ins>
-                                <del>
+                                <del th:text="${element.giaGoc}">
                                     57.990.000 ₫
                                 </del>
                             </div>
@@ -711,14 +477,14 @@
                         <h2 class="product-wid-title">
                             Mới nhất
                         </h2>
-                        <a href="#" class="wid-view-more">
+                        <a th:href="@{/product/sort?sort=newOrder}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220503385/1.jpg" alt="" class="product-thumb"></a>
+                        <div th:each="element: ${some_newProducts}" th:if="${element.tonKho != 0}" class="single-wid-product">
+                            <a th:href="@{/detail}">
+                                <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
-                                <a href="detail.html">
+                                <a th:text="${element.ten}" th:href="@{/detail}">
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
@@ -730,62 +496,15 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-                                <ins>
+                                <ins th:text="${element.khuyenMai}">
                                     64.990.000 ₫
                                 </ins>
-                                <del>
+                                <del th:text="${element.giaGoc}">
                                     65.990.000 ₫
                                 </del>
                             </div>
                         </div>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220503385/1.jpg" alt="" class="product-thumb"></a>
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                </a>
-                            </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>
-                                    64.990.000 ₫
-                                </ins>
-                                <del>
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
-                        <div class="single-wid-product">
-                            <a href="detail.html">
-                                <img src="img/220503385/1.jpg" alt="" class="product-thumb"></a>
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                </a>
-                            </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <div class="product-wid-price">
-                                <ins>
-                                    64.990.000 ₫
-                                </ins>
-                                <del>
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -831,22 +550,22 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="profile.html">
+                                <a th:href="@{/profile}">
                                     Tài khoản cá nhân
                                 </a>
                             </li>
                             <li>
-                                <a href="history.html">
+                                <a th:href="@{/history}">
                                     Lịch sử đặt hàng
                                 </a>
                             </li>
                             <li>
-                                <a href="favorite.html">
+                                <a th:href="@{/about}">
                                     Giới thiệu về trang
                                 </a>
                             </li>
                             <li>
-                                <a href="contact.html">
+                                <a th:href="@{/contact}">
                                     Liên hệ nhà cung cấp
                                 </a>
                             </li>
@@ -865,27 +584,27 @@
                         </h2>
                         <ul>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/sort?sort=laptop}">
                                     Máy tính xách tay
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/sort?sort=pc}">
                                     Máy tính để bàn
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/sort?sort=tablet}">
                                     Máy tính bảng
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/sort?sort=devices}">
                                     Thiết bị ngoại vi
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a th:href="@{/category/sort?sort=smartphone}">
                                     Điện thoại di động
                                 </a>
                             </li>

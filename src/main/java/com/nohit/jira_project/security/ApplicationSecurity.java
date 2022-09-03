@@ -69,7 +69,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(API_VIEW + LOGIN_VIEW, API_VIEW + TOKEN_VIEW + REFRESH_VIEW, 
                 REGISTER_VIEW, REGISTER_VIEW + FREE_VIEW, PRODUCT_VIEW, PRODUCT_VIEW + FREE_VIEW, 
                 CATEGORY_VIEW, CATEGORY_VIEW + FREE_VIEW, ABOUT_VIEW, ABOUT_VIEW + FREE_VIEW, 
-                CONTACT_VIEW, CONTACT_VIEW + FREE_VIEW, "/product/top-sale", "css/owl.carousel.css", "css/style.css", "css/responsive.css","css/**").permitAll()
+                CONTACT_VIEW, CONTACT_VIEW + FREE_VIEW, "css/**").permitAll()
 
                 // Khi vào link cart và checkout thì cần authen
                 .antMatchers(CART_VIEW, CART_VIEW + FREE_VIEW, CHECKOUT_VIEW, CHECKOUT_VIEW + FREE_VIEW, PROFILE_VIEW, PROFILE_VIEW + FREE_VIEW).hasRole(CLIENT)

@@ -55,17 +55,6 @@ public class ApplicationController {
         }
     }
 
-    // Load dashboard
-    @GetMapping(value = { INDEX_VIEW, "/", "" })
-    public ModelAndView index() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(INDEX_TEMP);
-        mIsByPass = false;
-        return mav;
-
-    }
-
     // Load detail
     @GetMapping(value = { DETAIL_VIEW })
     public ModelAndView detail() {
@@ -88,7 +77,7 @@ public class ApplicationController {
 
     }
 
-    // Load about
+    // Load register
     @GetMapping(value = { REGISTER_VIEW})
     public ModelAndView register() {
         // All can go to pages: homepage/product/details/about/contact
@@ -99,7 +88,7 @@ public class ApplicationController {
 
     }
 
-    // Load product
+    // Load contact
     @GetMapping(value = { CONTACT_VIEW })
     public ModelAndView contact() {
         // All can go to pages: homepage/product/details/about/contact
@@ -109,7 +98,7 @@ public class ApplicationController {
         return mav;
     }
 
-    // Load product
+    // Load cart
     @GetMapping(value = { CART_VIEW })
     public ModelAndView cart() {
         // All can go to pages: homepage/product/details/about/contact
@@ -125,17 +114,8 @@ public class ApplicationController {
         }
     }
 
-    // Load category
-    @GetMapping(value = { CATEGORY_VIEW })
-    public ModelAndView category() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(CATEGORY_TEMP);
-        mIsByPass = false;
-        return mav;
-    }
 
-    // Load product
+    // Load checkout
     @GetMapping(value = { CHECKOUT_VIEW })
     public ModelAndView checkout() {
         // All can go to pages: homepage/product/details/about/contact

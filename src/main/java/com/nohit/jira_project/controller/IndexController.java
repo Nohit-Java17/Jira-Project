@@ -14,8 +14,8 @@ import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Controller
-@RequestMapping(PRODUCT_VIEW)
-public class SanPhamController {
+@RequestMapping(INDEX_VIEW)
+public class IndexController {
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -30,37 +30,18 @@ public class SanPhamController {
     private boolean mIsByPass;
     private boolean mIsMsgShow;
 
-    // Load product
+    // Load dashboard
     @GetMapping(value = {""})
-    public ModelAndView product() {
+    public ModelAndView index() {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(PRODUCT_TEMP);
+        var mav = new ModelAndView(INDEX_TEMP);
         mav.addObject(USER_PARAM, mCurrentAccount);
         mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
-        mIsByPass = false;
-        return mav;
-    }
-
-    // Load top sale products
-    @GetMapping(value = {"/sort"})
-    public ModelAndView topsaleProduct(@RequestParam("sort") String criteria) {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(PRODUCT_TEMP);
-        mav.addObject(USER_PARAM, mCurrentAccount);
-        if(criteria.equals("topSale")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamTopSale());
-        } else if (criteria.equals("newOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder());
-        } else if (criteria.equals("ascendingPriceOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamAscendingPriceOrder());
-        } else if (criteria.equals("descendingPriceOrder")){
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPhamDescendingPriceOrder());
-        } else{
-            mav.addObject(PRODUCTS_PARAM, productService.getDsSanPham());
-        }
-        
+        mav.addObject(NEWEST_PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder());
+        mav.addObject(SOME_PRODUCTS_PARAM, productService.getDsSanPhamAscendingPriceOrder().subList(0, 3));
+        mav.addObject(SOME_NEWEST_PRODUCTS_PARAM, productService.getDsSanPhamNewestOrder().subList(0, 3));
+        mav.addObject(SOME_TOP_SALE_PRODUCTS_PARAM, productService.getDsSanPhamTopSale().subList(0, 3));
         mIsByPass = false;
         return mav;
     }
@@ -96,4 +77,5 @@ public class SanPhamController {
             mIsMsgShow = false;
         }
     }
+
 }

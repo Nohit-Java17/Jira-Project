@@ -79,4 +79,79 @@ public class SanPhamServiceImpl implements SanPhamService {
 
         return listProductTemp;
     }
+
+    @Override
+    public List<SanPham> getDsSanPhamLaptop() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        List<SanPham> listProductFinal = new ArrayList<SanPham>();
+    
+        for(SanPham element : listProductTemp){
+            if(element.getPhanLoai().equals("Máy tính xách tay")){
+                listProductFinal.add(element);
+            }
+        }
+
+        return listProductFinal;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamComputer() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        List<SanPham> listProductFinal = new ArrayList<SanPham>();
+    
+        for(SanPham element : listProductTemp){
+            if(element.getPhanLoai().equals("Máy tính để bàn")){
+                listProductFinal.add(element);
+            }
+        }
+
+        return listProductFinal;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamSmartPhone() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        List<SanPham> listProductFinal = new ArrayList<SanPham>();
+    
+        for(SanPham element : listProductTemp){
+            if(element.getPhanLoai().equals("Điện thoại di động")){
+                listProductFinal.add(element);
+            }
+        }
+
+        return listProductFinal;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamTablet() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        List<SanPham> listProductFinal = new ArrayList<SanPham>();
+    
+        for(SanPham element : listProductTemp){
+            if(element.getPhanLoai().equals("Máy tính bảng")){
+                listProductFinal.add(element);
+            }
+        }
+
+        return listProductFinal;
+    }
+
+    @Override
+    public List<SanPham> getDsSanPhamDevices() {
+        // TODO Auto-generated method stub
+        List<SanPham> listProductTemp = sanPhamRepository.findAll();
+        List<SanPham> listProductFinal = new ArrayList<SanPham>();
+    
+        for(SanPham element : listProductTemp){
+            if(element.getPhanLoai().equals("Thiết bị ngoại vi")){
+                listProductFinal.add(element);
+            }
+        }
+
+        return listProductFinal;
+    }
 }

@@ -11,8 +11,8 @@
         Sản Phẩm | nohitElectronics
     </title>
     <!-- Icon -->
-    <link href="img/logo.png" rel="apple-touch-icon">
-    <link href="img/logo.png" rel="shortcut icon">
+    <link th:href="@{/img/logo.png}" rel="apple-touch-icon">
+    <link th:href="@{img/logo.png}" rel="shortcut icon">
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet'
         type='text/css'>
@@ -23,9 +23,9 @@
     <!-- Font Awesome -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/owl.carousel.css" rel="stylesheet" type='text/css'>
-    <link href="css/style.css" rel="stylesheet" type='text/css'>
-    <link href="css/responsive.css" rel="stylesheet" type='text/css'>
+    <link th:href="@{/css/owl.carousel.css}" rel="stylesheet" type='text/css'>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type='text/css'>
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" type='text/css'>
 </head>
 
 <body>
@@ -368,27 +368,27 @@
                         </h2>
                         <ul>
                             <li>
-                                <a th:href="@{/category/laptop}">
+                                <a th:href="@{/category/sort?sort=laptop}">
                                     Máy tính xách tay
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/category/pc}">
+                                <a th:href="@{/category/sort?sort=pc}">
                                     Máy tính để bàn
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/category/tablet}">
+                                <a th:href="@{/category/sort?sort=tablet}">
                                     Máy tính bảng
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/category/devices}">
+                                <a th:href="@{/category/sort?sort=devices}">
                                     Thiết bị ngoại vi
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/category/smartphone}">
+                                <a th:href="@{/category/sort?sort=smartphone}">
                                     Điện thoại di động
                                 </a>
                             </li>
