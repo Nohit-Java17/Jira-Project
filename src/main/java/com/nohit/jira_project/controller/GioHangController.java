@@ -12,9 +12,10 @@ import com.nohit.jira_project.util.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
-@RequestMapping(value = { CART_VIEW,"/giohang" })
+@RequestMapping(value = { CART_VIEW, "/giohang" })
 public class GioHangController {
 
     @Autowired
@@ -26,24 +27,106 @@ public class GioHangController {
     @Autowired
     KhachHangService khachHangService;
 
+    @Autowired
+    private SanPhamService productService;
+
+    @Autowired
+    private ChiTietGioHangService chiTietGioHangService;
+
+    @Autowired
+    private GioHangService gioHangService;
+
     // Fields
     private KhachHang mCurrentAccount;
+    private ChiTietGioHang mChoosenOne;
+    private SanPham mChoosenOneSP;
     private String mMsg;
     private boolean mIsByPass;
     private boolean mIsMsgShow;
 
-    @GetMapping(value = {"" })
+    @GetMapping(value = { "" })
     public ModelAndView cart() {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(CART_TEMP);
+        GioHang gioHang;
 
         // Check current account still valid
         if (!isValidAccount()) {
             return new ModelAndView(LOGIN_TEMP);
         } else {
-            mIsByPass = true;
-            return new ModelAndView(CART_TEMP);
+            var id = mCurrentAccount.getId();
+            gioHang = gioHangService.getGioHang(id);
+            // check gio_hang exist
+            if (gioHang == null) {
+                gioHang = new GioHang();
+                gioHang.setId(id);
+                gioHangService.saveGioHang(gioHang);
+            }
+            mIsByPass = false;
+
+            mav.addObject("khachHang", mCurrentAccount);
+            mav.addObject("gioHang", gioHang);
+            mav.addObject("listChiTietGioHang", gioHang.getDsChiTietGioHang());
+            // mav.addObject("dsSanPham", gioHang.getDsChiTietGioHang());
+            mav.addObject("login", mCurrentAccount != null);
+            mav.addObject("some_products", productService.getDsSanPhamAscendingPriceOrder().subList(0, 2));
+            mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 2));
+            mav.addObject("some_topsaleProducts", productService.getDsSanPhamTopSale().subList(0, 2));
+            showMessageBox(mav);
+            return mav;
         }
+
+    }
+
+    // // Delete chiTietGioHang
+    // @GetMapping(value = "/delete")
+    // public ModelAndView chiTietGioHangDelete(@RequestParam("id") int id) {
+    //     // All can go to pages: homepage/product/details/about/contact
+    //     // User must login fisrt to go to pages cart and checkout
+
+    //     GioHang gioHang;
+    //     var mav = new ModelAndView(CART_TEMP);
+
+    //     // Check current account still valid
+    //     if (!isValidAccount()) {
+    //         return new ModelAndView(LOGIN_TEMP);
+    //     } else {
+    //         var idAccount = mCurrentAccount.getId();
+    //         gioHang = gioHangService.getGioHang(idAccount);
+    //         // check gio_hang exist
+    //         if (gioHang == null) {
+    //             gioHang = new GioHang();
+    //             gioHang.setId(idAccount);
+    //             gioHangService.saveGioHang(gioHang);
+    //         }
+
+    //         // xóa
+    //         chiTietGioHangService.deleteChiTietGioHang(id);
+
+    //         mIsByPass = false;
+    //         mav.addObject("khachHang", mCurrentAccount);
+    //         mav.addObject("gioHang", gioHang);
+    //         mav.addObject("listChiTietGioHang", gioHang.getDsChiTietGioHang());
+    //         showMessageBox(mav);
+    //         return mav;
+    //     }
+    // }
+
+    // Delete San Pham
+    @RequestMapping(value = "/delete", method = { GET, DELETE })
+    public String sanPhamDelete(int id) {
+    // check current account still valid
+    if (!isValidAccount()) {
+    return REDIRECT_PREFIX + LOGOUT_VIEW;
+    } else {
+
+    chiTietGioHangService.deleteChiTietGioHang(id);
+    mIsMsgShow = true;
+    mMsg = "Xóa sản phẩm thành công!";
+    return REDIRECT_PREFIX + CART_VIEW;
+
+    }
     }
 
     // Check valid account

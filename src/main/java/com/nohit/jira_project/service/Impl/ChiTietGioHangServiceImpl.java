@@ -38,4 +38,5 @@ public class ChiTietGioHangServiceImpl implements ChiTietGioHangService {
         log.info("Deleting chi_tiet_gio_hang with id: {}", id);
         chiTietGioHangRepository.deleteById(id);
     }
+
 }
