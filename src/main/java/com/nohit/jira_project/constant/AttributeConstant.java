@@ -15,7 +15,8 @@ public class AttributeConstant {
     public static final String ERROR_HEADER_KEY = "errors";
     public static final String ERROR_MESSAGE_KEY = "error_messages";
 
-    // Message
+    // Params
     public static final String FLAG_MSG_PARAM = "flag";
     public static final String MSG_PARAM = "msg";
+    public static final String REMEMBER_ME_PARAM = "remember-me";
 }

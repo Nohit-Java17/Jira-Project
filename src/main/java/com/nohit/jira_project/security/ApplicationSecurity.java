@@ -16,6 +16,7 @@ import com.nohit.jira_project.filter.AuthenticationFilter;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.Role.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
+import static com.nohit.jira_project.constant.AttributeConstant.*;
 
 @Configuration
 @EnableWebSecurity
@@ -64,7 +65,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .and().formLogin().loginPage(LOGIN_VIEW).loginProcessingUrl(LOGIN_VIEW)
                 .defaultSuccessUrl(INDEX_VIEW).failureUrl(LOGIN_VIEW + "?error=true").permitAll().and().logout()
                 .invalidateHttpSession(true).clearAuthentication(true).permitAll().and().exceptionHandling()
-                .accessDeniedPage(LOGIN_VIEW).and().addFilter(authenticationFilter)
+                .accessDeniedPage(LOGIN_VIEW).and().rememberMe().rememberMeParameter(REMEMBER_ME_PARAM).and().addFilter(authenticationFilter)
                 // Chạy filter jwtAuthFilter() trước filter chứng thực
                 // UsernamePasswordAuthenticationFilter
                 .addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
