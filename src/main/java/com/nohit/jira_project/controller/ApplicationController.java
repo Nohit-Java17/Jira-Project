@@ -76,21 +76,6 @@ public class ApplicationController {
 
     }
 
-    @GetMapping(value = { CART_VIEW })
-    public ModelAndView cart() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-
-        // Check current account still valid
-        if (!isValidAccount()) {
-            var mav = new ModelAndView(LOGIN_TEMP);
-            return mav;
-        } else {
-            mIsByPass = true;
-            return new ModelAndView(REDIRECT_PREFIX + CART_VIEW);
-        }
-    }
-
     // Load checkout
     @GetMapping(value = { CHECKOUT_VIEW })
     public ModelAndView checkout() {
