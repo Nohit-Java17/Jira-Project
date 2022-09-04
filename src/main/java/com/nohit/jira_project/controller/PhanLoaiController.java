@@ -21,6 +21,9 @@ public class PhanLoaiController {
 
     @Autowired
     private SanPhamService productService;
+    
+    @Autowired
+    private GioHangService gioHangService;
 
     // Fields
     private KhachHang mCurrentAccount;
@@ -35,6 +38,24 @@ public class PhanLoaiController {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(CATEGORY_TEMP);
+        GioHang gioHang;
+        // check current account still valid
+        if (!isValidAccount()) {
+            gioHang = new GioHang();
+        } else {
+            var id = mCurrentAccount.getId();
+            gioHang = gioHangService.getGioHang(id);
+            // check gio_hang exist
+            if (gioHang == null) {
+                gioHang = new GioHang();
+                gioHang.setId(id);
+                gioHangService.saveGioHang(gioHang);
+            }
+        }
+        mav.addObject("khachHang", mCurrentAccount);
+        mav.addObject("gioHang", gioHang);
+        mav.addObject("login", mCurrentAccount != null);
+        showMessageBox(mav);
         mav.addObject("user", mCurrentAccount);
         mav.addObject("products", productService.getDsSanPham());
         mIsByPass = false;
@@ -47,6 +68,24 @@ public class PhanLoaiController {
         // All can go to pages: homepage/product/details/about/contact
         // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(CATEGORY_TEMP);
+        GioHang gioHang;
+        // check current account still valid
+        if (!isValidAccount()) {
+            gioHang = new GioHang();
+        } else {
+            var id = mCurrentAccount.getId();
+            gioHang = gioHangService.getGioHang(id);
+            // check gio_hang exist
+            if (gioHang == null) {
+                gioHang = new GioHang();
+                gioHang.setId(id);
+                gioHangService.saveGioHang(gioHang);
+            }
+        }
+        mav.addObject("khachHang", mCurrentAccount);
+        mav.addObject("gioHang", gioHang);
+        mav.addObject("login", mCurrentAccount != null);
+        showMessageBox(mav);
         mav.addObject("user", mCurrentAccount);
         if (criteria.equals("pc")) {
             mav.addObject("products", productService.getDsSanPhamComputer());
