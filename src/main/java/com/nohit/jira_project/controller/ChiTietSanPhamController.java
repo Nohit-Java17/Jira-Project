@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.nohit.jira_project.model.GioHang;
 import com.nohit.jira_project.model.KhachHang;
-import com.nohit.jira_project.service.GioHangService;
+import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.AuthenticationUtil;
 
 import static com.nohit.jira_project.constant.AttributeConstant.*;
@@ -20,6 +20,9 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 public class ChiTietSanPhamController {
 	@Autowired
     private GioHangService gioHangService;
+
+    @Autowired
+    private SanPhamService sanPhamService;
 	
 	@Autowired
     private AuthenticationUtil authenticationUtil;
@@ -31,26 +34,27 @@ public class ChiTietSanPhamController {
     private boolean mIsMsgShow;
     
     // Load detail
-    @GetMapping("/{id}")
-    public ModelAndView detail() {
+    @GetMapping("")
+    public ModelAndView detail(int id) {
         var mav = new ModelAndView(DETAIL_TEMP);
         GioHang gioHang;
         // check current account still valid
         if (!isValidAccount()) {
             gioHang = new GioHang();
         } else {
-            var id = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(id);
+            var idKhacHang = mCurrentAccount.getId();
+            gioHang = gioHangService.getGioHang(idKhacHang);
             // check gio_hang exist
             if (gioHang == null) {
                 gioHang = new GioHang();
-                gioHang.setId(id);
+                gioHang.setId(idKhacHang);
                 gioHangService.saveGioHang(gioHang);
             }
         }
         mav.addObject("khachHang", mCurrentAccount);
         mav.addObject("gioHang", gioHang);
         mav.addObject("login", mCurrentAccount != null);
+        mav.addObject("sanPham", sanPhamService.getSanPham(id));
         showMessageBox(mav);
         mIsByPass = false;
         return mav;
