@@ -121,7 +121,7 @@ public class GioHangController {
     return REDIRECT_PREFIX + LOGOUT_VIEW;
     } else {
 
-    chiTietGioHangService.deleteChiTietGioHang(id);
+    chiTietGioHangService.deleteChiTietGioHang(new ChiTietGioHangId(mCurrentAccount.getId(),id));
     mIsMsgShow = true;
     mMsg = "Xóa sản phẩm thành công!";
     return REDIRECT_PREFIX + CART_VIEW;
