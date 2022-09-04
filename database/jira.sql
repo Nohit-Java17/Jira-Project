@@ -45,8 +45,8 @@ CREATE TABLE
         id INT NOT NULL,
         name_on_card NVARCHAR(50) NOT NULL,
         card_number NVARCHAR(20) NOT NULL,
-        expiration NVARCHAR(5),
-        security_code NVARCHAR(5),
+        expiration NVARCHAR(5) NOT NULL,
+        security_code NVARCHAR(5) NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (id) REFERENCES khach_hang(id)
     );
@@ -163,10 +163,10 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS thu_phan_hoi(
         id INT NOT NULL AUTO_INCREMENT,
-        ho_ten NVARCHAR(50),
+        ho_ten NVARCHAR(50) NOT NULL,
         thu_dien_tu NVARCHAR(50) NOT NULL,
-        chu_de NVARCHAR(20),
-        noi_dung TEXT,
+        chu_de NVARCHAR(20) NOT NULL,
+        noi_dung TEXT NOT NULL,
         PRIMARY KEY (id)
     );
 
