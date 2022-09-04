@@ -16,28 +16,25 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping(INDEX_VIEW)
 public class IndexController {
     @Autowired
-    private AuthenticationUtil authenticationUtil;
-
-    @Autowired
-    private SanPhamService productService;
+    private SanPhamService sanPhamService;
 
     @Autowired
     private GioHangService gioHangService;
 
-    // Fields
-    private KhachHang mCurrentAccount;
-    private boolean mIsByPass;
+    @Autowired
+    private AuthenticationUtil authenticationUtil;
 
     // Load dashboard
     @GetMapping("")
     public ModelAndView index() {
         var mav = new ModelAndView(INDEX_TEMP);
         GioHang gioHang;
+        var khachHang = authenticationUtil.getAccount();
         // check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             gioHang = new GioHang();
         } else {
-            var id = mCurrentAccount.getId();
+            var id = khachHang.getId();
             gioHang = gioHangService.getGioHang(id);
             // check gio_hang exist
             if (gioHang == null) {
@@ -46,25 +43,13 @@ public class IndexController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
-        mav.addObject("khachHang", mCurrentAccount);
-        mav.addObject("gioHang", gioHang);
-        mav.addObject("login", mCurrentAccount != null);
-        mav.addObject("newProducts", productService.getDsSanPhamNewestOrder().subList(0, 6));
-        mav.addObject("some_topsaleProducts", productService.getDsSanPhamTopSale().subList(0, 3));
-        mav.addObject("some_products", productService.getDsSanPhamDescendingPriceOrder().subList(0, 3));
-        mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 3));
-        mIsByPass = false;
+        mav.addObject("client", khachHang);
+        mav.addObject("cart", gioHang);
+        mav.addObject("login", khachHang != null);
+        mav.addObject("newProducts", sanPhamService.getDsSanPhamNewestOrder().subList(0, 6));
+        mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 3));
+        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingPriceOrder().subList(0, 3));
+        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewestOrder().subList(0, 3));
         return mav;
-    }
-
-    // Check valid account
-    private boolean isValidAccount() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            mCurrentAccount = authenticationUtil.getAccount();
-            return mCurrentAccount != null;
-        }
     }
 }

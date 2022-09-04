@@ -13,6 +13,8 @@ public interface SanPhamService {
 
     public void deleteSanPham(int id);
 
+    public List<SanPham> getDsSanPhamTonKho();
+
     // Methods to sort in Product Controller
     public List<SanPham> getDsSanPhamTopSale();
 
@@ -32,5 +34,4 @@ public interface SanPhamService {
     public List<SanPham> getDsSanPhamTablet();
 
     public List<SanPham> getDsSanPhamDevices();
-
 }

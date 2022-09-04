@@ -28,7 +28,7 @@ public class ThongTinCaNhanController {
     private GioHangService gioHangService;
 
     @Autowired
-    private TinhThanhService thanhService;
+    private TinhThanhService tinhThanhService;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -65,7 +65,7 @@ public class ThongTinCaNhanController {
                 gioHang.setId(id);
                 gioHangService.saveGioHang(gioHang);
             }
-            mav.addObject("dsTinhThanh", thanhService.getDsTinhThanh());
+            mav.addObject("dsTinhThanh", tinhThanhService.getDsTinhThanh());
             mav.addObject("khachHang", mCurrentAccount);
             mav.addObject("creditCard", creditCard);
             mav.addObject("gioHang", gioHang);

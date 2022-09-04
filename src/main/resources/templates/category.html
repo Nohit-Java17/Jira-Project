@@ -167,7 +167,7 @@
                 <div class="col-lg-9 tab-content">
                     <div class="row">
                         <div th:each="element: ${products}" class="col-md-3 col-sm-6">
-                            <div th:if="${element.tonKho != 0}" class="single-shop-product">
+                            <div class="single-shop-product">
                                 <div class="product-upper">
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                 </div>

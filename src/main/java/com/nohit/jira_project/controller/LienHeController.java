@@ -26,9 +26,7 @@ public class LienHeController {
     private AuthenticationUtil authenticationUtil;
 
     // Fields
-    private KhachHang mCurrentAccount;
     private String mMsg;
-    private boolean mIsByPass;
     private boolean mIsMsgShow;
 
     // Load contact
@@ -36,11 +34,12 @@ public class LienHeController {
     public ModelAndView contact() {
         var mav = new ModelAndView(CONTACT_TEMP);
         GioHang gioHang;
+        var khachHang = authenticationUtil.getAccount();
         // check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             gioHang = new GioHang();
         } else {
-            var id = mCurrentAccount.getId();
+            var id = khachHang.getId();
             gioHang = gioHangService.getGioHang(id);
             // check gio_hang exist
             if (gioHang == null) {
@@ -49,32 +48,20 @@ public class LienHeController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
-        mav.addObject("khachHang", mCurrentAccount);
-        mav.addObject("gioHang", gioHang);
-        mav.addObject("login", mCurrentAccount != null);
+        mav.addObject("client", khachHang);
+        mav.addObject("cart", gioHang);
+        mav.addObject("login", khachHang != null);
         showMessageBox(mav);
-        mIsByPass = false;
         return mav;
     }
 
     // Add thu_phan_hoi
     @PostMapping("")
-    public String guiPhanHoi(ThuPhanHoi thuPhanHoi) {
+    public String contact(ThuPhanHoi thuPhanHoi) {
         thuPhanHoiService.saveThuPhanHoi(thuPhanHoi);
         mIsMsgShow = true;
         mMsg = "Cảm ơn quý khách đã liên hệ với chúng tôi!";
         return REDIRECT_PREFIX + CONTACT_VIEW;
-    }
-
-    // Check valid account
-    private boolean isValidAccount() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            mCurrentAccount = authenticationUtil.getAccount();
-            return mCurrentAccount != null;
-        }
     }
 
     // Show message

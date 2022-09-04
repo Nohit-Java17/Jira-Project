@@ -264,8 +264,7 @@
                             Sản phẩm mới nhất
                         </h2>
                         <div class="product-carousel">
-                            <div th:each="element: ${newProducts}" th:if="${element.tonKho != 0}"
-                                class="single-product">
+                            <div th:each="element: ${newProducts}" class="single-product">
                                 <div class="product-f-image">
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                     <div class="product-hover">
@@ -273,25 +272,13 @@
                                             <i class="fa fa-shopping-cart"></i>
                                             Thêm vào giỏ
                                         </a>
-<<<<<<< HEAD
-                                        <a th:href="@{/detail}" class="view-details-link">
-                                            <i class="fa fa-link"></i>Xem thông tin
-=======
                                         <a th:href="@{/detail/(id=${element.id})}" class="view-details-link">
-                                            <i class="fa fa-link"></i>
-                                            Xem thông tin
->>>>>>> origin/feature/detail-BE+FE
+                                            <i class="fa fa-link"></i>Xem thông tin
                                         </a>
                                     </div>
                                 </div>
                                 <h2>
-<<<<<<< HEAD
-                                    <a th:text="${element.ten}" th:href="@{/detail}">
-=======
-
                                     <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
-
->>>>>>> origin/feature/detail-BE+FE
                                         Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                     </a>
                                 </h2>
@@ -348,8 +335,7 @@
                         <a th:href="@{/product/sort?sort=topSale}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div th:each="element: ${some_topsaleProducts}" th:if="${element.tonKho != 0}"
-                            class="single-wid-product">
+                        <div th:each="element: ${topSaleProducts}" class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb">
                             </a>
@@ -385,17 +371,11 @@
                         <a th:href="@{/product}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div th:each="element: ${some_products}" th:if="${element.tonKho != 0}"
-                            class="single-wid-product">
+                        <div th:each="element: ${topPriceProducts}" class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
-<<<<<<< HEAD
-                                <a th:text="${element.ten}" th:href="@{/detail}">
-=======
                                 <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
-
->>>>>>> origin/feature/detail-BE+FE
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
@@ -426,17 +406,11 @@
                         <a th:href="@{/product/sort?sort=newOrder}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div th:each="element: ${some_newProducts}" th:if="${element.tonKho != 0}"
-                            class="single-wid-product">
+                        <div th:each="element: ${topNewProducts}" class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
-<<<<<<< HEAD
-                                <a th:text="${element.ten}" th:href="@{/detail}">
-=======
                                 <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
-
->>>>>>> origin/feature/detail-BE+FE
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>

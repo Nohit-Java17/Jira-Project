@@ -22,40 +22,36 @@ public class SanPhamController {
     private AuthenticationUtil authenticationUtil;
 
     @Autowired
-    private SanPhamService productService;
+    private SanPhamService sanPhamService;
 
     @Autowired
     private GioHangService gioHangService;
-
-    // Fields
-    private KhachHang mCurrentAccount;
-    private boolean mIsByPass;
 
     // Load product
     @GetMapping("")
     public ModelAndView product() {
         var mav = new ModelAndView(PRODUCT_TEMP);
         GioHang gioHang;
+        var khachHang = authenticationUtil.getAccount();
         // check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             gioHang = new GioHang();
         } else {
-            var id = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(id);
+            var idKhachHang = khachHang.getId();
+            gioHang = gioHangService.getGioHang(idKhachHang);
             // check gio_hang exist
             if (gioHang == null) {
                 gioHang = new GioHang();
-                gioHang.setId(id);
+                gioHang.setId(idKhachHang);
                 gioHangService.saveGioHang(gioHang);
             }
         }
         var radioCheck = 0;
-        mav.addObject("khachHang", mCurrentAccount);
-        mav.addObject("gioHang", gioHang);
-        mav.addObject("login", mCurrentAccount != null);
-        mav.addObject("products", productService.getDsSanPham());
+        mav.addObject("client", khachHang);
+        mav.addObject("cart", gioHang);
+        mav.addObject("login", khachHang != null);
+        mav.addObject("products", sanPhamService.getDsSanPhamTonKho());
         mav.addObject("radioCheck", radioCheck);
-        mIsByPass = false;
         return mav;
     }
 
@@ -64,16 +60,17 @@ public class SanPhamController {
     public ModelAndView productSort(String sort) {
         var mav = new ModelAndView(PRODUCT_TEMP);
         GioHang gioHang;
+        var khachHang = authenticationUtil.getAccount();
         // check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             gioHang = new GioHang();
         } else {
-            var id = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(id);
+            var idKhachHang = khachHang.getId();
+            gioHang = gioHangService.getGioHang(idKhachHang);
             // check gio_hang exist
             if (gioHang == null) {
                 gioHang = new GioHang();
-                gioHang.setId(id);
+                gioHang.setId(idKhachHang);
                 gioHangService.saveGioHang(gioHang);
             }
         }
@@ -82,48 +79,36 @@ public class SanPhamController {
         // filter function
         switch (sort) {
             case "topSale": {
-                dsSanPham = productService.getDsSanPhamTopSale();
+                dsSanPham = sanPhamService.getDsSanPhamTopSale();
                 radioCheck = 1;
                 break;
             }
             case "newOrder": {
-                dsSanPham = productService.getDsSanPhamNewestOrder();
+                dsSanPham = sanPhamService.getDsSanPhamNewestOrder();
                 radioCheck = 2;
                 break;
             }
             case "ascendingPriceOrder": {
-                dsSanPham = productService.getDsSanPhamAscendingPriceOrder();
+                dsSanPham = sanPhamService.getDsSanPhamAscendingPriceOrder();
                 radioCheck = 3;
                 break;
             }
             case "descendingPriceOrder": {
-                dsSanPham = productService.getDsSanPhamDescendingPriceOrder();
+                dsSanPham = sanPhamService.getDsSanPhamDescendingPriceOrder();
                 radioCheck = 4;
                 break;
             }
             default: {
-                dsSanPham = productService.getDsSanPham();
+                dsSanPham = sanPhamService.getDsSanPham();
                 radioCheck = 0;
                 break;
             }
         }
-        mav.addObject("khachHang", mCurrentAccount);
-        mav.addObject("gioHang", gioHang);
-        mav.addObject("login", mCurrentAccount != null);
+        mav.addObject("client", khachHang);
+        mav.addObject("cart", gioHang);
+        mav.addObject("login", khachHang != null);
         mav.addObject("products", dsSanPham);
         mav.addObject("radioCheck", radioCheck);
-        mIsByPass = false;
         return mav;
-    }
-
-    // Check valid account
-    private boolean isValidAccount() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            mCurrentAccount = authenticationUtil.getAccount();
-            return mCurrentAccount != null;
-        }
     }
 }

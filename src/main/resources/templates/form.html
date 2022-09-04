@@ -19,7 +19,7 @@
                         <div class="dropdown" th:switch="${login}">
                             <a th:case="true" class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-user"></i>
-                                <span th:text="${khachHang.hoTen}">
+                                <span th:text="${client.hoTen}">
                                     Đăng nhập
                                 </span>
                             </a>
@@ -73,12 +73,12 @@
                 <div class="shopping-item">
                     <a th:href="@{/cart}">
                         Giỏ -
-                        <span th:text="${#numbers.formatDecimal(gioHang.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}"
+                        <span th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}"
                             class="cart-amunt">
                             64.990.000 ₫
                         </span>
                         <i class="fa fa-shopping-cart"></i>
-                        <span th:text="${gioHang.tongSoLuong}" class="product-count">
+                        <span th:text="${cart.tongSoLuong}" class="product-count">
                             1
                         </span>
                     </a>
@@ -290,5 +290,51 @@
                 </ul>
             </div>
         </div>
+    </div>
+</div>
+<div class="col-md-3" th:fragment="extend-bar">
+    <div class="single-sidebar">
+        <h2 class="sidebar-title">
+            Tra cứu
+        </h2>
+        <form action="#">
+            <input type="text" placeholder="Nhập vào tên sản phẩm..." required>
+            <input class="btn-search" type="submit" value="Tìm kiếm">
+        </form>
+    </div>
+    <div class="single-sidebar one-line">
+        <h2 class="sidebar-title">
+            Sản phẩm
+        </h2>
+        <div th:each="element: ${topPriceProducts}" class="thubmnail-recent">
+            <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" class="recent-thumb" alt="">
+            <h2>
+                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                    Máy tính xách tay MSI Vector GP76 12UGS
+                </a>
+            </h2>
+            <div class="product-sidebar-price">
+                <ins
+                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                    64.990.000 ₫
+                </ins>
+                <br>
+                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                    65.990.000 ₫
+                </del>
+            </div>
+        </div>
+    </div>
+    <div class="single-sidebar one-line">
+        <h2 class="sidebar-title">
+            Mới nhất
+        </h2>
+        <ul>
+            <li th:each="element: ${topNewProducts}">
+                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
