@@ -25,8 +25,12 @@ public class ViewConstant {
     public static final String INFO_VIEW = "/info";
     public static final String PASSWORD_VIEW = "/password";
     public static final String CARD_VIEW = "/card";
+<<<<<<< HEAD
 
     public static final String SORT_VIEW = "/sort";
 
     public static final String FILTER_VIEW = "/filter";
+=======
+    public static final String RATE_VIEW = "/rate";
+>>>>>>> origin/feature/detail-BE+FE
 }
