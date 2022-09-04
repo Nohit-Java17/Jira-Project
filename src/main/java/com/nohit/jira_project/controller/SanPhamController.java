@@ -1,5 +1,7 @@
 package com.nohit.jira_project.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +11,6 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
-import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -22,22 +23,17 @@ public class SanPhamController {
 
     @Autowired
     private SanPhamService productService;
-    
+
     @Autowired
     private GioHangService gioHangService;
 
     // Fields
     private KhachHang mCurrentAccount;
-    private SanPham mChoosenOne;
-    private String mMsg;
     private boolean mIsByPass;
-    private boolean mIsMsgShow;
 
     // Load product
-    @GetMapping(value = {""})
+    @GetMapping("")
     public ModelAndView product() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(PRODUCT_TEMP);
         GioHang gioHang;
         // check current account still valid
@@ -53,21 +49,19 @@ public class SanPhamController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
+        var radioCheck = 0;
         mav.addObject("khachHang", mCurrentAccount);
         mav.addObject("gioHang", gioHang);
         mav.addObject("login", mCurrentAccount != null);
-        showMessageBox(mav);
-        mav.addObject("user", mCurrentAccount);
         mav.addObject("products", productService.getDsSanPham());
+        mav.addObject("radioCheck", radioCheck);
         mIsByPass = false;
         return mav;
     }
 
     // Load top sale products
-    @GetMapping(value = {"/sort"})
-    public ModelAndView topsaleProduct(@RequestParam("sort") String criteria) {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
+    @GetMapping(SORT_VIEW)
+    public ModelAndView productSort(String sort) {
         var mav = new ModelAndView(PRODUCT_TEMP);
         GioHang gioHang;
         // check current account still valid
@@ -83,36 +77,43 @@ public class SanPhamController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
+        List<SanPham> dsSanPham;
+        int radioCheck;
+        // filter function
+        switch (sort) {
+            case "topSale": {
+                dsSanPham = productService.getDsSanPhamTopSale();
+                radioCheck = 1;
+                break;
+            }
+            case "newOrder": {
+                dsSanPham = productService.getDsSanPhamNewestOrder();
+                radioCheck = 2;
+                break;
+            }
+            case "ascendingPriceOrder": {
+                dsSanPham = productService.getDsSanPhamAscendingPriceOrder();
+                radioCheck = 3;
+                break;
+            }
+            case "descendingPriceOrder": {
+                dsSanPham = productService.getDsSanPhamDescendingPriceOrder();
+                radioCheck = 4;
+                break;
+            }
+            default: {
+                dsSanPham = productService.getDsSanPham();
+                radioCheck = 0;
+                break;
+            }
+        }
         mav.addObject("khachHang", mCurrentAccount);
         mav.addObject("gioHang", gioHang);
         mav.addObject("login", mCurrentAccount != null);
-        showMessageBox(mav);
-        mav.addObject("user", mCurrentAccount);
-        if(criteria.equals("topSale")){
-            mav.addObject("products", productService.getDsSanPhamTopSale());
-        } else if (criteria.equals("newOrder")){
-            mav.addObject("products", productService.getDsSanPhamNewestOrder());
-        } else if (criteria.equals("ascendingPriceOrder")){
-            mav.addObject("products", productService.getDsSanPhamAscendingPriceOrder());
-        } else if (criteria.equals("descendingPriceOrder")){
-            mav.addObject("products", productService.getDsSanPhamDescendingPriceOrder());
-        } else{
-            mav.addObject("products", productService.getDsSanPham());
-        }
-        
+        mav.addObject("products", dsSanPham);
+        mav.addObject("radioCheck", radioCheck);
         mIsByPass = false;
         return mav;
-    }
-
-    // Re-check choosen one
-    private boolean isAliveChoosenOne() {
-        // check the project has been declared
-        if (mChoosenOne == null) {
-            return false;
-        } else {
-            mChoosenOne = productService.getSanPham(mChoosenOne.getId());
-            return mChoosenOne != null;
-        }
     }
 
     // Check valid account
@@ -123,16 +124,6 @@ public class SanPhamController {
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
             return mCurrentAccount != null;
-        }
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
         }
     }
 }

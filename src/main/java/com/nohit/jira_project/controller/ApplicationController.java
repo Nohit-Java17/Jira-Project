@@ -13,6 +13,7 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -42,10 +43,10 @@ public class ApplicationController {
         // check current account still valid
         if (!isValidAccount()) {
             var mav = new ModelAndView(LOGIN_TEMP);
+            showMessageBox(mav);
             if (error) {
                 mIsMsgShow = true;
                 mMsg = "Tài khoản đăng nhập chưa đúng!";
-                showMessageBox(mav);
             }
             return mav;
         } else {
@@ -66,14 +67,11 @@ public class ApplicationController {
     }
 
     // Load register
-    @GetMapping(value = { REGISTER_VIEW })
+    @GetMapping(REGISTER_VIEW)
     public ModelAndView register() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(REGISTER_TEMP);
-        mIsByPass = false;
+        showMessageBox(mav);
         return mav;
-
     }
 
     @GetMapping(value = { CART_VIEW })
@@ -121,24 +119,22 @@ public class ApplicationController {
 
     }
 
-    // đăng ký
+    // Register
     @PostMapping(REGISTER_VIEW)
-    public String register(@RequestParam("email") String email, @RequestParam("matKhau") String matKhau) {
+    public String register(KhachHang khachHang) {
+        mIsByPass = false;
+        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(khachHang.getEmail()).toLowerCase();
         mIsMsgShow = true;
-        mIsByPass = true;
-        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(email).toLowerCase();
         // check email is already exist
         if (khachHangService.getKhachHang(trueEmail) != null) {
             mMsg = "Email này đã được đăng ký!";
-            return null;
+            return REDIRECT_PREFIX + REGISTER_VIEW;
         } else {
-            KhachHang khachHang = new KhachHang();
-
-            khachHang.setMatKhau(matKhau);
             khachHang.setEmail(trueEmail);
-            khachHang.setIdTinhThanh(1);
+            khachHang.setIdTinhThanh(DEFAULT_PROVINCE);
+            khachHang.setVaiTro(DEFAULT_ROLE);
             khachHangService.saveKhachHang(khachHang);
-            mMsg = "Tài khoản đã được tạo thành công!";
+            mMsg = "Tài khoản đã được đăng ký thành công!";
             return REDIRECT_PREFIX + LOGIN_VIEW;
         }
     }

@@ -1,25 +1,22 @@
 package com.nohit.jira_project.controller;
 
-import static com.nohit.jira_project.constant.AttributeConstant.FLAG_MSG_PARAM;
-import static com.nohit.jira_project.constant.AttributeConstant.MSG_PARAM;
-import static com.nohit.jira_project.constant.TemplateConstant.ABOUT_TEMP;
-import static com.nohit.jira_project.constant.ViewConstant.ABOUT_VIEW;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import com.nohit.jira_project.model.*;
+import com.nohit.jira_project.service.*;
+import com.nohit.jira_project.util.*;
 
-import com.nohit.jira_project.model.GioHang;
-import com.nohit.jira_project.model.KhachHang;
-import com.nohit.jira_project.service.GioHangService;
-import com.nohit.jira_project.util.AuthenticationUtil;
+import static com.nohit.jira_project.constant.AttributeConstant.*;
+import static com.nohit.jira_project.constant.TemplateConstant.*;
+import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Controller
 @RequestMapping(ABOUT_VIEW)
 public class GioiThieuController {
-	@Autowired
+    @Autowired
     private GioHangService gioHangService;
 
     @Autowired
@@ -40,12 +37,12 @@ public class GioiThieuController {
         if (!isValidAccount()) {
             gioHang = new GioHang();
         } else {
-            var id = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(id);
+            var idKhachHang = mCurrentAccount.getId();
+            gioHang = gioHangService.getGioHang(idKhachHang);
             // check gio_hang exist
             if (gioHang == null) {
                 gioHang = new GioHang();
-                gioHang.setId(id);
+                gioHang.setId(idKhachHang);
                 gioHangService.saveGioHang(gioHang);
             }
         }
@@ -56,7 +53,6 @@ public class GioiThieuController {
         mIsByPass = false;
         return mav;
     }
-
 
     // Check valid account
     private boolean isValidAccount() {

@@ -118,41 +118,47 @@
                             </h2>
                         </div>
                         <div class="card-body">
-                            <form th:action="@{/category/sort}" method="get" class="form">
+                            <form th:action="@{/category/filter}" method="get" class="form">
                                 <div class="form-group">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value=""> Tất cả
+                                            <input type="radio" name="filter" th:checked="${radioCheck==0}" value="">
+                                            Tất cả
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="laptop"> Máy tính xách tay
+                                            <input type="radio" name="filter" th:checked="${radioCheck==1}"
+                                                value="laptop"> Máy tính xách tay
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="pc"> Máy tính để bàn
+                                            <input type="radio" name="filter" th:checked="${radioCheck==2}"
+                                                value="computer"> Máy tính để bàn
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="tablet"> Máy tính bảng
+                                            <input type="radio" name="filter" th:checked="${radioCheck==3}"
+                                                value="tablet"> Máy tính bảng
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="smartphone"> Điện thoại di động
+                                            <input type="radio" name="filter" th:checked="${radioCheck==4}"
+                                                value="smartphone"> Điện thoại di động
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="devices"> Thiết bị ngoại vi
+                                            <input type="radio" name="filter" th:checked="${radioCheck==5}"
+                                                value="devices"> Thiết bị ngoại vi
                                         </label>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">
-                                    Sort
+                                    Filter
                                 </button>
                             </form>
                         </div>
@@ -163,7 +169,6 @@
                         <div th:each="element: ${products}" class="col-md-3 col-sm-6">
                             <div th:if="${element.tonKho != 0}" class="single-shop-product">
                                 <div class="product-upper">
-                                    <!-- <img src="img/191005936/0.jpg" alt=""> -->
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                 </div>
                                 <h2>
@@ -172,16 +177,19 @@
                                     </a>
                                 </h2>
                                 <div class="product-carousel-price">
-                                    <ins th:text="${element.khuyenMai}">
+                                    <ins
+                                        th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         3.289.000 ₫
                                     </ins>
-                                    <del th:text="${element.giaGoc}">
+                                    <del
+                                        th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         4.699.000 ₫
                                     </del>
                                 </div>
                                 <div class="product-option-shop">
                                     <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                        data-product_id="70" rel="nofollow" th:href="@{/canvas/shop/?add-to-cart={id}(id=${element.id})}">
+                                        data-product_id="70" rel="nofollow"
+                                        th:href="@{/canvas/shop/?add-to-cart={id}(id=${element.id})}">
                                         Thêm vào giỏ
                                     </a>
                                 </div>
