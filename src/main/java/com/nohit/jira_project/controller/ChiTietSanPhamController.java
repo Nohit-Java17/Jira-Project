@@ -23,6 +23,7 @@ public class ChiTietSanPhamController {
 
     @Autowired
     private SanPhamService sanPhamService;
+    
 	
 	@Autowired
     private AuthenticationUtil authenticationUtil;
@@ -55,7 +56,13 @@ public class ChiTietSanPhamController {
         mav.addObject("gioHang", gioHang);
         mav.addObject("login", mCurrentAccount != null);
         mav.addObject("sanPham", sanPhamService.getSanPham(id));
+        mav.addObject("newProducts", sanPhamService.getDsSanPhamNewestOrder());
+        mav.addObject("some_products", sanPhamService.getDsSanPhamAscendingPriceOrder().subList(0, 3));
+        mav.addObject("some_newProducts", sanPhamService.getDsSanPhamNewestOrder().subList(0, 3));
+       
         showMessageBox(mav);
+        
+        
         mIsByPass = false;
         return mav;
     }

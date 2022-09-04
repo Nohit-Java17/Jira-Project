@@ -28,6 +28,11 @@
     <link th:href="@{/css/responsive.css}" rel="stylesheet">
     <!-- Toastify CSS -->
     <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet" type="text/css">
+    <style>
+    	.chon{
+    		color: orange;
+    	}
+    </style>
 </head>
 
 <body>
@@ -124,64 +129,55 @@
                         <h2 class="sidebar-title">
                             Sản phẩm
                         </h2>
-                        <div class="thubmnail-recent">
-                            <img src="img/220202046/1.jpg" class="recent-thumb" alt="">
+                        <div th:each="element: ${some_products}" class="thubmnail-recent">                 
+                            <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" class="recent-thumb" alt="">
                             <h2>
-                                <a href="detail.html">
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
                             <div class="product-sidebar-price">
-                                <ins>
-                                    54.200.000 ₫
+                                <ins th:text="${#numbers.formatDecimal(element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    64.990.000 ₫
                                 </ins>
-                                <del class="obsolete">
-                                    57.990.000 ₫
+                                <br>
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    65.990.000 ₫
                                 </del>
                             </div>
                         </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/220202046/1.jpg" class="recent-thumb" alt="">
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay MSI Vector GP76 12UGS
-                                </a>
-                            </h2>
-                            <div class="product-sidebar-price">
-                                <ins>
-                                    54.200.000 ₫
-                                </ins>
-                                <del class="obsolete">
-                                    57.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div class="single-sidebar one-line">
                         <h2 class="sidebar-title">
                             Mới nhất
                         </h2>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
+                        <div th:each="element: ${some_newProducts}" class="thubmnail-recent">                 
+                            <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" class="recent-thumb" alt="">
+                            <h2>
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                                    Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                </a>
-                            </li>
-                        </ul>
+                            </h2>
+                            <div class="product-sidebar-price">
+                                <ins th:text="${#numbers.formatDecimal(element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    64.990.000 ₫
+                                </ins>
+                                <br>
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    65.990.000 ₫
+                                </del>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
-                            <a href="">
+                            <a th:href="@{/category}">
                                 Phân loại
                             </a>
-                            <a href="">
+                            <a href="#" th:text="${sanPham.phanLoai}">
                                 Máy tính xách tay
                             </a>
                         </div>
@@ -189,13 +185,13 @@
                             <div class="col-sm-6">
                                 <div class="product-images">
                                     <div class="product-main-img">
-                                        <img src="img/220503385/0.jpg" alt="">
+                                        <img th:src="@{${'/img/'+sanPham.album+'/0.jpg'}}" alt="">
                                     </div>
                                     <div class="product-gallery">
-                                        <img src="img/220503385/1.jpg" alt="">
-                                        <img src="img/220503385/2.jpg" alt="">
-                                        <img src="img/220503385/3.jpg" alt="">
-                                        <img src="img/220503385/4.jpg" alt="">
+                                        <img th:src="@{${'/img/'+sanPham.album+'/1.jpg'}}" alt="">
+                                        <img th:src="@{${'/img/'+sanPham.album+'/3.jpg'}}" alt="">
+                                        <img th:src="@{${'/img/'+sanPham.album+'/3.jpg'}}" alt="">
+                                        <img th:src="@{${'/img/'+sanPham.album+'/4.jpg'}}" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -205,13 +201,14 @@
                                         Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                     </h2>
                                     <div class="product-inner-price">
-                                        <ins>
+                                        <ins th:text="${#numbers.formatDecimal(sanPham.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                             64.990.000 ₫
                                         </ins>
-                                        <del>
+                                        <del th:text="${#numbers.formatDecimal(sanPham.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                             65.990.000 ₫
                                         </del>
                                     </div>
+                                    
                                     <form action="" class="cart">
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" value="1"
@@ -221,12 +218,14 @@
                                             Thêm vào giỏ
                                         </button>
                                     </form>
+                                    
                                     <div class="product-inner-category">
                                         <p>
                                             Phân Loại:
-                                            <a href="">
-                                                Máy tính xách tay</a>. Thẻ:
-                                            <a href="">
+                                            <a href="#" th:text="${sanPham.phanLoai}">
+                                                Máy tính xách tay
+                                            </a>. Thẻ:
+                                            <a href="#" th:text="${sanPham.thuongHieu}">
                                                 Asus</a>.
                                         </p>
                                     </div>
@@ -248,7 +247,7 @@
                                                 <h2>
                                                     Giới thiệu
                                                 </h2>
-                                                <p>
+                                                <span th:text="${sanPham.moTa}">
                                                     - CPU: AMD Ryzen 7 6800HS<br>
                                                     - Màn hình: 15.6" IPS (2560 x 1440), 240Hz<br>
                                                     - RAM: 1 x 16GB, 16GB Onboard DDR5 4800MHz<br>
@@ -258,32 +257,34 @@
                                                     - Hệ điều hành: Windows 11 Home<br>
                                                     - Pin: 4 cell 90 Wh<br>
                                                     - Khối lượng: 1.9 kg
-                                                </p>
+                                                </span>
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="profile">
                                                 <h2>
                                                     Nhận xét
                                                 </h2>
                                                 <div class="submit-review">
-                                                    <form action="">
+                                                    <form th:action="@{/rate}" method="post">
+                                                    	<input type="hidden" name="idSanPham" th:value="${sanPham.id}">
+                                                    	<input type="hidden" id="danhGia" name="danhGia" value="5">
                                                         <div class="rating-chooser">
                                                             <p>
                                                                 Đánh giá
                                                             </p>
                                                             <div class="rating-wrap-post">
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                                <i class="fa fa-star-o"></i>
+                                                                <i class="fa fa-star-o" id="sao_1" data-value="1"></i>
+                                                                <i class="fa fa-star-o" id="sao_2" data-value="2"></i>
+                                                                <i class="fa fa-star-o" id="sao_3" data-value="3"></i>
+                                                                <i class="fa fa-star-o" id="sao_4" data-value="4"></i>
+                                                                <i class="fa fa-star-o" id="sao_5" data-value="5"></i>
                                                             </div>
                                                         </div>
                                                         <p>
                                                             <label for="review">
                                                                 Bình luận
                                                             </label>
-                                                            <textarea name="review" id="" cols="30" rows="10"
-                                                                placeholder="Nhập ý kiến..." required></textarea>
+                                                            <textarea name="binhLuan" id="" cols="30" rows="10"
+                                                                placeholder="Nhập ý kiến..."></textarea>
                                                         </p>
                                                         <p>
                                                             <input type="submit" value="Đăng" class="pull-right">
@@ -300,119 +301,38 @@
                             <h2 class="related-products-title">
                                 Gợi ý
                             </h2>
-                            <div class="related-products-carousel">
-                                <div class="single-product">
+                            <div class="related-products-carousel" >                          
+           
+                                <div class="single-product" th:each="element: ${newProducts}" th:if="${element.tonKho != 0}">
                                     <div class="product-f-image">
-                                        <img src="img/220402991/0.jpg" alt="">
+                                        <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                         <div class="product-hover">
-                                            <a href="" class="add-to-cart-link">
+                                            <a href="#" class="add-to-cart-link">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Thêm vào giỏ
                                             </a>
-                                            <a href="" class="view-details-link">
+                                            <a th:href="@{/detail/(id=${element.id})}" class="view-details-link">
                                                 <i class="fa fa-link"></i>
                                                 Xem thông tin
                                             </a>
                                         </div>
                                     </div>
                                     <h2>
-                                        <a href="">
+                                        <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
                                             Điện thoại ASUS ROG Phone 5S ZS676KS-1A111WW
                                         </a>
                                     </h2>
                                     <div class="product-carousel-price">
-                                        <ins>
-                                            16.290.000 ₫
-                                        </ins>
-                                        <del>
-                                            16.990.000 ₫
-                                        </del>
+                                        <ins th:text="${#numbers.formatDecimal(element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+		                                    64.990.000 ₫
+		                                </ins>
+		                                
+		                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+		                                    65.990.000 ₫
+		                                </del>
                                     </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/220402991/0.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Thêm vào giỏ
-                                            </a>
-                                            <a href="" class="view-details-link">
-                                                <i class="fa fa-link"></i>
-                                                Xem thông tin
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <h2>
-                                        <a href="">
-                                            Điện thoại ASUS ROG Phone 5S ZS676KS-1A111WW
-                                        </a>
-                                    </h2>
-                                    <div class="product-carousel-price">
-                                        <ins>
-                                            16.290.000 ₫
-                                        </ins>
-                                        <del>
-                                            16.990.000 ₫
-                                        </del>
-                                    </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/220402991/0.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Thêm vào giỏ
-                                            </a>
-                                            <a href="" class="view-details-link">
-                                                <i class="fa fa-link"></i>
-                                                Xem thông tin
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <h2>
-                                        <a href="">
-                                            Điện thoại ASUS ROG Phone 5S ZS676KS-1A111WW
-                                        </a>
-                                    </h2>
-                                    <div class="product-carousel-price">
-                                        <ins>
-                                            16.290.000 ₫
-                                        </ins>
-                                        <del>
-                                            16.990.000 ₫
-                                        </del>
-                                    </div>
-                                </div>
-                                <div class="single-product">
-                                    <div class="product-f-image">
-                                        <img src="img/220402991/0.jpg" alt="">
-                                        <div class="product-hover">
-                                            <a href="" class="add-to-cart-link">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                Thêm vào giỏ
-                                            </a>
-                                            <a href="" class="view-details-link">
-                                                <i class="fa fa-link"></i>
-                                                Xem thông tin
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <h2>
-                                        <a href="">
-                                            Điện thoại ASUS ROG Phone 5S ZS676KS-1A111WW
-                                        </a>
-                                    </h2>
-                                    <div class="product-carousel-price">
-                                        <ins>
-                                            16.290.000 ₫
-                                        </ins>
-                                        <del>
-                                            16.990.000 ₫
-                                        </del>
-                                    </div>
-                                </div>
+                                </div>                          
+                                
                             </div>
                         </div>
                     </div>
@@ -427,20 +347,37 @@
     <!-- Bootstrap JS form CDN -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.sticky.js}"></script>
     <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
+    <script th:src="@{/js/jquery.easing.1.3.min.js}"></script>
     <!-- Main Script -->
-    <script src="js/main.js"></script>
+    <script th:src="@{/js/main.js}"></script>
     <!-- Toastify JS -->
     <script src="https://cdn.jsdelivr.net/npm/toastify-js" type="text/javascript"></script>
     <script th:inline="javascript">
+    	
         var flag = /*[[${flag}]]*/ false;
         var msg = /*[[${msg}]]*/ null;
         if (flag) {
             Toastify({ text: msg, position: "center" }).showToast();
         }
+    </script>
+    <script>
+	    $( document ).ready(function() {
+	    	for(let i = 1; i <= 5; i++ ){
+				$('#sao_'+i).addClass("chon");
+			}
+	    });
+	    $('.fa-star-o').click(function(){
+	    	$('#danhGia').val($(this).data('value'));
+			for(let i = 1; i <= 5; i++ ){
+				$('#sao_'+i).removeClass("chon");
+				if(i <= $(this).data('value')){
+					$('#sao_'+i).addClass("chon");
+				}
+			}
+		})
     </script>
 </body>
 

@@ -25,4 +25,5 @@ public class ViewConstant {
     public static final String INFO_VIEW = "/info";
     public static final String PASSWORD_VIEW = "/password";
     public static final String CARD_VIEW = "/card";
+    public static final String RATE_VIEW = "/rate";
 }
