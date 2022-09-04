@@ -5,7 +5,7 @@ import java.util.*;
 import com.nohit.jira_project.model.*;
 
 public interface SanPhamService {
-    public Iterable<SanPham> getDsSanPham();
+    public List<SanPham> getDsSanPham();
 
     public SanPham getSanPham(int id);
 
@@ -16,21 +16,21 @@ public interface SanPhamService {
     // Methods to sort in Product Controller
     public List<SanPham> getDsSanPhamTopSale();
 
-    public List<SanPham> getDsSanPhamDescendingPriceOrder();
-
     public List<SanPham> getDsSanPhamAscendingPriceOrder();
+
+    public List<SanPham> getDsSanPhamDescendingPriceOrder();
 
     public List<SanPham> getDsSanPhamNewestOrder();
 
     // Methods to sort in Category Controller
-    public Iterable<SanPham> getDsSanPhamLaptop();
+    public List<SanPham> getDsSanPhamLaptop();
 
-    public Iterable<SanPham> getDsSanPhamComputer();
+    public List<SanPham> getDsSanPhamComputer();
 
-    public Iterable<SanPham> getDsSanPhamSmartPhone();
+    public List<SanPham> getDsSanPhamSmartPhone();
 
-    public Iterable<SanPham> getDsSanPhamTablet();
+    public List<SanPham> getDsSanPhamTablet();
 
-    public Iterable<SanPham> getDsSanPhamDevices();
+    public List<SanPham> getDsSanPhamDevices();
 
 }

@@ -12,7 +12,7 @@
     </title>
     <!-- Icon -->
     <link th:href="@{/img/logo.png}" rel="apple-touch-icon">
-    <link th:href="@{img/logo.png}" rel="shortcut icon">
+    <link th:href="@{/img/logo.png}" rel="shortcut icon">
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet'
         type='text/css'>
@@ -120,27 +120,32 @@
                                 <div class="form-group">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value=""> Tất cả
+                                            <input type="radio" name="sort" th:checked="${radioCheck==0}" value=""> Tất
+                                            cả
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="topSale" > Bán chạy
+                                            <input type="radio" name="sort" th:checked="${radioCheck==1}"
+                                                value="topSale"> Bán chạy
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="newOrder" > Mới nhất
+                                            <input type="radio" name="sort" th:checked="${radioCheck==2}"
+                                                value="newOrder"> Mới nhất
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="ascendingPriceOrder" > Giá tăng dần
+                                            <input type="radio" name="sort" th:checked="${radioCheck==3}"
+                                                value="ascendingPriceOrder"> Giá tăng dần
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" value="descendingPriceOrder" > Giá giảm dần
+                                            <input type="radio" name="sort" th:checked="${radioCheck==4}"
+                                                value="descendingPriceOrder"> Giá giảm dần
                                         </label>
                                     </div>
                                 </div>
@@ -153,33 +158,35 @@
                 </div>
                 <div class="col-lg-9 tab-content">
                     <div class="row">
-                            <div th:each="element: ${products}" class="col-md-3 col-sm-6">
-                                <div th:if="${element.tonKho != 0}" class="single-shop-product">
-                                    <div class="product-upper">
-                                        <!-- <img src="img/191005936/0.jpg" alt=""> -->
-                                        <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
-                                    </div>
-                                    <h2>
-                                        <a th:text="${element.ten}" href="">
-                                            Bàn phím cơ Logitech Gaming G813
-                                        </a>
-                                    </h2>
-                                    <div class="product-carousel-price">
-                                        <ins th:text="${element.khuyenMai}">
-                                            3.289.000 ₫
-                                        </ins>
-                                        <del th:text="${element.giaGoc}">
-                                            4.699.000 ₫
-                                        </del>
-                                    </div>
-                                    <div class="product-option-shop">
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                            data-product_id="70" rel="nofollow" th:href="@{/canvas/shop/?add-to-cart={id}(id=${element.id})}">
-                                            Thêm vào giỏ
-                                        </a>
-                                    </div>
+                        <div th:each="element: ${products}" class="col-md-3 col-sm-6">
+                            <div th:if="${element.tonKho != 0}" class="single-shop-product">
+                                <div class="product-upper">
+                                    <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
+                                </div>
+                                <h2>
+                                    <a th:text="${element.ten}" href="">
+                                        Bàn phím cơ Logitech Gaming G813
+                                    </a>
+                                </h2>
+                                <div class="product-carousel-price">
+                                    <ins
+                                        th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                        3.289.000 ₫
+                                    </ins>
+                                    <del
+                                        th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                        4.699.000 ₫
+                                    </del>
+                                </div>
+                                <div class="product-option-shop">
+                                    <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
+                                        data-product_id="70" rel="nofollow"
+                                        th:href="@{/canvas/shop/?add-to-cart={id}(id=${element.id})}">
+                                        Thêm vào giỏ
+                                    </a>
                                 </div>
                             </div>
+                        </div>
                     </div>
                     <!-- Dư tg sẽ làm tiếp :(( -->
                     <!-- <div class="row">
@@ -216,7 +223,6 @@
                             </div>
                         </div>
                     </div> -->
-
                 </div>
             </div>
         </div>

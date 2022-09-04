@@ -1,5 +1,7 @@
 package com.nohit.jira_project.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +11,6 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
-import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -21,22 +22,17 @@ public class PhanLoaiController {
 
     @Autowired
     private SanPhamService productService;
-    
+
     @Autowired
     private GioHangService gioHangService;
 
     // Fields
     private KhachHang mCurrentAccount;
-    private SanPham mChoosenOne;
-    private String mMsg;
     private boolean mIsByPass;
-    private boolean mIsMsgShow;
 
     // Load category
-    @GetMapping(value = { "" })
+    @GetMapping("")
     public ModelAndView category() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
         var mav = new ModelAndView(CATEGORY_TEMP);
         GioHang gioHang;
         // check current account still valid
@@ -52,21 +48,19 @@ public class PhanLoaiController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
+        var radioCheck = 0;
         mav.addObject("khachHang", mCurrentAccount);
         mav.addObject("gioHang", gioHang);
         mav.addObject("login", mCurrentAccount != null);
-        showMessageBox(mav);
-        mav.addObject("user", mCurrentAccount);
         mav.addObject("products", productService.getDsSanPham());
+        mav.addObject("radioCheck", radioCheck);
         mIsByPass = false;
         return mav;
     }
 
     // Load top sale products
-    @GetMapping(value = { "/sort" })
-    public ModelAndView topsaleProduct(@RequestParam("sort") String criteria) {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
+    @GetMapping(FILTER_VIEW)
+    public ModelAndView categoryFilter(String filter) {
         var mav = new ModelAndView(CATEGORY_TEMP);
         GioHang gioHang;
         // check current account still valid
@@ -82,24 +76,46 @@ public class PhanLoaiController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
+        List<SanPham> dsSanPham;
+        int radioCheck;
+        // filter function
+        switch (filter) {
+            case "laptop": {
+                dsSanPham = productService.getDsSanPhamLaptop();
+                radioCheck = 1;
+                break;
+            }
+            case "computer": {
+                dsSanPham = productService.getDsSanPhamComputer();
+                radioCheck = 2;
+                break;
+            }
+            case "tablet": {
+                dsSanPham = productService.getDsSanPhamTablet();
+                radioCheck = 3;
+                break;
+            }
+            case "smartphone": {
+                dsSanPham = productService.getDsSanPhamSmartPhone();
+                radioCheck = 4;
+                break;
+            }
+            case "devices": {
+                dsSanPham = productService.getDsSanPhamDevices();
+                radioCheck = 5;
+                break;
+            }
+            default: {
+                dsSanPham = productService.getDsSanPham();
+                radioCheck = 0;
+                break;
+            }
+        }
         mav.addObject("khachHang", mCurrentAccount);
         mav.addObject("gioHang", gioHang);
         mav.addObject("login", mCurrentAccount != null);
-        showMessageBox(mav);
-        mav.addObject("user", mCurrentAccount);
-        if (criteria.equals("pc")) {
-            mav.addObject("products", productService.getDsSanPhamComputer());
-        } else if (criteria.equals("devices")) {
-            mav.addObject("products", productService.getDsSanPhamDevices());
-        } else if (criteria.equals("laptop")) {
-            mav.addObject("products", productService.getDsSanPhamLaptop());
-        } else if (criteria.equals("smartphone")) {
-            mav.addObject("products", productService.getDsSanPhamSmartPhone());
-        } else if (criteria.equals("tablet")) {
-            mav.addObject("products", productService.getDsSanPhamTablet());
-        } else {
-            mav.addObject("products", productService.getDsSanPham());
-        }
+        mav.addObject("products", dsSanPham);
+        mav.addObject("radioCheck", radioCheck);
         mIsByPass = false;
         return mav;
     }
@@ -114,15 +130,4 @@ public class PhanLoaiController {
             return mCurrentAccount != null;
         }
     }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
-        }
-    }
-
 }

@@ -21,8 +21,14 @@ public class ViewConstant {
     public static final String TOKEN_VIEW = "/token";
     public static final String REFRESH_VIEW = "/refresh";
     public static final String FREE_VIEW = "/**";
-    
+
     public static final String INFO_VIEW = "/info";
     public static final String PASSWORD_VIEW = "/password";
     public static final String CARD_VIEW = "/card";
+
+    public static final String SORT_VIEW = "/sort";
+
+    public static final String FILTER_VIEW = "/filter";
+
+    public static final String RATE_VIEW = "/rate";
 }

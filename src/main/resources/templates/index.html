@@ -11,8 +11,8 @@
         Trang Chủ | nohitElectronics
     </title>
     <!-- Icon -->
-    <link th:href="@{img/logo.png}" rel="apple-touch-icon">
-    <link th:href="@{img/logo.png}" rel="shortcut icon">
+    <link th:href="@{/img/logo.png}" rel="apple-touch-icon">
+    <link th:href="@{/img/logo.png}" rel="shortcut icon">
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet'
         type='text/css'>
@@ -23,9 +23,9 @@
     <!-- Font Awesome -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link th:href="@{css/owl.carousel.css}" rel="stylesheet">
-    <link th:href="@{css/style.css}" rel="stylesheet">
-    <link th:href="@{css/responsive.css}" rel="stylesheet">
+    <link th:href="@{/css/owl.carousel.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/responsive.css}" rel="stylesheet">
     <!-- Toastify CSS -->
     <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet" type="text/css">
 </head>
@@ -134,7 +134,7 @@
                                                     tính mà còn là nơi khách hàng có thể tìm thấy mọi tiện ích công nghệ
                                                     hiện đại và dịch vụ chất lượng cao.
                                                 </p>
-                                                <a href="" class="readmore">
+                                                <a th:href="@{/about}" class="readmore">
                                                     Xem thêm
                                                 </a>
                                             </div>
@@ -173,7 +173,7 @@
                                                     Thêm sự lựa chọn, nohitElectronics mở rộng ngành hàng như các thiết
                                                     bị điện tử tiêu dùng, thiết bị gia dụng và thiết bị thông minh.
                                                 </p>
-                                                <a href="" class="readmore">
+                                                <a th:href="@{/about}" class="readmore">
                                                     Xem thêm
                                                 </a>
                                             </div>
@@ -201,7 +201,7 @@
                                                     lẻ thiết bị công nghệ cao được khách hàng và các đối tác tin tưởng
                                                     và yêu mến. Đó là giải thưởng và niềm tự hào vô giá của chúng tôi.
                                                 </p>
-                                                <a href="" class="readmore">
+                                                <a th:href="@{/about}" class="readmore">
                                                     Xem thêm
                                                 </a>
                                             </div>
@@ -263,10 +263,9 @@
                         <h2 class="section-title">
                             Sản phẩm mới nhất
                         </h2>
-
-                        <div  class="product-carousel">
-
-                            <div th:each="element: ${newProducts}" th:if="${element.tonKho != 0}" class="single-product">
+                        <div class="product-carousel">
+                            <div th:each="element: ${newProducts}" th:if="${element.tonKho != 0}"
+                                class="single-product">
                                 <div class="product-f-image">
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                     <div class="product-hover">
@@ -274,30 +273,39 @@
                                             <i class="fa fa-shopping-cart"></i>
                                             Thêm vào giỏ
                                         </a>
+<<<<<<< HEAD
                                         <a th:href="@{/detail}" class="view-details-link">
+                                            <i class="fa fa-link"></i>Xem thông tin
+=======
+                                        <a th:href="@{/detail/(id=${element.id})}" class="view-details-link">
                                             <i class="fa fa-link"></i>
                                             Xem thông tin
+>>>>>>> origin/feature/detail-BE+FE
                                         </a>
                                     </div>
                                 </div>
                                 <h2>
-
+<<<<<<< HEAD
                                     <a th:text="${element.ten}" th:href="@{/detail}">
+=======
 
+                                    <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+
+>>>>>>> origin/feature/detail-BE+FE
                                         Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                     </a>
                                 </h2>
                                 <div class="product-carousel-price">
-
-                                    <ins th:text="${element.khuyenMai}" >
+                                    <ins
+                                        th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         64.990.000 ₫
                                     </ins>
-                                    <del th:text="${element.giaGoc}">
+                                    <del
+                                        th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         65.990.000 ₫
                                     </del>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -340,14 +348,13 @@
                         <a th:href="@{/product/sort?sort=topSale}" class="wid-view-more">
                             Xem thêm
                         </a>
-
-
-                        <div th:each="element: ${some_topsaleProducts}" th:if="${element.tonKho != 0}" class="single-wid-product">
+                        <div th:each="element: ${some_topsaleProducts}" th:if="${element.tonKho != 0}"
+                            class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb">
                             </a>
                             <h2>
-                                <a th:text="${element.ten}" th:href="@{/detail}">
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
@@ -359,17 +366,15 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-
-                                <ins th:text="${element.khuyenMai}">
+                                <ins
+                                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     64.990.000 ₫
                                 </ins>
-                                <del th:text="${element.giaGoc}">
-
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     65.990.000 ₫
                                 </del>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -380,13 +385,17 @@
                         <a th:href="@{/product}" class="wid-view-more">
                             Xem thêm
                         </a>
-
-                        <div th:each="element: ${some_products}" th:if="${element.tonKho != 0}" class="single-wid-product">
+                        <div th:each="element: ${some_products}" th:if="${element.tonKho != 0}"
+                            class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
+<<<<<<< HEAD
                                 <a th:text="${element.ten}" th:href="@{/detail}">
+=======
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
 
+>>>>>>> origin/feature/detail-BE+FE
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
@@ -398,11 +407,11 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-
-                                <ins th:text="${element.khuyenMai}">
+                                <ins
+                                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     54.200.000 ₫
                                 </ins>
-                                <del th:text="${element.giaGoc}">
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     57.990.000 ₫
                                 </del>
                             </div>
@@ -417,13 +426,17 @@
                         <a th:href="@{/product/sort?sort=newOrder}" class="wid-view-more">
                             Xem thêm
                         </a>
-
-                        <div th:each="element: ${some_newProducts}" th:if="${element.tonKho != 0}" class="single-wid-product">
+                        <div th:each="element: ${some_newProducts}" th:if="${element.tonKho != 0}"
+                            class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
+<<<<<<< HEAD
                                 <a th:text="${element.ten}" th:href="@{/detail}">
+=======
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
 
+>>>>>>> origin/feature/detail-BE+FE
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
@@ -435,17 +448,15 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-
-                                <ins th:text="${element.khuyenMai}">
+                                <ins
+                                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     64.990.000 ₫
                                 </ins>
-                                <del th:text="${element.giaGoc}">
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     65.990.000 ₫
                                 </del>
                             </div>
                         </div>
-                        
-
                     </div>
                 </div>
             </div>

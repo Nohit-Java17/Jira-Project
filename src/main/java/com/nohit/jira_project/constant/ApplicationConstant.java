@@ -4,9 +4,10 @@ public class ApplicationConstant {
     public static final long EXPIRATION_TIME = 60 * 60 * 1000;
     public static final String SECRET_KEY = "secret";
 
+    public static final String DEFAULT_ROLE = "client";
     public static final int DEFAULT_STATUS = 0;
     public static final int DEFAULT_PAYMENT = 2;
-    public static final int DEFAULT_ROLE = 1;
+    public static final int DEFAULT_PROVINCE = 29;
 
     public class Role {
         public static final String ADMIN = "ADMIN";

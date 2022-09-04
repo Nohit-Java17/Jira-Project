@@ -20,9 +20,16 @@
     <!-- Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link th:href="@{css/style-ex.css}" rel="stylesheet">
+    <link th:href="@{/css/style-ex.css}" rel="stylesheet">
     <!-- Toastify CSS -->
     <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet" type="text/css">
+    <!-- Check cursor -->
+    <style>
+        input[type="checkbox"],
+        input[type="checkbox"]+label {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
@@ -54,11 +61,10 @@
                             <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu">
                         </div>
                         <div class="checkbox">
-                            <!-- Nếu kịp sẽ làm thêm :(( -->
-                            <!-- <label>
-                                <input type="checkbox">
+                            <input type="checkbox" name="remember-me" id="remember">
+                            <label for="remember">
                                 Ghi Nhớ
-                            </label> -->
+                            </label>
                             <label class="pull-right">
                                 <a th:href="@{/password-reset}">
                                     Quên mật khẩu?

@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.*;
+
 import lombok.*;
 
 import static javax.persistence.GenerationType.*;
@@ -40,8 +42,9 @@ public class SanPham {
     private int soLuong;
 
     @NonNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "ngay_nhap")
-    private String ngayNhap;
+    private Date ngayNhap;
 
     @Column(name = "ton_kho")
     private int tonKho;
