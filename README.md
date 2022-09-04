@@ -10,7 +10,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 
 ## HÌNH ẢNH DEMO
 <p align="center">
-<img src="https://media-exp1.licdn.com/dms/image/C5622AQGHqawx9dEKUg/feedshare-shrink_2048_1536/0/1659002871239?e=1661990400&v=beta&t=V6Dtu_HDL6MLdkc2bnjnxGkGLPyp4omh9XkEkuUvCJk"></img>
+<img src="https://raw.githubusercontent.com/Tynab/Jira-Project/main/temp/pic/0.png"></img>
 </p>
 
 ## VIDEO DEMO
