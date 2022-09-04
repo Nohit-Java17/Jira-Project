@@ -2,22 +2,69 @@
 Trang web thương mại điện tử được thiết lập để phục vụ một phần hoặc toàn bộ quy trình của hoạt động mua bán hàng hóa hay cung ứng dịch vụ, từ trưng bày giới thiệu hàng hóa, dịch vụ đến giao kết hợp đồng, cung ứng dịch vụ, thanh toán và dịch vụ sau bán hàng.
 
 ## LINK DEMO
-[Click vào đây chưa thể xem]()
+<div align="center">
+
+[Click vào đây để xem chi tiết](https://crm-project.herokuapp.com/login)
+
+</div>
 
 ## HÌNH ẢNH DEMO
 <p align="center">
 <img src="https://media-exp1.licdn.com/dms/image/C5622AQGHqawx9dEKUg/feedshare-shrink_2048_1536/0/1659002871239?e=1661990400&v=beta&t=V6Dtu_HDL6MLdkc2bnjnxGkGLPyp4omh9XkEkuUvCJk"></img>
 </p>
 
-## CẤU HÌNH KẾT NỐI
+## VIDEO DEMO
+<div align="center">
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3W1kdSJdITo/0.jpg)](https://youtu.be/3W1kdSJdITo)
+
+</div>
+
+## CẤU HÌNH API REFRESH TOKEN
 ```java
-// CODE DEMO
+// Refresh token
+    @GetMapping(TOKEN_VIEW + REFRESH_VIEW)
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response)
+            throws StreamWriteException, DatabindException, IOException {
+        var header = request.getHeader(AUTHORIZATION);
+        // check token format in authorization header
+        if (header != null && header.startsWith(TOKEN_PREFIX)) {
+            // get token from authorization header
+            try {
+                var refreshToken = header.substring(TOKEN_PREFIX.length());
+                var algorithm = HMAC256(SECRET_KEY.getBytes());
+                var user = userService.getUser(require(algorithm).build().verify(refreshToken).getSubject());
+                var tokens = new HashMap<>();
+                tokens.put(ACCESS_TOKEN_KEY,
+                        create().withSubject(user.getEmail())
+                                .withExpiresAt(new Date(currentTimeMillis() + EXPIRATION_TIME))
+                                .withIssuer(request.getRequestURL().toString())
+                                .withClaim(ROLE_CLAIM_KEY,
+                                        singleton(new Role(ROLE_PREFIX + user.getRole().getName().toUpperCase()))
+                                                .stream().map(Role::getName).collect(toList()))
+                                .sign(algorithm));
+                tokens.put(REFRESH_TOKEN_KEY, refreshToken);
+                response.setContentType(APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+            } catch (Exception e) {
+                var errorMsg = e.getMessage();
+                response.setHeader(ERROR_HEADER_KEY, errorMsg);
+                response.setStatus(FORBIDDEN.value());
+                var error = new HashMap<>();
+                error.put(ERROR_MESSAGE_KEY, errorMsg);
+                response.setContentType(APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(), error);
+            }
+        } else {
+            throw new RuntimeException("Refresh token is missing");
+        }
+    }
 ```
 
 ### THÀNH VIÊN
 Nhóm NOHIT gồm các thành viên:
 
-<img src="https://media-exp1.licdn.com/dms/image/C5622AQGtkRfQZFA0UQ/feedshare-shrink_800/0/1659003903148?e=1661990400&v=beta&t=_XIFrJVYKHJBEvxsTHRXje4pTWWzVIxJqoJMUs-0EEU" align="right" width="21%" height="21%"></img>
+<img src="https://raw.githubusercontent.com/Tynab/Jira-Project/main/temp/pic/2.png" align="right" width="21%" height="21%"></img>
 <div style="display:flex;">
 
 - Nguyễn Đặng Trường An
@@ -28,29 +75,10 @@ Nhóm NOHIT gồm các thành viên:
 
 </div>
 
-### CÔNG VIỆC
-- Database:
-    - MySQL:
-- Front-End:
-    - HTML:
-    - CSS:
-    - Boostrap:
-    - Javascript:
-    - jQuery:
-    - Thymeleaf:
-- Back-End:
-    - Servlet:
-    - JSP:
-    - Filter:
-    - JDBC:
-    - RESTful API:
-    - DI & IoC:
-    - Spring Boot:
-    - Hibernate:
-    - JPA:
-    - Security:
-- Khác:
-    - Docker:
-    - ELK:
-    - RabbitMQ:
-- Feature:
+### TÍCH HỢP
+<img src="https://raw.githubusercontent.com/Tynab/CRM-Project/master/temp/pic/1.png" align="left" width="3%" height="3%"></img>
+<div style="display:flex;">
+
+- Java JWT » 4.0.0
+
+</div>
