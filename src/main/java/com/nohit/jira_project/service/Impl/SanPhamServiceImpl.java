@@ -45,8 +45,14 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
+    public List<SanPham> getDsSanPhamTonKho() {
+        log.info("Fetching all san_pham ton_kho");
+        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getTonKho() > 0).collect(toList());
+    }
+
+    @Override
     public List<SanPham> getDsSanPhamTopSale() {
-        var dsSanPham = sanPhamRepository.findAll();
+        var dsSanPham = getDsSanPhamTonKho();
         dsSanPham.sort((firstProduct, secondProduct) -> {
             return secondProduct.getTonKho() < firstProduct.getTonKho() ? 1 : -1;
         });
@@ -56,7 +62,7 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public List<SanPham> getDsSanPhamAscendingPriceOrder() {
-        var dsSanPham = sanPhamRepository.findAll();
+        var dsSanPham = getDsSanPhamTonKho();
         dsSanPham.sort((firstProduct, secondProduct) -> {
             return secondProduct.getKhuyenMai() < firstProduct.getKhuyenMai() ? 1 : -1;
         });
@@ -66,7 +72,7 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public List<SanPham> getDsSanPhamDescendingPriceOrder() {
-        var dsSanPham = sanPhamRepository.findAll();
+        var dsSanPham = getDsSanPhamTonKho();
         dsSanPham.sort((firstProduct, secondProduct) -> {
             return secondProduct.getKhuyenMai() > firstProduct.getKhuyenMai() ? 1 : -1;
         });
@@ -76,7 +82,7 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public List<SanPham> getDsSanPhamNewestOrder() {
-        var dsSanPham = sanPhamRepository.findAll();
+        var dsSanPham = getDsSanPhamTonKho();
         dsSanPham.sort((firstProduct, secondProduct) -> {
             return secondProduct.getNgayNhap().compareTo(firstProduct.getNgayNhap());
         });
@@ -87,35 +93,32 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Override
     public List<SanPham> getDsSanPhamLaptop() {
         log.info("Fetching san_pham with category {}", LAPTOP);
-        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(LAPTOP))
-                .collect(toList());
+        return getDsSanPhamTonKho().stream().filter(sanPham -> sanPham.getPhanLoai().equals(LAPTOP)).collect(toList());
     }
 
     @Override
     public List<SanPham> getDsSanPhamComputer() {
         log.info("Fetching san_pham with category {}", COMPUTER);
-        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(COMPUTER))
+        return getDsSanPhamTonKho().stream().filter(sanPham -> sanPham.getPhanLoai().equals(COMPUTER))
                 .collect(toList());
     }
 
     @Override
     public List<SanPham> getDsSanPhamSmartPhone() {
         log.info("Fetching san_pham with category {}", SMART_PHONE);
-        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(SMART_PHONE))
+        return getDsSanPhamTonKho().stream().filter(sanPham -> sanPham.getPhanLoai().equals(SMART_PHONE))
                 .collect(toList());
     }
 
     @Override
     public List<SanPham> getDsSanPhamTablet() {
         log.info("Fetching san_pham with category {}", TABLET);
-        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(TABLET))
-                .collect(toList());
+        return getDsSanPhamTonKho().stream().filter(sanPham -> sanPham.getPhanLoai().equals(TABLET)).collect(toList());
     }
 
     @Override
     public List<SanPham> getDsSanPhamDevices() {
         log.info("Fetching san_pham with category {}", DEVICES);
-        return sanPhamRepository.findAll().stream().filter(sanPham -> sanPham.getPhanLoai().equals(DEVICES))
-                .collect(toList());
+        return getDsSanPhamTonKho().stream().filter(sanPham -> sanPham.getPhanLoai().equals(DEVICES)).collect(toList());
     }
 }

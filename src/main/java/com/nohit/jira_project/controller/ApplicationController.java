@@ -22,16 +22,15 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping("")
 public class ApplicationController {
     @Autowired
+    KhachHangService khachHangService;
+
+    @Autowired
     private AuthenticationUtil authenticationUtil;
 
     @Autowired
     StringUtil stringUtil;
 
-    @Autowired
-    KhachHangService khachHangService;
-
     // Fields
-    private KhachHang mCurrentAccount;
     private String mMsg;
     private boolean mIsMsgShow;
 

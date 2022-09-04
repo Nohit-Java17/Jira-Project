@@ -22,21 +22,16 @@ public class LichSuMuaHangController {
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
-    // Fields
-    private KhachHang mCurrentAccount;
-    private String mMsg;
-    private boolean mIsByPass;
-    private boolean mIsMsgShow;
-
     // Load history
     @GetMapping("")
     public ModelAndView history() {
+        var khachHang = authenticationUtil.getAccount();
         // check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
         } else {
             var mav = new ModelAndView(HISTORY_TEMP);
-            var id = mCurrentAccount.getId();
+            var id = khachHang.getId();
             var gioHang = gioHangService.getGioHang(id);
             // check gio_hang exist
             if (gioHang == null) {
@@ -44,33 +39,10 @@ public class LichSuMuaHangController {
                 gioHang.setId(id);
                 gioHangService.saveGioHang(gioHang);
             }
-            mav.addObject("khachHang", mCurrentAccount);
-            mav.addObject("gioHang", gioHang);
-            mav.addObject("login", mCurrentAccount != null);
-            showMessageBox(mav);
-            mIsByPass = false;
+            mav.addObject("client", khachHang);
+            mav.addObject("cart", gioHang);
+            mav.addObject("login", khachHang != null);
             return mav;
-        }
-    }
-
-    // Check valid account
-    private boolean isValidAccount() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            mCurrentAccount = authenticationUtil.getAccount();
-            return mCurrentAccount != null;
-        }
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
         }
     }
 }
