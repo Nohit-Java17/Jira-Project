@@ -263,20 +263,12 @@
                         <h2 class="section-title">
                             Sản phẩm mới nhất
                         </h2>
-<<<<<<< HEAD
-                        <div class="product-carousel">
-                        
-                            <div th:each="spMoiNhat : ${dsMoiNhat}" class="single-product">
-                                <div class="product-f-image">
-                                    <!-- <img th:src="img/220503385/0.jpg" alt=""> -->
-                                    <img th:src="@{${'img/'+productNew.album}}/0.jpg">
-=======
+
                         <div  class="product-carousel">
 
                             <div th:each="element: ${newProducts}" th:if="${element.tonKho != 0}" class="single-product">
                                 <div class="product-f-image">
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
->>>>>>> origin/feCategory
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link">
                                             <i class="fa fa-shopping-cart"></i>
@@ -289,35 +281,23 @@
                                     </div>
                                 </div>
                                 <h2>
-<<<<<<< HEAD
-                                    <a th:href="@{/detail}" th:text="productNew.ten">
-=======
+
                                     <a th:text="${element.ten}" th:href="@{/detail}">
->>>>>>> origin/feCategory
+
                                         Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                     </a>
                                 </h2>
                                 <div class="product-carousel-price">
-<<<<<<< HEAD
-                                    <ins th:text="productNew.giaGoc">
-                                        64.990.000 ₫
-                                    </ins>
-                                    <del th:text="productNew.giamGia">
-=======
+
                                     <ins th:text="${element.khuyenMai}" >
                                         64.990.000 ₫
                                     </ins>
                                     <del th:text="${element.giaGoc}">
->>>>>>> origin/feCategory
                                         65.990.000 ₫
                                     </del>
                                 </div>
                             </div>
-<<<<<<< HEAD
                             
-=======
-                    
->>>>>>> origin/feCategory
                         </div>
                     </div>
                 </div>
@@ -360,16 +340,7 @@
                         <a th:href="@{/product/sort?sort=topSale}" class="wid-view-more">
                             Xem thêm
                         </a>
-<<<<<<< HEAD
-                        
-                        <div th:each="spBanChayNhat : ${dsBanChayNhat}" class="single-wid-product">
-                            <a th:href="@{/detail}">
-                                <!-- <img src="img/220503385/1.jpg" alt="" class="product-thumb"> -->
-                                <img th:src="@{${'img/'+spBanChayNhat.album}}/1.jpg" class="product-thumb">
-                            </a>
-                            <h2>
-                                <a th:href="@{/detail}" th:text="spBanChayNhat.ten">
-=======
+
 
                         <div th:each="element: ${some_topsaleProducts}" th:if="${element.tonKho != 0}" class="single-wid-product">
                             <a th:href="@{/detail}">
@@ -377,7 +348,6 @@
                             </a>
                             <h2>
                                 <a th:text="${element.ten}" th:href="@{/detail}">
->>>>>>> origin/feCategory
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
@@ -389,17 +359,12 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-<<<<<<< HEAD
-                                <ins th:text="spBanChayNhat.giaGoc">
-                                        64.990.000 ₫
-                                </ins>
-                                <del th:text="spBanChayNhat.giamGia">
-=======
+
                                 <ins th:text="${element.khuyenMai}">
                                     64.990.000 ₫
                                 </ins>
                                 <del th:text="${element.giaGoc}">
->>>>>>> origin/feCategory
+
                                     65.990.000 ₫
                                 </del>
                             </div>
@@ -415,23 +380,13 @@
                         <a th:href="@{/product}" class="wid-view-more">
                             Xem thêm
                         </a>
-<<<<<<< HEAD
-                        
-                        <div th:each="spKhuyenMai : ${dsKhuyenMai}" class="single-wid-product">
-                            <a th:href="@{/detail}">
-                                <!-- <img src="img/220202046/1.jpg" alt="" class="product-thumb"> -->
-                                <img th:src="@{${'img/'+spKhuyenMai.album}}/1.jpg" class="product-thumb">
-                           </a>
-             
-                            <h2>
-                                <a th:href="@{/detail}" th:text="spKhuyenMai.ten">
-=======
+
                         <div th:each="element: ${some_products}" th:if="${element.tonKho != 0}" class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
                                 <a th:text="${element.ten}" th:href="@{/detail}">
->>>>>>> origin/feCategory
+
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
@@ -443,16 +398,7 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-<<<<<<< HEAD
-                                <ins th:text="spKhuyenMai.giaGoc">
-                                        64.990.000 ₫
-                                </ins>
-                                <del th:text="spKhuyenMai.giamGia">
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>                  
-=======
+
                                 <ins th:text="${element.khuyenMai}">
                                     54.200.000 ₫
                                 </ins>
@@ -461,7 +407,6 @@
                                 </del>
                             </div>
                         </div>
->>>>>>> origin/feCategory
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -472,21 +417,13 @@
                         <a th:href="@{/product/sort?sort=newOrder}" class="wid-view-more">
                             Xem thêm
                         </a>
-<<<<<<< HEAD
-                        <div th:each="spMoiNhat : ${dsMoiNhat}" class="single-wid-product">
-                            <a th:href="@{/detail}">
-                                <!-- <img src="img/220503385/1.jpg" alt="" class="product-thumb"> -->
-                                <img th:src="@{${'img/'+spMoiNhat.album}}/1.jpg" class="product-thumb">
-                          	</a>
-                            <h2>
-                                <a th:href="@{/detail}" th:text="spMoiNhat.ten">
-=======
+
                         <div th:each="element: ${some_newProducts}" th:if="${element.tonKho != 0}" class="single-wid-product">
                             <a th:href="@{/detail}">
                                 <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="" class="product-thumb"></a>
                             <h2>
                                 <a th:text="${element.ten}" th:href="@{/detail}">
->>>>>>> origin/feCategory
+
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
@@ -498,16 +435,7 @@
                                 <i class="fa fa-star"></i>
                             </div>
                             <div class="product-wid-price">
-<<<<<<< HEAD
-                                <ins th:text="spMoiNhat.giaGoc">
-                                        64.990.000 ₫
-                                </ins>
-                                <del th:text="spMoiNhat.giamGia">
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>                       
-=======
+
                                 <ins th:text="${element.khuyenMai}">
                                     64.990.000 ₫
                                 </ins>
@@ -517,7 +445,7 @@
                             </div>
                         </div>
                         
->>>>>>> origin/feCategory
+
                     </div>
                 </div>
             </div>

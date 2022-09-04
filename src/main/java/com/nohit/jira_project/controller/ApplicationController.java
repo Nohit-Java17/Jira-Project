@@ -65,17 +65,6 @@ public class ApplicationController {
 
     }
 
-    // Load about
-    @GetMapping(value = { ABOUT_VIEW })
-    public ModelAndView about() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(ABOUT_TEMP);
-        mIsByPass = false;
-        return mav;
-
-    }
-
     // Load register
     @GetMapping(value = { REGISTER_VIEW })
     public ModelAndView register() {
