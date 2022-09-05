@@ -17,7 +17,6 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @Controller
 @RequestMapping(PRODUCT_VIEW)
 public class SanPhamController {
-
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
@@ -83,19 +82,24 @@ public class SanPhamController {
                 radioCheck = 1;
                 break;
             }
-            case "newOrder": {
-                dsSanPham = sanPhamService.getDsSanPhamNewestOrder();
+            case "newest": {
+                dsSanPham = sanPhamService.getDsSanPhamNewest();
                 radioCheck = 2;
                 break;
             }
-            case "ascendingPriceOrder": {
-                dsSanPham = sanPhamService.getDsSanPhamAscendingPriceOrder();
+            case "discount": {
+                dsSanPham = sanPhamService.getDsSanPhamDescendingDiscount();
                 radioCheck = 3;
                 break;
             }
-            case "descendingPriceOrder": {
-                dsSanPham = sanPhamService.getDsSanPhamDescendingPriceOrder();
+            case "ascendingPrice": {
+                dsSanPham = sanPhamService.getDsSanPhamAscendingPrice();
                 radioCheck = 4;
+                break;
+            }
+            case "descendingPrice": {
+                dsSanPham = sanPhamService.getDsSanPhamDescendingPrice();
+                radioCheck = 5;
                 break;
             }
             default: {

@@ -28,7 +28,7 @@ public class ApplicationController {
     private AuthenticationUtil authenticationUtil;
 
     @Autowired
-    StringUtil stringUtil;
+    private StringUtil stringUtil;
 
     // Fields
     private String mMsg;

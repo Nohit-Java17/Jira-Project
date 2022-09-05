@@ -13,7 +13,7 @@ import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
 @Controller
-@RequestMapping(INDEX_VIEW)
+@RequestMapping(value = { INDEX_VIEW, "/", "" })
 public class IndexController {
     @Autowired
     private SanPhamService sanPhamService;
@@ -46,10 +46,10 @@ public class IndexController {
         mav.addObject("client", khachHang);
         mav.addObject("cart", gioHang);
         mav.addObject("login", khachHang != null);
-        mav.addObject("newProducts", sanPhamService.getDsSanPhamNewestOrder().subList(0, 6));
+        mav.addObject("newProducts", sanPhamService.getDsSanPhamNewest().subList(0, 6));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 3));
-        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingPriceOrder().subList(0, 3));
-        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewestOrder().subList(0, 3));
+        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         return mav;
     }
 }

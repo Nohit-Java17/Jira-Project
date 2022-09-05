@@ -133,19 +133,25 @@
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="sort" th:checked="${radioCheck==2}"
-                                                value="newOrder"> Mới nhất
+                                                value="newest"> Mới nhất
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="sort" th:checked="${radioCheck==3}"
-                                                value="ascendingPriceOrder"> Giá tăng dần
+                                                value="discount"> Khuyến mãi
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="sort" th:checked="${radioCheck==4}"
-                                                value="descendingPriceOrder"> Giá giảm dần
+                                                value="ascendingPrice"> Giá tăng dần
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="sort" th:checked="${radioCheck==5}"
+                                                value="descendingPrice"> Giá giảm dần
                                         </label>
                                     </div>
                                 </div>
@@ -164,7 +170,7 @@
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                 </div>
                                 <h2>
-                                    <a th:text="${element.ten}" href="">
+                                    <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                                         Bàn phím cơ Logitech Gaming G813
                                     </a>
                                 </h2>
