@@ -28,9 +28,9 @@ public class NguoiNhanServiceImpl implements NguoiNhanService {
     }
 
     @Override
-    public void saveNguoiNhan(NguoiNhan nguoiNhan) {
+    public NguoiNhan saveNguoiNhan(NguoiNhan nguoiNhan) {
         log.info("Saving nguoi_nhan with name: {}", nguoiNhan.getHoTen());
-        nguoiNhanRepository.save(nguoiNhan);
+        return nguoiNhanRepository.save(nguoiNhan);
     }
 
     @Override

@@ -7,7 +7,7 @@ public interface DonHangService {
 
     public DonHang getDonHang(int id);
 
-    public void saveDonHang(DonHang donHang);
+    public DonHang saveDonHang(DonHang donHang);
 
     public void deleteDonHang(int id);
 }
