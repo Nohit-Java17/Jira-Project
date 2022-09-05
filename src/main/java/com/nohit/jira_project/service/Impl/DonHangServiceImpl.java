@@ -28,9 +28,9 @@ public class DonHangServiceImpl implements DonHangService {
     }
 
     @Override
-    public void saveDonHang(DonHang donHang) {
+    public DonHang saveDonHang(DonHang donHang) {
         log.info("Saving don_hang with id: {}", donHang.getId());
-        donHangRepository.save(donHang);
+        return donHangRepository.save(donHang);
     }
 
     @Override

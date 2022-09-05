@@ -7,7 +7,7 @@ public interface NguoiNhanService {
 
     public NguoiNhan getNguoiNhan(int id);
 
-    public void saveNguoiNhan(NguoiNhan nguoiNhan);
+    public NguoiNhan saveNguoiNhan(NguoiNhan nguoiNhan);
 
     public void deleteNguoiNhan(int id);
 }

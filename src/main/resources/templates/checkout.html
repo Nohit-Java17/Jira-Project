@@ -49,42 +49,42 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="index.html">
+                            <a th:href="@{/index}">
                                 Trang chủ
                             </a>
                         </li>
                         <li>
-                            <a href="product.html">
+                            <a th:href="@{/product}">
                                 Sản phẩm
                             </a>
                         </li>
                         <li>
-                            <a href="category.html">
+                            <a th:href="@{/category}">
                                 Phân Loại
                             </a>
                         </li>
                         <li>
-                            <a href="detail.html">
+                            <a th:href="@{/detail}">
                                 Chi tiết
                             </a>
                         </li>
                         <li>
-                            <a href="cart.html">
+                            <a th:href="@{/cart}">
                                 Giỏ hàng
                             </a>
                         </li>
                         <li class="active">
-                            <a href="checkout.html">
+                            <a th:href="@{/checkout}">
                                 Thanh toán
                             </a>
                         </li>
                         <li>
-                            <a href="about.html">
+                            <a th:href="@{/about}">
                                 Giới thiệu
                             </a>
                         </li>
                         <li>
-                            <a href="contact.html">
+                            <a th:href="@{/contact}">
                                 Liên hệ
                             </a>
                         </li>
@@ -124,62 +124,52 @@
                         <h2 class="sidebar-title">
                             Sản phẩm
                         </h2>
-                        <div class="thubmnail-recent">
-                            <img src="img/220202046/1.jpg" class="recent-thumb" alt="">
+                        <div th:each="element: ${some_products}" class="thubmnail-recent">                 
+                            <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" class="recent-thumb" alt="">
                             <h2>
-                                <a href="detail.html">
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
                             <div class="product-sidebar-price">
-                                <ins>
-                                    54.200.000 ₫
+                                <ins th:text="${#numbers.formatDecimal(element.giaGoc - element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    64.990.000 ₫
                                 </ins>
-                                <del class="obsolete">
-                                    57.990.000 ₫
+                                <br>
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    65.990.000 ₫
                                 </del>
                             </div>
                         </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/220202046/1.jpg" class="recent-thumb" alt="">
-                            <h2>
-                                <a href="detail.html">
-                                    Máy tính xách tay MSI Vector GP76 12UGS
-                                </a>
-                            </h2>
-                            <div class="product-sidebar-price">
-                                <ins>
-                                    54.200.000 ₫
-                                </ins>
-                                <del class="obsolete">
-                                    57.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div class="single-sidebar one-line">
                         <h2 class="sidebar-title">
                             Mới nhất
                         </h2>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
+                        <div th:each="element: ${some_newProducts}" class="thubmnail-recent">                 
+                            <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" class="recent-thumb" alt="">
+                            <h2>
+                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                                    Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                </a>
-                            </li>
-                        </ul>
+                            </h2>
+                            <div class="product-sidebar-price">
+                                <ins th:text="${#numbers.formatDecimal(element.giaGoc - element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    64.990.000 ₫
+                                </ins>
+                                <br>
+                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    65.990.000 ₫
+                                </del>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form enctype="multipart/form-data" action="#" class="checkout" method="post"
-                                name="checkout">
+                            <form th:action="@{/checkout}" enctype="multipart/form-data" class="checkout" method="post" name="checkout">
                                 <div id="customer_details" class="col2-set">
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
@@ -195,7 +185,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" value="" placeholder="Nhập họ và tên"
+                                                <input type="text" th:value="${khachHang.hoTen}" placeholder="Nhập họ và tên"
                                                     id="billing_first_name" name="billing_first_name" class="input-text"
                                                     required>
                                             </p>
@@ -209,7 +199,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" value="" placeholder="Nhập địa chỉ"
+                                                <input type="text" th:value="${khachHang.diaChi}" placeholder="Nhập địa chỉ"
                                                     id="billing_address_1" name="billing_address_1" class="input-text"
                                                     required>
                                             </p>
@@ -224,7 +214,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" value="" placeholder="Nhập Huyện / Quận"
+                                                <input type="text" th:value="${khachHang.xaPhuong}" placeholder="Nhập Huyện / Quận"
                                                     id="billing_city" name="billing_city" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
@@ -238,7 +228,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" value="" placeholder="Nhập Huyện / Quận"
+                                                <input type="text" th:value="${khachHang.huyenQuan}" placeholder="Nhập Huyện / Quận"
                                                     id="billing_city" name="billing_city" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
@@ -253,194 +243,9 @@
                                                 </label>
                                                 <select class="country_to_state country_select" id="billing_country"
                                                     name="billing_country">
-                                                    <option value="AG">
-                                                        An Giang
-                                                    </option>
-                                                    <option value="BL">
-                                                        Bạc Liêu
-                                                    </option>
-                                                    <option value="BG">
-                                                        Bắc Giang
-                                                    </option>
-                                                    <option value="BK">
-                                                        Bắc Kạn
-                                                    </option>
-                                                    <option value="BN">
-                                                        Bắc Ninh
-                                                    </option>
-                                                    <option value="BE">
-                                                        Bến Tre
-                                                    </option>
-                                                    <option value="BD">
-                                                        Bình Dương
-                                                    </option>
-                                                    <option value="BH">
-                                                        Bình Định
-                                                    </option>
-                                                    <option value="BP">
-                                                        Bình Phước
-                                                    </option>
-                                                    <option value="BT">
-                                                        Bình Thuận
-                                                    </option>
-                                                    <option value="CM">
-                                                        Cà Mau
-                                                    </option>
-                                                    <option value="CB">
-                                                        Cao Bằng
-                                                    </option>
-                                                    <option value="CT">
-                                                        Cần Thơ
-                                                    </option>
-                                                    <option value="DN">
-                                                        Đà Nẵng
-                                                    </option>
-                                                    <option value="DL">
-                                                        Đắk Lắk
-                                                    </option>
-                                                    <option value="DG">
-                                                        Đắk Nông
-                                                    </option>
-                                                    <option value="DB">
-                                                        Điện Biên
-                                                    </option>
-                                                    <option value="DI">
-                                                        Đồng Nai
-                                                    </option>
-                                                    <option value="DT">
-                                                        Đồng Tháp
-                                                    </option>
-                                                    <option value="GL">
-                                                        Gia Lai
-                                                    </option>
-                                                    <option value="HG">
-                                                        Hà Giang
-                                                    </option>
-                                                    <option value="HN">
-                                                        Hà Nam
-                                                    </option>
-                                                    <option value="HI">
-                                                        Hà Nội
-                                                    </option>
-                                                    <option value="HT">
-                                                        Hà Tĩnh
-                                                    </option>
-                                                    <option value="HD">
-                                                        Hải Dương
-                                                    </option>
-                                                    <option value="HP">
-                                                        Hải Phòng
-                                                    </option>
-                                                    <option value="UG">
-                                                        Hậu Giang
-                                                    </option>
-                                                    <option value="HB">
-                                                        Hòa Bình
-                                                    </option>
-                                                    <option value="SG" selected>
-                                                        Hồ Chí Minh
-                                                    </option>
-                                                    <option value="HY">
-                                                        Hưng Yên
-                                                    </option>
-                                                    <option value="KH">
-                                                        Khánh Hòa
-                                                    </option>
-                                                    <option value="KG">
-                                                        Kiên Giang
-                                                    </option>
-                                                    <option value="KT">
-                                                        Kon Tum
-                                                    </option>
-                                                    <option value="LC">
-                                                        Lai Châu
-                                                    </option>
-                                                    <option value="LS">
-                                                        Lạng Sơn
-                                                    </option>
-                                                    <option value="LI">
-                                                        Lào Cai
-                                                    </option>
-                                                    <option value="LD">
-                                                        Lâm Đồng
-                                                    </option>
-                                                    <option value="LA">
-                                                        Long An
-                                                    </option>
-                                                    <option value="ND">
-                                                        Nam Định
-                                                    </option>
-                                                    <option value="NA">
-                                                        Nghệ An
-                                                    </option>
-                                                    <option value="NB">
-                                                        Ninh Bình
-                                                    </option>
-                                                    <option value="NT">
-                                                        Ninh Thuận
-                                                    </option>
-                                                    <option value="PT">
-                                                        Phú Thọ
-                                                    </option>
-                                                    <option value="PY">
-                                                        Phú Yên
-                                                    </option>
-                                                    <option value="QB">
-                                                        Quảng Bình
-                                                    </option>
-                                                    <option value="QN">
-                                                        Quảng Nam
-                                                    </option>
-                                                    <option value="QI">
-                                                        Quảng Ngãi
-                                                    </option>
-                                                    <option value="QH">
-                                                        Quảng Ninh
-                                                    </option>
-                                                    <option value="QT">
-                                                        Quảng Trị
-                                                    </option>
-                                                    <option value="ST">
-                                                        Sóc Trăng
-                                                    </option>
-                                                    <option value="SL">
-                                                        Sơn La
-                                                    </option>
-                                                    <option value="TN">
-                                                        Tây Ninh
-                                                    </option>
-                                                    <option value="TB">
-                                                        Thái Bình
-                                                    </option>
-                                                    <option value="IN">
-                                                        Thái Nguyên
-                                                    </option>
-                                                    <option value="TH">
-                                                        Thanh Hóa
-                                                    </option>
-                                                    <option value="TT">
-                                                        Thừa Thiên Huế
-                                                    </option>
-                                                    <option value="TG">
-                                                        Tiền Giang
-                                                    </option>
-                                                    <option value="TV">
-                                                        Trà Vinh
-                                                    </option>
-                                                    <option value="TQ">
-                                                        Tuyên Quang
-                                                    </option>
-                                                    <option value="VL">
-                                                        Vĩnh Long
-                                                    </option>
-                                                    <option value="VP">
-                                                        Vĩnh Phúc
-                                                    </option>
-                                                    <option value="VT">
-                                                        Vũng Tàu
-                                                    </option>
-                                                    <option value="YB">
-                                                        Yên Bái
+                                                    <option th:each="tinhThanh : ${dsTinhThanh}"
+                                                                th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
+                                                                th:selected="${tinhThanh.id}==${khachHang.idTinhThanh}">
                                                     </option>
                                                 </select>
                                             </p>
@@ -453,7 +258,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="email" value="" placeholder="Nhập thư điện tử"
+                                                <input type="email" th:value="${khachHang.email}" placeholder="Nhập thư điện tử"
                                                     id="billing_email" name="billing_email" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
@@ -465,7 +270,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" value="" placeholder="Nhập số điện thoại"
+                                                <input type="text" th:value="${khachHang.soDienThoai}" placeholder="Nhập số điện thoại"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                     id="billing_phone" name="billing_phone" class="input-text" required>
                                             </p>
@@ -477,7 +282,7 @@
                                             <h3 id="ship-to-different-address">
                                                 <label style="cursor:pointer" class="checkbox"
                                                     for="ship-to-different-address-checkbox">
-                                                    <input type="checkbox" value="1" name="ship_to_different_address"
+                                                    <input type="checkbox" value="0" name="newNguoiNhan"
                                                         class="input-checkbox" id="ship-to-different-address-checkbox">
                                                     Giao hàng đến địa chỉ khác?
                                                 </label>
@@ -494,7 +299,7 @@
                                                         </abbr>
                                                     </label>
                                                     <input type="text" value="" placeholder="Nhập họ và tên"
-                                                        id="shipping_first_name" name="shipping_first_name"
+                                                        id="shipping_first_name" name="hoTen"
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
@@ -509,7 +314,7 @@
                                                         </abbr>
                                                     </label>
                                                     <input type="text" value="" placeholder="Nhập địa chỉ"
-                                                        id="shipping_address_1" name="shipping_address_1"
+                                                        id="shipping_address_1" name="diaChi"
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
@@ -525,7 +330,7 @@
                                                         </abbr>
                                                     </label>
                                                     <input type="text" value="" placeholder="Nhập Huyện / Quận"
-                                                        id="shipping_city" name="shipping_city"
+                                                        id="shipping_city" name="xaPhuong"
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
@@ -541,7 +346,7 @@
                                                         </abbr>
                                                     </label>
                                                     <input type="text" value="" placeholder="Nhập Huyện / Quận"
-                                                        id="shipping_city" name="shipping_city"
+                                                        id="shipping_city" name="huyenQuan"
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
@@ -556,196 +361,11 @@
                                                         </abbr>
                                                     </label>
                                                     <select class="country_to_state country_select"
-                                                        id="shipping_country" name="shipping_country">
-                                                        <option value="AG">
-                                                            An Giang
-                                                        </option>
-                                                        <option value="BL">
-                                                            Bạc Liêu
-                                                        </option>
-                                                        <option value="BG">
-                                                            Bắc Giang
-                                                        </option>
-                                                        <option value="BK">
-                                                            Bắc Kạn
-                                                        </option>
-                                                        <option value="BN">
-                                                            Bắc Ninh
-                                                        </option>
-                                                        <option value="BE">
-                                                            Bến Tre
-                                                        </option>
-                                                        <option value="BD">
-                                                            Bình Dương
-                                                        </option>
-                                                        <option value="BH">
-                                                            Bình Định
-                                                        </option>
-                                                        <option value="BP">
-                                                            Bình Phước
-                                                        </option>
-                                                        <option value="BT">
-                                                            Bình Thuận
-                                                        </option>
-                                                        <option value="CM">
-                                                            Cà Mau
-                                                        </option>
-                                                        <option value="CB">
-                                                            Cao Bằng
-                                                        </option>
-                                                        <option value="CT">
-                                                            Cần Thơ
-                                                        </option>
-                                                        <option value="DN">
-                                                            Đà Nẵng
-                                                        </option>
-                                                        <option value="DL">
-                                                            Đắk Lắk
-                                                        </option>
-                                                        <option value="DG">
-                                                            Đắk Nông
-                                                        </option>
-                                                        <option value="DB">
-                                                            Điện Biên
-                                                        </option>
-                                                        <option value="DI">
-                                                            Đồng Nai
-                                                        </option>
-                                                        <option value="DT">
-                                                            Đồng Tháp
-                                                        </option>
-                                                        <option value="GL">
-                                                            Gia Lai
-                                                        </option>
-                                                        <option value="HG">
-                                                            Hà Giang
-                                                        </option>
-                                                        <option value="HN">
-                                                            Hà Nam
-                                                        </option>
-                                                        <option value="HI">
-                                                            Hà Nội
-                                                        </option>
-                                                        <option value="HT">
-                                                            Hà Tĩnh
-                                                        </option>
-                                                        <option value="HD">
-                                                            Hải Dương
-                                                        </option>
-                                                        <option value="HP">
-                                                            Hải Phòng
-                                                        </option>
-                                                        <option value="UG">
-                                                            Hậu Giang
-                                                        </option>
-                                                        <option value="HB">
-                                                            Hòa Bình
-                                                        </option>
-                                                        <option value="SG" selected>
-                                                            Hồ Chí Minh
-                                                        </option>
-                                                        <option value="HY">
-                                                            Hưng Yên
-                                                        </option>
-                                                        <option value="KH">
-                                                            Khánh Hòa
-                                                        </option>
-                                                        <option value="KG">
-                                                            Kiên Giang
-                                                        </option>
-                                                        <option value="KT">
-                                                            Kon Tum
-                                                        </option>
-                                                        <option value="LC">
-                                                            Lai Châu
-                                                        </option>
-                                                        <option value="LS">
-                                                            Lạng Sơn
-                                                        </option>
-                                                        <option value="LI">
-                                                            Lào Cai
-                                                        </option>
-                                                        <option value="LD">
-                                                            Lâm Đồng
-                                                        </option>
-                                                        <option value="LA">
-                                                            Long An
-                                                        </option>
-                                                        <option value="ND">
-                                                            Nam Định
-                                                        </option>
-                                                        <option value="NA">
-                                                            Nghệ An
-                                                        </option>
-                                                        <option value="NB">
-                                                            Ninh Bình
-                                                        </option>
-                                                        <option value="NT">
-                                                            Ninh Thuận
-                                                        </option>
-                                                        <option value="PT">
-                                                            Phú Thọ
-                                                        </option>
-                                                        <option value="PY">
-                                                            Phú Yên
-                                                        </option>
-                                                        <option value="QB">
-                                                            Quảng Bình
-                                                        </option>
-                                                        <option value="QN">
-                                                            Quảng Nam
-                                                        </option>
-                                                        <option value="QI">
-                                                            Quảng Ngãi
-                                                        </option>
-                                                        <option value="QH">
-                                                            Quảng Ninh
-                                                        </option>
-                                                        <option value="QT">
-                                                            Quảng Trị
-                                                        </option>
-                                                        <option value="ST">
-                                                            Sóc Trăng
-                                                        </option>
-                                                        <option value="SL">
-                                                            Sơn La
-                                                        </option>
-                                                        <option value="TN">
-                                                            Tây Ninh
-                                                        </option>
-                                                        <option value="TB">
-                                                            Thái Bình
-                                                        </option>
-                                                        <option value="IN">
-                                                            Thái Nguyên
-                                                        </option>
-                                                        <option value="TH">
-                                                            Thanh Hóa
-                                                        </option>
-                                                        <option value="TT">
-                                                            Thừa Thiên Huế
-                                                        </option>
-                                                        <option value="TG">
-                                                            Tiền Giang
-                                                        </option>
-                                                        <option value="TV">
-                                                            Trà Vinh
-                                                        </option>
-                                                        <option value="TQ">
-                                                            Tuyên Quang
-                                                        </option>
-                                                        <option value="VL">
-                                                            Vĩnh Long
-                                                        </option>
-                                                        <option value="VP">
-                                                            Vĩnh Phúc
-                                                        </option>
-                                                        <option value="VT">
-                                                            Vũng Tàu
-                                                        </option>
-                                                        <option value="YB">
-                                                            Yên Bái
-                                                        </option>
+                                                        id="shipping_country" name="idTinhThanh">
+                                                        <option th:each="tinhThanh : ${dsTinhThanh}"
+                                                                th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
+                                                                th:selected="${tinhThanh.id}==29">
+                                                    	</option>
                                                     </select>
                                                 </p>
                                                 <div class="clear"></div>
@@ -761,7 +381,7 @@
                                                     </label>
                                                     <input type="text" value="" placeholder="Nhập số điện thoại"
                                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                                        id="shipping_phone" name="shipping_phone"
+                                                        id="shipping_phone" name="soDienThoai"
                                                         class="input-text chk-required">
                                                 </p>
                                                 <div class="clear"></div>
@@ -773,7 +393,7 @@
                                                 <textarea cols="5" rows="2"
                                                     placeholder="Những lưu ý đặc biệt khi giao hàng..."
                                                     id="order_comments" class="input-text"
-                                                    name="order_comments"></textarea>
+                                                    name="ghiChu"></textarea>
                                             </p>
                                         </div>
                                     </div>
@@ -794,28 +414,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="cart_item">
+                                            <tr th:each="element : ${dsHang}" class="cart_item">
                                                 <td class="product-name">
-                                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                                    <strong class="product-quantity">
-                                                        × 2
-                                                    </strong>
-                                                </td>
-                                                <td class="product-total">
-                                                    <span class="amount">
-                                                        64.990.000 ₫
+                                                    <span th:text="${element.sanPham.ten}">
+                                                   		 Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                                     </span>
-                                                </td>
-                                            </tr>
-                                            <tr class="cart_item">
-                                                <td class="product-name">
-                                                    Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
-                                                    <strong class="product-quantity">
-                                                        × 1
+                                                    <strong>x</strong>
+                                                    <strong class="product-quantity" th:text="${element.soLuongSanPhan}">
+                                                       
                                                     </strong>
                                                 </td>
                                                 <td class="product-total">
-                                                    <span class="amount">
+                                                    <span class="amount" th:text="${#numbers.formatDecimal(element.tongTienSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -826,7 +436,8 @@
                                                 <th>
                                                     Tổng giỏ hàng
                                                 </th>
-                                                <td><span class="amount">
+                                                <td>
+                                                	<span class="amount" th:text="${#numbers.formatDecimal(gioHang.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -836,7 +447,9 @@
                                                     Chi phí vận chuyển
                                                 </th>
                                                 <td>
-                                                    Miễn phí giao hàng
+                                         
+                                                    <span th:text="${#numbers.formatDecimal(phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                    </span>
                                                     <input type="hidden" class="shipping_method" value="free_shipping"
                                                         id="shipping_method_0" data-index="0" name="shipping_method[0]">
                                                 </td>
@@ -847,7 +460,7 @@
                                                 </th>
                                                 <td>
                                                     <strong>
-                                                        <span class="amount">
+                                                        <span class="amount" th:text="${#numbers.formatDecimal(gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                             64.990.000 ₫
                                                         </span>
                                                     </strong>
@@ -858,8 +471,8 @@
                                     <div id="payment">
                                         <ul class="payment_methods methods">
                                             <li class="payment_method_bacs">
-                                                <input type="radio" data-order_button_text="" value="bacs"
-                                                    name="payment_method" class="input-radio" id="payment_method_bacs">
+                                                <input type="radio" data-order_button_text="" value="Chuyển khoản"
+                                                    name="phuongThucThanhToan" class="input-radio" id="payment_method_bacs">
                                                 <label style="cursor:pointer" for="payment_method_bacs">
                                                     Chuyển khoản
                                                 </label>
@@ -873,8 +486,8 @@
                                                 </div>
                                             </li>
                                             <li class="payment_method_paypal">
-                                                <input type="radio" data-order_button_text="Proceed to PayPal"
-                                                    value="paypal" name="payment_method" class="input-radio"
+                                                <input type="radio" data-order_button_text="Paypal"
+                                                    value="paypal" name="phuongThucThanhToan" class="input-radio"
                                                     id="payment_method_paypal">
                                                 <label style="cursor:pointer" for="payment_method_paypal">
                                                     Trực tuyến
@@ -889,14 +502,22 @@
                                                 </label>
                                             </li>
                                             <li class="payment_method_cheque">
-                                                <input type="radio" data-order_button_text="" value="cheque"
-                                                    checked="true" name="payment_method" class="input-radio"
+                                                <input type="radio" data-order_button_text="" value="Tiền mặt"
+                                                    checked="true" name="phuongThucThanhToan" class="input-radio"
                                                     id="payment_method_cheque">
                                                 <label style="cursor:pointer" for="payment_method_cheque">
                                                     Tiền mặt
                                                 </label>
                                             </li>
                                         </ul>
+                                        <!-- <input type="hidden" name="tongGioHang" th:value="${gioHang.tongGioHang}">
+                                        <input type="hidden" name="chiPhiVanChuyen" th:value="${phiVanChuyen.chiPhiVanChuyen}">
+                                        <input type="hidden" name="tongDonHang" th:value="${gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen}">
+                                        <input type="hidden" name="giamGia" value="0">
+                                        <input type="hidden" name="trangThai" value="Đang giao">
+                                        <input type="hidden" name="idKhachHang" th:value="${khachHang.id}">
+                                        <input type="hidden" name="idNguoiNhan" th:value="${khachHang.id}"> -->
+                                        <input type="hidden" id="idNguoiNhan" name="idNguoiNhan" value="0">
                                         <div class="form-row place-order">
                                             <input type="submit" data-value="Place order" value="Đặt hàng"
                                                 id="place_order" name="woocommerce_checkout_place_order"
@@ -931,8 +552,12 @@
             $('input[type="checkbox"]').change(function () {
                 if ($('.chk-required').attr('required')) {
                     $('.chk-required').removeAttr('required');
+                    $('#ship-to-different-address-checkbox').val(0);
+                    $('#idNguoiNhan').val(0);
                 } else {
                     $('.chk-required').attr('required', 'required');
+                    $('#ship-to-different-address-checkbox').val(1);
+                    $('#idNguoiNhan').val(0);
                 }
             });
         });
