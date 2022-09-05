@@ -5,8 +5,8 @@ public class ApplicationConstant {
     public static final String SECRET_KEY = "secret";
 
     public static final String DEFAULT_ROLE = "client";
-    public static final int DEFAULT_STATUS = 0;
-    public static final int DEFAULT_PAYMENT = 2;
+    public static final String DEFAULT_STATUS = "Đang giao";
+    public static final String DEFAULT_PAYMENT = "Tiền mặt";
     public static final int DEFAULT_PROVINCE = 29;
 
     public class Role {
