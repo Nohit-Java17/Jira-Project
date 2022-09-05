@@ -41,7 +41,7 @@ public class ChiTietSanPhamController {
     }
 
     // Load detail
-    @GetMapping("/find")
+    @GetMapping(VIEW_VIEW)
     public ModelAndView detailFind(int id) {
         var mav = new ModelAndView(DETAIL_TEMP);
         // check current account still valid
@@ -61,9 +61,9 @@ public class ChiTietSanPhamController {
         mav.addObject("cart", mCurrentCart);
         mav.addObject("login", mCurrentAccount != null);
         mav.addObject("product", sanPhamService.getSanPham(id));
+        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingPriceOrder().subList(0, 3));
-        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewestOrder().subList(0, 3));
         showMessageBox(mav);
         mIsByPass = false;
         return mav;

@@ -126,7 +126,7 @@
                             <a th:href="@{/category}">
                                 Phân loại
                             </a>
-                            <a href="#" th:text="${product.phanLoai}">
+                            <a th:href="@{/category/filter(filter=${product.phanLoai})}" th:text="${product.phanLoai}">
                                 Máy tính xách tay
                             </a>
                         </div>
@@ -264,14 +264,14 @@
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Thêm vào giỏ
                                             </a>
-                                            <a th:href="@{/detail/(id=${element.id})}" class="view-details-link">
+                                            <a th:href="@{/detail/view(id=${element.id})}" class="view-details-link">
                                                 <i class="fa fa-link"></i>
                                                 Xem thông tin
                                             </a>
                                         </div>
                                     </div>
                                     <h2>
-                                        <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                                        <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                                             Điện thoại ASUS ROG Phone 5S ZS676KS-1A111WW
                                         </a>
                                     </h2>

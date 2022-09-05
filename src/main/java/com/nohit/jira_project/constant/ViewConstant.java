@@ -30,5 +30,6 @@ public class ViewConstant {
 
     public static final String FILTER_VIEW = "/filter";
 
+    public static final String VIEW_VIEW = "/view";
     public static final String RATE_VIEW = "/rate";
 }

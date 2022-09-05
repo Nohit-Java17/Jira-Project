@@ -137,7 +137,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="@{/about}">
                                 Giới thiệu về trang
                             </a>
                         </li>
@@ -161,28 +161,28 @@
                     </h2>
                     <ul>
                         <li>
-                            <a href="#">
+                            <a th:href="@{/category/filter(filter='Máy tính xách tay')}">
                                 Máy tính xách tay
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="@{/category/filter(filter='Máy tính để bàn')}">
                                 Máy tính để bàn
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a th:href="@{/category/filter(filter='Máy tính bảng')}">
                                 Máy tính bảng
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                Thiết bị ngoại vi
+                            <a th:href="@{/category/filter(filter='Điện thoại di động')}">
+                                Điện thoại di động
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                Điện thoại di động
+                            <a th:href="@{/category/filter(filter='Thiết bị ngoại vi')}">
+                                Thiết bị ngoại vi
                             </a>
                         </li>
                     </ul>
@@ -309,13 +309,12 @@
         <div th:each="element: ${topPriceProducts}" class="thubmnail-recent">
             <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" class="recent-thumb" alt="">
             <h2>
-                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                     Máy tính xách tay MSI Vector GP76 12UGS
                 </a>
             </h2>
             <div class="product-sidebar-price">
-                <ins
-                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                <ins th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                     64.990.000 ₫
                 </ins>
                 <br>
@@ -331,7 +330,7 @@
         </h2>
         <ul>
             <li th:each="element: ${topNewProducts}">
-                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
+                <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                 </a>
             </li>

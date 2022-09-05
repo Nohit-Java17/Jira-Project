@@ -7,31 +7,26 @@ import com.nohit.jira_project.model.*;
 public interface SanPhamService {
     public List<SanPham> getDsSanPham();
 
+    public List<SanPham> getDsSanPham(String phanLoai);
+
     public SanPham getSanPham(int id);
 
     public void saveSanPham(SanPham sanPham);
 
     public void deleteSanPham(int id);
 
+    // Methods to sort in Product Controller
     public List<SanPham> getDsSanPhamTonKho();
 
-    // Methods to sort in Product Controller
     public List<SanPham> getDsSanPhamTopSale();
 
-    public List<SanPham> getDsSanPhamAscendingPriceOrder();
+    public List<SanPham> getDsSanPhamNewest();
 
-    public List<SanPham> getDsSanPhamDescendingPriceOrder();
+    public List<SanPham> getDsSanPhamAscendingPrice();
 
-    public List<SanPham> getDsSanPhamNewestOrder();
+    public List<SanPham> getDsSanPhamDescendingPrice();
 
-    // Methods to sort in Category Controller
-    public List<SanPham> getDsSanPhamLaptop();
+    public List<SanPham> getDsSanPhamAscendingDiscount();
 
-    public List<SanPham> getDsSanPhamComputer();
-
-    public List<SanPham> getDsSanPhamSmartPhone();
-
-    public List<SanPham> getDsSanPhamTablet();
-
-    public List<SanPham> getDsSanPhamDevices();
+    public List<SanPham> getDsSanPhamDescendingDiscount();
 }

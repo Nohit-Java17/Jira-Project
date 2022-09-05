@@ -4,7 +4,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 ## LINK DEMO
 <div align="center">
 
-[Click vào đây để xem chi tiết](https://crm-project.herokuapp.com/login)
+[Click vào đây để xem chi tiết](https://jira-project.herokuapp.com)
 
 </div>
 

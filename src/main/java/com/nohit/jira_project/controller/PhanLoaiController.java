@@ -1,7 +1,5 @@
 package com.nohit.jira_project.controller;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +9,7 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -45,12 +44,11 @@ public class PhanLoaiController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
-        var radioCheck = 0;
         mav.addObject("client", khachHang);
         mav.addObject("cart", gioHang);
         mav.addObject("login", khachHang != null);
         mav.addObject("products", sanPhamService.getDsSanPhamTonKho());
-        mav.addObject("radioCheck", radioCheck);
+        mav.addObject("radioCheck", DEFAULT_CATEGORY);
         return mav;
     }
 
@@ -64,55 +62,20 @@ public class PhanLoaiController {
         if (khachHang == null) {
             gioHang = new GioHang();
         } else {
-            var id = khachHang.getId();
-            gioHang = gioHangService.getGioHang(id);
+            var idKhachHang = khachHang.getId();
+            gioHang = gioHangService.getGioHang(idKhachHang);
             // check gio_hang exist
             if (gioHang == null) {
                 gioHang = new GioHang();
-                gioHang.setId(id);
+                gioHang.setId(idKhachHang);
                 gioHangService.saveGioHang(gioHang);
-            }
-        }
-        List<SanPham> dsSanPham;
-        int radioCheck;
-        // filter function
-        switch (filter) {
-            case "laptop": {
-                dsSanPham = sanPhamService.getDsSanPhamLaptop();
-                radioCheck = 1;
-                break;
-            }
-            case "computer": {
-                dsSanPham = sanPhamService.getDsSanPhamComputer();
-                radioCheck = 2;
-                break;
-            }
-            case "tablet": {
-                dsSanPham = sanPhamService.getDsSanPhamTablet();
-                radioCheck = 3;
-                break;
-            }
-            case "smartphone": {
-                dsSanPham = sanPhamService.getDsSanPhamSmartPhone();
-                radioCheck = 4;
-                break;
-            }
-            case "devices": {
-                dsSanPham = sanPhamService.getDsSanPhamDevices();
-                radioCheck = 5;
-                break;
-            }
-            default: {
-                dsSanPham = sanPhamService.getDsSanPhamTonKho();
-                radioCheck = 0;
-                break;
             }
         }
         mav.addObject("client", khachHang);
         mav.addObject("cart", gioHang);
         mav.addObject("login", khachHang != null);
-        mav.addObject("products", dsSanPham);
-        mav.addObject("radioCheck", radioCheck);
+        mav.addObject("products", sanPhamService.getDsSanPham(filter));
+        mav.addObject("radioCheck", CATEGORIES_MAP.get(filter));
         return mav;
     }
 }

@@ -19,11 +19,11 @@ public class NhanXet {
 
     @Column(name = "danh_gia")
     private int danhGia;
-    
+
     @NonNull
     @Column(name = "binh_luan")
     private String binhLuan;
-    
+
     @Column(name = "id_san_pham")
     private int idSanPham;
 

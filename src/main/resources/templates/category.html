@@ -122,38 +122,39 @@
                                 <div class="form-group">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="filter" th:checked="${radioCheck==0}" value="">
+                                            <input type="radio" name="filter" th:checked="${radioCheck==0}" value="all">
                                             Tất cả
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="filter" th:checked="${radioCheck==1}"
-                                                value="laptop"> Máy tính xách tay
+                                                value="Máy tính xách tay">
+                                            Máy tính xách tay
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="filter" th:checked="${radioCheck==2}"
-                                                value="computer"> Máy tính để bàn
+                                                value="Máy tính để bàn"> Máy tính để bàn
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="filter" th:checked="${radioCheck==3}"
-                                                value="tablet"> Máy tính bảng
+                                                value="Máy tính bảng"> Máy tính bảng
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="filter" th:checked="${radioCheck==4}"
-                                                value="smartphone"> Điện thoại di động
+                                                value="Điện thoại di động"> Điện thoại di động
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
                                             <input type="radio" name="filter" th:checked="${radioCheck==5}"
-                                                value="devices"> Thiết bị ngoại vi
+                                                value="Thiết bị ngoại vi"> Thiết bị ngoại vi
                                         </label>
                                     </div>
                                 </div>
@@ -172,7 +173,7 @@
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                 </div>
                                 <h2>
-                                    <a th:text="${element.ten}" href="">
+                                    <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                                         Bàn phím cơ Logitech Gaming G813
                                     </a>
                                 </h2>
