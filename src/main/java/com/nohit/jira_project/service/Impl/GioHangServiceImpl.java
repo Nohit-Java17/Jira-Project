@@ -38,4 +38,12 @@ public class GioHangServiceImpl implements GioHangService {
         log.info("Deleting gio_hang with id: {}", id);
         gioHangRepository.deleteById(id);
     }
+
+    @Override
+    public GioHang createGioHang(int id) {
+        var gioHang = new GioHang();
+        gioHang.setId(id);
+        log.info("Create gio_hang with id: {}", id);
+        return gioHangRepository.save(gioHang);
+    }
 }

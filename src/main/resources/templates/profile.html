@@ -74,7 +74,7 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập họ và tên"
-                                                            th:value="${khachHang.hoTen}" id="billing_first_name"
+                                                            th:value="${client.hoTen}" id="billing_first_name"
                                                             name="hoTen" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
@@ -89,7 +89,7 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập địa chỉ"
-                                                            th:value="${khachHang.diaChi}" id="billing_address_1"
+                                                            th:value="${client.diaChi}" id="billing_address_1"
                                                             name="diaChi" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
@@ -104,7 +104,7 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập Xã / Phường"
-                                                            th:value="${khachHang.xaPhuong}" id="billing_city"
+                                                            th:value="${client.xaPhuong}" id="billing_city"
                                                             name="xaPhuong" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
@@ -120,7 +120,7 @@
                                                             </abbr>
                                                         </label>
                                                         <input type="text" value="" placeholder="Nhập Huyện / Quận"
-                                                            th:value="${khachHang.huyenQuan}" id="billing_city"
+                                                            th:value="${client.huyenQuan}" id="billing_city"
                                                             name="huyenQuan" class="input-text" required>
                                                     </p>
                                                     <div class="clear"></div>
@@ -136,9 +136,9 @@
                                                         </label>
                                                         <select class="country_to_state country_select"
                                                             id="billing_country" name="idTinhThanh">
-                                                            <option th:each="tinhThanh : ${dsTinhThanh}"
+                                                            <option th:each="tinhThanh : ${provinces}"
                                                                 th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
-                                                                th:selected="${tinhThanh.id}==${khachHang.idTinhThanh}">
+                                                                th:selected="${tinhThanh.id}==${client.idTinhThanh}">
                                                             </option>
                                                         </select>
                                                     </p>
@@ -151,7 +151,7 @@
                                                                 *
                                                             </abbr>
                                                         </label>
-                                                        <input type="text" th:value="${khachHang.soDienThoai}"
+                                                        <input type="text" th:value="${client.soDienThoai}"
                                                             placeholder="Nhập số điện thoại"
                                                             onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                             id="billing_phone" name="soDienThoai" class="input-text"

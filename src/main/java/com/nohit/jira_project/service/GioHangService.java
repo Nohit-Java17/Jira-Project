@@ -10,4 +10,6 @@ public interface GioHangService {
     public void saveGioHang(GioHang gioHang);
 
     public void deleteGioHang(int id);
+
+    public GioHang createGioHang(int id);
 }

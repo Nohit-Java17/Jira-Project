@@ -11,14 +11,20 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import lombok.*;
+
+import static com.nohit.jira_project.constant.ApplicationConstant.*;
+import static com.nohit.jira_project.constant.ApplicationConstant.Payment.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
-import static com.nohit.jira_project.constant.ApplicationConstant.*;
 
 @Controller
 @RequestMapping(CHECKOUT_VIEW)
 public class ThanhToanController {
+    @Autowired
+    private NguoiNhanService nguoiNhanService;
+
     @Autowired
     private SanPhamService sanPhamService;
 
@@ -26,16 +32,16 @@ public class ThanhToanController {
     private GioHangService gioHangService;
 
     @Autowired
-    private TinhThanhService tinhThanhService;
+    private ChiTietGioHangService chiTietGioHangService;
 
     @Autowired
-    private NguoiNhanService nguoiNhanService;
+    private DonHangService donHangService;
 
     @Autowired
     private ChiTietDonHangService chiTietDonHangService;
 
     @Autowired
-    private DonHangService donHangService;
+    private TinhThanhService tinhThanhService;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -49,31 +55,27 @@ public class ThanhToanController {
     // Load checkout
     @GetMapping("")
     public ModelAndView checkout() {
-        var mav = new ModelAndView(CHECKOUT_TEMP);
-        GioHang gioHang;
+        ModelAndView mav;
         // check current account still valid
         if (!isValidAccount()) {
-            gioHang = new GioHang();
+            mav = new ModelAndView(REDIRECT_PREFIX + LOGIN_VIEW);
         } else {
+            mav = new ModelAndView(CHECKOUT_TEMP);
             var idKhacHang = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(idKhacHang);
+            var gioHang = gioHangService.getGioHang(idKhacHang);
             // check gio_hang exist
             if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idKhacHang);
-                gioHangService.saveGioHang(gioHang);
+                gioHangService.createGioHang(idKhacHang);
             }
+            mav.addObject("client", mCurrentAccount);
+            mav.addObject("cart", gioHang);
+            mav.addObject("login", mCurrentAccount != null);
+            mav.addObject("defaultProvince", DEFAULT_PROVINCE);
+            mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+            mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
+            mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
+            mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
         }
-        mav.addObject("client", mCurrentAccount);
-        mav.addObject("cart", gioHang);
-        mav.addObject("login", mCurrentAccount != null);
-        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
-        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
-        mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
-        mav.addObject("province", tinhThanhService.getTinhThanh(mCurrentAccount.getIdTinhThanh()));
-        mav.addObject("units", gioHang.getDsChiTietGioHang());
-        mav.addObject("defaultProvince", DEFAULT_PROVINCE);
         showMessageBox(mav);
         mIsByPass = false;
         return mav;
@@ -81,51 +83,65 @@ public class ThanhToanController {
 
     // Checkout
     @PostMapping("")
-    public String checkout(NguoiNhan nguoiNhan, boolean differentAddress) {
-        GioHang gioHang;
+    public String checkout(NguoiNhan nguoiNhan, boolean differentAddress, String paymentMethod) {
         // check current account still valid
         if (!isValidAccount()) {
-            gioHang = new GioHang();
+            return REDIRECT_PREFIX + LOGIN_VIEW;
         } else {
-            var idKhacHang = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(idKhacHang);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idKhacHang);
-                gioHangService.saveGioHang(gioHang);
+            var gioHang = mCurrentAccount.getGioHang();
+            mIsMsgShow = true;
+            // mIsByPass = true;
+            // check cart
+            if (gioHang.getTongSoLuong() <= 0) {
+                mMsg = "Không thể thanh toán giỏ hàng trống!";
+                return REDIRECT_PREFIX + CHECKOUT_VIEW;
+            } else {
+                // check exists credit_card
+                if (paymentMethod.equals(CARD) && mCurrentAccount.getCreditCard() == null) {
+                    mMsg = "Bạn chưa có thông tin thẻ tín dụng trong tài khoản!";
+                    return REDIRECT_PREFIX + CHECKOUT_VIEW;
+                } else {
+                    if (!differentAddress) {
+                        nguoiNhan.setHoTen(mCurrentAccount.getHoTen());
+                        nguoiNhan.setSoDienThoai(mCurrentAccount.getSoDienThoai());
+                        nguoiNhan.setDiaChi(mCurrentAccount.getDiaChi());
+                        nguoiNhan.setXaPhuong(mCurrentAccount.getXaPhuong());
+                        nguoiNhan.setHuyenQuan(mCurrentAccount.getHuyenQuan());
+                        nguoiNhan.setIdTinhThanh(mCurrentAccount.getIdTinhThanh());
+                    }
+                    nguoiNhan = nguoiNhanService.saveNguoiNhan(nguoiNhan);
+                    var donHang = new DonHang();
+                    donHang.setNgayDat(new Date());
+                    var tongGioHang = gioHang.getTongGioHang();
+                    donHang.setTongGioHang(tongGioHang);
+                    var chiPhiVanChuyen = mCurrentAccount.getTinhThanh().getChiPhiVanChuyen();
+                    donHang.setChiPhiVanChuyen(chiPhiVanChuyen);
+                    var giamGia = gioHang.getGiamGia();
+                    donHang.setGiamGia(giamGia);
+                    donHang.setTongDonHang(tongGioHang + chiPhiVanChuyen - giamGia);
+                    donHang.setPhuongThucThanhToan(paymentMethod);
+                    donHang.setTrangThai(DEFAULT_STATUS);
+                    donHang.setIdKhachHang(mCurrentAccount.getId());
+                    donHang.setIdNguoiNhan(nguoiNhan.getId());
+                    donHang = donHangService.saveDonHang(donHang);
+                    var idGioHang = gioHang.getId();
+                    for (var chiTietGioHang : gioHang.getDsChiTietGioHang()) {
+                        var chiTietDonHang = new ChiTietDonHang();
+                        chiTietDonHang.setSoLuongSanPhan(chiTietGioHang.getSoLuongSanPhan());
+                        chiTietDonHang.setGiaBanSanPham(chiTietGioHang.getGiaBanSanPham());
+                        chiTietDonHang.setTongTienSanPham(chiTietGioHang.getTongTienSanPham());
+                        var idSanPham = chiTietGioHang.getSanPham().getId();
+                        chiTietDonHang.setId(new ChiTietDonHangId(donHang.getId(), idSanPham));
+                        chiTietDonHangService.saveChiTietDonHang(chiTietDonHang);
+                        chiTietGioHangService.deleteChiTietGioHang(new ChiTietGioHangId(idGioHang, idSanPham));
+                    }
+                    gioHangService.deleteGioHang(idGioHang);
+                    gioHangService.createGioHang(idGioHang);
+                    mMsg = "Đơn hàng đã được đặt thành công!";
+                    return REDIRECT_PREFIX + HISTORY_VIEW;
+                }
             }
         }
-
-        // DonHang donHang = new DonHang();
-
-        // donHang.setNgayDat(new Date());
-        // donHang.setTongGioHang(gioHang.getTongGioHang());
-        // donHang.setChiPhiVanChuyen(
-        //         tinhThanhService.getTinhThanh(mCurrentAccount.getIdTinhThanh()).getChiPhiVanChuyen());
-        // donHang.setTongDonHang(gioHang.getTongGioHang() - gioHang.getGiamGia()
-        //         + tinhThanhService.getTinhThanh(mCurrentAccount.getIdTinhThanh()).getChiPhiVanChuyen());
-        // donHang.setPhuongThucThanhToan(phuongThucThanhToan);
-        // donHang.setTrangThai("Đang giao");
-        // donHang.setGiamGia(gioHang.getGiamGia());
-        // donHang.setIdKhachHang(mCurrentAccount.getId());
-        // donHang.setIdNguoiNhan(idnguoinhan);
-
-        // DonHang donHang2 = donHangService.saveDonHang(donHang);
-        // mMsg = "Đặt hàng thành công!";
-
-        // List<ChiTietGioHang> listHangs = gioHang.getDsChiTietGioHang();
-        // for (ChiTietGioHang chiTietGioHang : listHangs) {
-        //     ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
-        //     chiTietDonHang.setDonHang(donHang2);
-        //     chiTietDonHang.setSanPham(chiTietGioHang.getSanPham());
-        //     chiTietDonHang.setSoLuongSanPhan(chiTietGioHang.getSoLuongSanPhan());
-        //     chiTietDonHang.setGiaBanSanPham(chiTietGioHang.getGiaBanSanPham());
-        //     chiTietDonHang.setTongTienSanPham(chiTietGioHang.getTongTienSanPham());
-
-        //     chiTietDonHangService.saveChiTietDonHang(chiTietDonHang);
-        // }
-        return REDIRECT_PREFIX + HISTORY_VIEW;
     }
 
     // Check valid account

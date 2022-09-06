@@ -127,27 +127,18 @@
                                                 class="form-row form-row-first validate-required">
                                                 <label class="" for="billing_first_name">
                                                     Họ tên
-                                                    <abbr title="Nhập vào họ và tên đầy đủ của bạn" class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
-                                                <input type="text" th:value="${client.hoTen}"
-                                                    placeholder="Nhập họ và tên" id="billing_first_name"
-                                                    name="hoTen" class="input-text" required>
+                                                <input type="text" th:value="${client.hoTen}" id="billing_first_name"
+                                                    class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_address_1_field"
                                                 class="form-row form-row-wide address-field validate-required">
                                                 <label class="" for="billing_address_1">
                                                     Địa chỉ
-                                                    <abbr title="Nhập vào số nhà và tên đường bạn đang sinh sống"
-                                                        class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
-                                                <input type="text" th:value="${client.diaChi}"
-                                                    placeholder="Nhập địa chỉ" id="billing_address_1"
-                                                    name="diaChi" class="input-text" required>
+                                                <input type="text" th:value="${client.diaChi}" id="billing_address_1"
+                                                    class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -155,14 +146,9 @@
                                                 data-o_class="form-row form-row-wide address-field validate-required">
                                                 <label class="" for="billing_city">
                                                     Xã / Phường
-                                                    <abbr title="Nhập vào tên xã hoặc phường bạn đang sinh sống"
-                                                        class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
-                                                <input type="text" th:value="${client.xaPhuong}"
-                                                    placeholder="Nhập Huyện / Quận" id="billing_city"
-                                                    name="xaPhuong" class="input-text" required>
+                                                <input type="text" th:value="${client.xaPhuong}" id="billing_city"
+                                                    class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -170,59 +156,38 @@
                                                 data-o_class="form-row form-row-wide address-field validate-required">
                                                 <label class="" for="billing_city">
                                                     Huyện / Quận
-                                                    <abbr title="Nhập vào tên huyện hoặc quận bạn đang sinh sống"
-                                                        class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
-                                                <input type="text" th:value="${client.huyenQuan}"
-                                                    placeholder="Nhập Huyện / Quận" id="billing_city"
-                                                    name="huyenQuan" class="input-text" required>
+                                                <input type="text" th:value="${client.huyenQuan}" id="billing_city"
+                                                    class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_country_field"
-                                                class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
+                                                class="form-row form-row-wide address-field validate-required"
+                                                data-o_class="form-row form-row-wide address-field validate-required">
                                                 <label class="" for="billing_country">
                                                     Tỉnh / Thành
-                                                    <abbr title="Chọn tên tỉnh hoặc thành phố bạn đang sinh sống"
-                                                        class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
-                                                <select class="country_to_state country_select" id="billing_country"
-                                                    name="idTinhThanh">
-                                                    <option th:each="tinhThanh : ${provinces}"
-                                                        th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
-                                                        th:selected="${tinhThanh.id}==${client.idTinhThanh}">
-                                                    </option>
-                                                </select>
+                                                <input type="text" th:value="${client.tinhThanh.ten}"
+                                                    id="billing_country" class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_email_field"
                                                 class="form-row form-row-first validate-required validate-email">
                                                 <label class="" for="billing_email">
                                                     Email
-                                                    <abbr title="Nhập vào địa chỉ email của bạn" class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
-                                                <input type="email" th:value="${client.email}"
-                                                    placeholder="Nhập thư điện tử" id="billing_email"
-                                                    name="email" class="input-text" readonly>
+                                                <input type="email" th:value="${client.email}" id="billing_email"
+                                                    class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_phone_field"
                                                 class="form-row form-row-last validate-required validate-phone">
                                                 <label class="" for="billing_phone">
                                                     Điện thoại
-                                                    <abbr title="Nhập vào số di động của bạn" class="required">
-                                                        *
-                                                    </abbr>
                                                 </label>
                                                 <input type="text" th:value="${client.soDienThoai}"
-                                                    placeholder="Nhập số điện thoại"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                                    id="billing_phone" name="soDienThoai" class="input-text" required>
+                                                    id="billing_phone" class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                         </div>
@@ -232,7 +197,7 @@
                                             <h3 id="ship-to-different-address">
                                                 <label style="cursor:pointer" class="checkbox"
                                                     for="ship-to-different-address-checkbox">
-                                                    <input type="checkbox" value="0" name="defferentAddress"
+                                                    <input type="checkbox" name="differentAddress"
                                                         class="input-checkbox" id="ship-to-different-address-checkbox">
                                                     Giao hàng đến địa chỉ khác?
                                                 </label>
@@ -279,7 +244,7 @@
                                                             *
                                                         </abbr>
                                                     </label>
-                                                    <input type="text" value="" placeholder="Nhập Huyện / Quận"
+                                                    <input type="text" value="" placeholder="Nhập Xã / Phường"
                                                         id="shipping_city" name="xaPhuong"
                                                         class="input-text chk-required">
                                                 </p>
@@ -363,7 +328,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="element : ${units}" class="cart_item">
+                                            <tr th:each="element : ${cart.dsChiTietGioHang}"
+                                                class="cart_item">
                                                 <td class="product-name">
                                                     <span th:text="${element.sanPham.ten}">
                                                         Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
@@ -389,7 +355,7 @@
                                                 </th>
                                                 <td>
                                                     <span class="amount"
-                                                        th:text="${#numbers.formatDecimal(gioHang.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                        th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -399,12 +365,10 @@
                                                     Chi phí vận chuyển
                                                 </th>
                                                 <td>
-
-                                                    <span
-                                                        th:text="${#numbers.formatDecimal(phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                    <span class="amount"
+                                                        th:text="${#numbers.formatDecimal(client.tinhThanh.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                        Miễn phí giao hàng
                                                     </span>
-                                                    <input type="hidden" class="shipping_method" value="free_shipping"
-                                                        id="shipping_method_0" data-index="0" name="shipping_method[0]">
                                                 </td>
                                             </tr>
                                             <tr class="order-total">
@@ -414,7 +378,7 @@
                                                 <td>
                                                     <strong>
                                                         <span class="amount"
-                                                            th:text="${#numbers.formatDecimal(gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                            th:text="${#numbers.formatDecimal(cart.tongGioHang+client.tinhThanh.chiPhiVanChuyen-cart.giamGia, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                             64.990.000 ₫
                                                         </span>
                                                     </strong>
@@ -426,8 +390,7 @@
                                         <ul class="payment_methods methods">
                                             <li class="payment_method_bacs">
                                                 <input type="radio" data-order_button_text="" value="Chuyển khoản"
-                                                    name="phuongThucThanhToan" class="input-radio"
-                                                    id="payment_method_bacs">
+                                                    name="paymentMethod" class="input-radio" id="payment_method_bacs">
                                                 <label style="cursor:pointer" for="payment_method_bacs">
                                                     Chuyển khoản
                                                 </label>
@@ -436,16 +399,16 @@
                                                         Thực hiện thanh toán của bạn trực tiếp vào tài khoản ngân hàng
                                                         của chúng tôi. Vui lòng sử dụng ID đơn hàng của bạn làm tham
                                                         chiếu thanh toán. Đơn hàng của bạn sẽ không được giao cho đến
-                                                        khi chúng tôi nhận được tiền vào tài khoản.
+                                                        khi chúng tôi nhận được tiền vào tài khoản (Vietcombank:
+                                                        0921000707813).
                                                     </p>
                                                 </div>
                                             </li>
                                             <li class="payment_method_paypal">
-                                                <input type="radio" data-order_button_text="Paypal" value="paypal"
-                                                    name="phuongThucThanhToan" class="input-radio"
-                                                    id="payment_method_paypal">
+                                                <input type="radio" data-order_button_text="Paypal" value="Qua thẻ"
+                                                    name="paymentMethod" class="input-radio" id="payment_method_paypal">
                                                 <label style="cursor:pointer" for="payment_method_paypal">
-                                                    Trực tuyến
+                                                    Qua thẻ
                                                     <img alt="PayPal Acceptance Mark"
                                                         src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_mc_vs_ms_ae_UK.png"><a
                                                         title="Tìm hiểu về PayPal?"
@@ -458,21 +421,13 @@
                                             </li>
                                             <li class="payment_method_cheque">
                                                 <input type="radio" data-order_button_text="" value="Tiền mặt"
-                                                    checked="true" name="phuongThucThanhToan" class="input-radio"
+                                                    checked="true" name="paymentMethod" class="input-radio"
                                                     id="payment_method_cheque">
                                                 <label style="cursor:pointer" for="payment_method_cheque">
                                                     Tiền mặt
                                                 </label>
                                             </li>
                                         </ul>
-                                        <!-- <input type="hidden" name="tongGioHang" th:value="${gioHang.tongGioHang}">
-                                        <input type="hidden" name="chiPhiVanChuyen" th:value="${phiVanChuyen.chiPhiVanChuyen}">
-                                        <input type="hidden" name="tongDonHang" th:value="${gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen}">
-                                        <input type="hidden" name="giamGia" value="0">
-                                        <input type="hidden" name="trangThai" value="Đang giao">
-                                        <input type="hidden" name="idKhachHang" th:value="${khachHang.id}">
-                                        <input type="hidden" name="idNguoiNhan" th:value="${khachHang.id}"> -->
-                                        <input type="hidden" id="idNguoiNhan" name="idNguoiNhan" value="0">
                                         <div class="form-row place-order">
                                             <input type="submit" data-value="Place order" value="Đặt hàng"
                                                 id="place_order" name="woocommerce_checkout_place_order"
