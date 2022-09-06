@@ -110,66 +110,12 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">
-                            Tra cứu
-                        </h2>
-                        <form action="#">
-                            <input type="text" placeholder="Nhập vào tên sản phẩm..." required>
-                            <input class="btn-search" type="submit" value="Tìm kiếm">
-                        </form>
-                    </div>
-                    <div class="single-sidebar two-line">
-                        <h2 class="sidebar-title">
-                            Sản phẩm
-                        </h2>
-                        <div th:each="element: ${some_products}" class="thubmnail-recent">                 
-                            <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" class="recent-thumb" alt="">
-                            <h2>
-                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
-                                    Máy tính xách tay MSI Vector GP76 12UGS
-                                </a>
-                            </h2>
-                            <div class="product-sidebar-price">
-                                <ins th:text="${#numbers.formatDecimal(element.giaGoc - element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
-                                    64.990.000 ₫
-                                </ins>
-                                <br>
-                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
-                       
-                    </div>
-                    <div class="single-sidebar one-line">
-                        <h2 class="sidebar-title">
-                            Mới nhất
-                        </h2>
-                        <div th:each="element: ${some_newProducts}" class="thubmnail-recent">                 
-                            <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" class="recent-thumb" alt="">
-                            <h2>
-                                <a th:text="${element.ten}" th:href="@{/detail/(id=${element.id})}">
-                                    Máy tính xách tay MSI Vector GP76 12UGS
-                                </a>
-                            </h2>
-                            <div class="product-sidebar-price">
-                                <ins th:text="${#numbers.formatDecimal(element.giaGoc - element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
-                                    64.990.000 ₫
-                                </ins>
-                                <br>
-                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
-                                    65.990.000 ₫
-                                </del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="/form::extend-bar"></div>
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form th:action="@{/checkout}" enctype="multipart/form-data" class="checkout" method="post" name="checkout">
+                            <form th:action="@{/checkout}" enctype="multipart/form-data" class="checkout" method="post"
+                                name="checkout">
                                 <div id="customer_details" class="col2-set">
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
@@ -185,9 +131,9 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.hoTen}" placeholder="Nhập họ và tên"
-                                                    id="billing_first_name" name="billing_first_name" class="input-text"
-                                                    required>
+                                                <input type="text" th:value="${client.hoTen}"
+                                                    placeholder="Nhập họ và tên" id="billing_first_name"
+                                                    name="hoTen" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_address_1_field"
@@ -199,9 +145,9 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.diaChi}" placeholder="Nhập địa chỉ"
-                                                    id="billing_address_1" name="billing_address_1" class="input-text"
-                                                    required>
+                                                <input type="text" th:value="${client.diaChi}"
+                                                    placeholder="Nhập địa chỉ" id="billing_address_1"
+                                                    name="diaChi" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -214,8 +160,9 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.xaPhuong}" placeholder="Nhập Huyện / Quận"
-                                                    id="billing_city" name="billing_city" class="input-text" required>
+                                                <input type="text" th:value="${client.xaPhuong}"
+                                                    placeholder="Nhập Huyện / Quận" id="billing_city"
+                                                    name="xaPhuong" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -228,8 +175,9 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.huyenQuan}" placeholder="Nhập Huyện / Quận"
-                                                    id="billing_city" name="billing_city" class="input-text" required>
+                                                <input type="text" th:value="${client.huyenQuan}"
+                                                    placeholder="Nhập Huyện / Quận" id="billing_city"
+                                                    name="huyenQuan" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_country_field"
@@ -242,10 +190,10 @@
                                                     </abbr>
                                                 </label>
                                                 <select class="country_to_state country_select" id="billing_country"
-                                                    name="billing_country">
-                                                    <option th:each="tinhThanh : ${dsTinhThanh}"
-                                                                th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
-                                                                th:selected="${tinhThanh.id}==${khachHang.idTinhThanh}">
+                                                    name="idTinhThanh">
+                                                    <option th:each="tinhThanh : ${provinces}"
+                                                        th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
+                                                        th:selected="${tinhThanh.id}==${client.idTinhThanh}">
                                                     </option>
                                                 </select>
                                             </p>
@@ -258,8 +206,9 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="email" th:value="${khachHang.email}" placeholder="Nhập thư điện tử"
-                                                    id="billing_email" name="billing_email" class="input-text" required>
+                                                <input type="email" th:value="${client.email}"
+                                                    placeholder="Nhập thư điện tử" id="billing_email"
+                                                    name="email" class="input-text" readonly>
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_phone_field"
@@ -270,9 +219,10 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.soDienThoai}" placeholder="Nhập số điện thoại"
+                                                <input type="text" th:value="${client.soDienThoai}"
+                                                    placeholder="Nhập số điện thoại"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                                    id="billing_phone" name="billing_phone" class="input-text" required>
+                                                    id="billing_phone" name="soDienThoai" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
                                         </div>
@@ -282,7 +232,7 @@
                                             <h3 id="ship-to-different-address">
                                                 <label style="cursor:pointer" class="checkbox"
                                                     for="ship-to-different-address-checkbox">
-                                                    <input type="checkbox" value="0" name="newNguoiNhan"
+                                                    <input type="checkbox" value="0" name="defferentAddress"
                                                         class="input-checkbox" id="ship-to-different-address-checkbox">
                                                     Giao hàng đến địa chỉ khác?
                                                 </label>
@@ -362,10 +312,10 @@
                                                     </label>
                                                     <select class="country_to_state country_select"
                                                         id="shipping_country" name="idTinhThanh">
-                                                        <option th:each="tinhThanh : ${dsTinhThanh}"
-                                                                th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
-                                                                th:selected="${tinhThanh.id}==29">
-                                                    	</option>
+                                                        <option th:each="tinhThanh : ${provinces}"
+                                                            th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
+                                                            th:selected="${tinhThanh.id}==${defaultProvince}">
+                                                        </option>
                                                     </select>
                                                 </p>
                                                 <div class="clear"></div>
@@ -392,8 +342,7 @@
                                                 </label>
                                                 <textarea cols="5" rows="2"
                                                     placeholder="Những lưu ý đặc biệt khi giao hàng..."
-                                                    id="order_comments" class="input-text"
-                                                    name="ghiChu"></textarea>
+                                                    id="order_comments" class="input-text" name="ghiChu"></textarea>
                                             </p>
                                         </div>
                                     </div>
@@ -414,18 +363,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="element : ${dsHang}" class="cart_item">
+                                            <tr th:each="element : ${units}" class="cart_item">
                                                 <td class="product-name">
                                                     <span th:text="${element.sanPham.ten}">
-                                                   		 Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
+                                                        Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                                     </span>
                                                     <strong>x</strong>
-                                                    <strong class="product-quantity" th:text="${element.soLuongSanPhan}">
-                                                       
+                                                    <strong class="product-quantity"
+                                                        th:text="${element.soLuongSanPhan}">
+
                                                     </strong>
                                                 </td>
                                                 <td class="product-total">
-                                                    <span class="amount" th:text="${#numbers.formatDecimal(element.tongTienSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                    <span class="amount"
+                                                        th:text="${#numbers.formatDecimal(element.tongTienSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -437,7 +388,8 @@
                                                     Tổng giỏ hàng
                                                 </th>
                                                 <td>
-                                                	<span class="amount" th:text="${#numbers.formatDecimal(gioHang.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                    <span class="amount"
+                                                        th:text="${#numbers.formatDecimal(gioHang.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -447,8 +399,9 @@
                                                     Chi phí vận chuyển
                                                 </th>
                                                 <td>
-                                         
-                                                    <span th:text="${#numbers.formatDecimal(phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+
+                                                    <span
+                                                        th:text="${#numbers.formatDecimal(phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                     </span>
                                                     <input type="hidden" class="shipping_method" value="free_shipping"
                                                         id="shipping_method_0" data-index="0" name="shipping_method[0]">
@@ -460,7 +413,8 @@
                                                 </th>
                                                 <td>
                                                     <strong>
-                                                        <span class="amount" th:text="${#numbers.formatDecimal(gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                        <span class="amount"
+                                                            th:text="${#numbers.formatDecimal(gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                             64.990.000 ₫
                                                         </span>
                                                     </strong>
@@ -472,7 +426,8 @@
                                         <ul class="payment_methods methods">
                                             <li class="payment_method_bacs">
                                                 <input type="radio" data-order_button_text="" value="Chuyển khoản"
-                                                    name="phuongThucThanhToan" class="input-radio" id="payment_method_bacs">
+                                                    name="phuongThucThanhToan" class="input-radio"
+                                                    id="payment_method_bacs">
                                                 <label style="cursor:pointer" for="payment_method_bacs">
                                                     Chuyển khoản
                                                 </label>
@@ -486,8 +441,8 @@
                                                 </div>
                                             </li>
                                             <li class="payment_method_paypal">
-                                                <input type="radio" data-order_button_text="Paypal"
-                                                    value="paypal" name="phuongThucThanhToan" class="input-radio"
+                                                <input type="radio" data-order_button_text="Paypal" value="paypal"
+                                                    name="phuongThucThanhToan" class="input-radio"
                                                     id="payment_method_paypal">
                                                 <label style="cursor:pointer" for="payment_method_paypal">
                                                     Trực tuyến
@@ -547,7 +502,7 @@
     <!-- Main Script -->
     <script src="js/main.js"></script>
     <!-- Add required if checkbox checked -->
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             $('input[type="checkbox"]').change(function () {
                 if ($('.chk-required').attr('required')) {
@@ -558,6 +513,17 @@
                     $('.chk-required').attr('required', 'required');
                     $('#ship-to-different-address-checkbox').val(1);
                     $('#idNguoiNhan').val(0);
+                }
+            });
+        });
+    </script> -->
+    <script>
+        $(document).ready(function () {
+            $('input[type="checkbox"]').change(function () {
+                if ($('.chk-required').attr('required')) {
+                    $('.chk-required').removeAttr('required');
+                } else {
+                    $('.chk-required').attr('required', 'required');
                 }
             });
         });
