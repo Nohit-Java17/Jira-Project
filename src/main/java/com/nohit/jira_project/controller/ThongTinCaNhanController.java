@@ -65,10 +65,10 @@ public class ThongTinCaNhanController {
                 gioHang.setId(id);
                 gioHangService.saveGioHang(gioHang);
             }
-            mav.addObject("dsTinhThanh", tinhThanhService.getDsTinhThanh());
-            mav.addObject("khachHang", mCurrentAccount);
+            mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
             mav.addObject("creditCard", creditCard);
-            mav.addObject("gioHang", gioHang);
+            mav.addObject("client", mCurrentAccount);
+            mav.addObject("cart", gioHang);
             mav.addObject("login", mCurrentAccount != null);
             showMessageBox(mav);
             mIsByPass = false;

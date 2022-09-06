@@ -22,7 +22,7 @@ public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
     }
 
     @Override
-    public ChiTietDonHang getChiTietDonHang(int id) {
+    public ChiTietDonHang getChiTietDonHang(ChiTietDonHangId id) {
         log.info("Fetching chi_tiet_don_hang with id {}", id);
         return chiTietDonHangRepository.findById(id).orElse(null);
     }
@@ -34,7 +34,7 @@ public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
     }
 
     @Override
-    public void deleteChiTietDonHang(int id) {
+    public void deleteChiTietDonHang(ChiTietDonHangId id) {
         log.info("Deleting chi_tiet_don_hang with id: {}", id);
         chiTietDonHangRepository.deleteById(id);
     }

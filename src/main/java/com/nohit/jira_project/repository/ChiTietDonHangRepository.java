@@ -6,5 +6,5 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface ChiTietDonHangRepository extends JpaRepository<ChiTietDonHang, Integer> {
+public interface ChiTietDonHangRepository extends JpaRepository<ChiTietDonHang, ChiTietDonHangId> {
 }

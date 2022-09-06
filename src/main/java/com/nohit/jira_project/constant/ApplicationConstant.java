@@ -10,7 +10,6 @@ public class ApplicationConstant {
 
     public static final String DEFAULT_ROLE = "client";
     public static final String DEFAULT_STATUS = "Đang giao";
-    public static final String DEFAULT_PAYMENT = "Tiền mặt";
     public static final int DEFAULT_PROVINCE = 29;
     public static final int DEFAULT_CATEGORY = 0;
 
@@ -21,7 +20,7 @@ public class ApplicationConstant {
 
     public class Payment {
         public static final String TRANSFER = "Chuyển khoản";
-        public static final String CARD = "Thẻ tín dụng";
+        public static final String CARD = "Qua thẻ";
         public static final String CASH = "Tiền mặt";
     }
 
