@@ -88,12 +88,13 @@ public class ThanhToanController {
             }
             //System.out.println(gioHang.getId());
         }
-        mav.addObject("khachHang", mCurrentAccount);
+
+        mav.addObject("client", mCurrentAccount);
         mav.addObject("dsTinhThanh", thanhService.getDsTinhThanh());
-        mav.addObject("gioHang", gioHang);
-        mav.addObject("newProducts", productService.getDsSanPhamNewestOrder());
-        mav.addObject("some_products", productService.getDsSanPhamAscendingPriceOrder().subList(0, 3));
-        mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 3));
+        mav.addObject("cart", gioHang);
+        mav.addObject("newProducts", productService.getDsSanPhamNewest());
+        mav.addObject("some_products", productService.getDsSanPhamAscendingPrice().subList(0, 3));
+        mav.addObject("some_newProducts", productService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("phiVanChuyen", thanhService.getTinhThanh(mCurrentAccount.getIdTinhThanh()));
         mav.addObject("login", mCurrentAccount != null);
         mav.addObject("dsHang", gioHang.getDsChiTietGioHang());

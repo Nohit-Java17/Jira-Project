@@ -185,7 +185,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.hoTen}" placeholder="Nhập họ và tên"
+                                                <input type="text" th:value="${client.hoTen}" placeholder="Nhập họ và tên"
                                                     id="billing_first_name" name="billing_first_name" class="input-text"
                                                     required>
                                             </p>
@@ -199,7 +199,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.diaChi}" placeholder="Nhập địa chỉ"
+                                                <input type="text" th:value="${client.diaChi}" placeholder="Nhập địa chỉ"
                                                     id="billing_address_1" name="billing_address_1" class="input-text"
                                                     required>
                                             </p>
@@ -214,7 +214,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.xaPhuong}" placeholder="Nhập Huyện / Quận"
+                                                <input type="text" th:value="${client.xaPhuong}" placeholder="Nhập Huyện / Quận"
                                                     id="billing_city" name="billing_city" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
@@ -228,7 +228,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.huyenQuan}" placeholder="Nhập Huyện / Quận"
+                                                <input type="text" th:value="${client.huyenQuan}" placeholder="Nhập Huyện / Quận"
                                                     id="billing_city" name="billing_city" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
@@ -245,7 +245,7 @@
                                                     name="billing_country">
                                                     <option th:each="tinhThanh : ${dsTinhThanh}"
                                                                 th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
-                                                                th:selected="${tinhThanh.id}==${khachHang.idTinhThanh}">
+                                                                th:selected="${tinhThanh.id}==${client.idTinhThanh}">
                                                     </option>
                                                 </select>
                                             </p>
@@ -258,7 +258,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="email" th:value="${khachHang.email}" placeholder="Nhập thư điện tử"
+                                                <input type="email" th:value="${client.email}" placeholder="Nhập thư điện tử"
                                                     id="billing_email" name="billing_email" class="input-text" required>
                                             </p>
                                             <div class="clear"></div>
@@ -270,7 +270,7 @@
                                                         *
                                                     </abbr>
                                                 </label>
-                                                <input type="text" th:value="${khachHang.soDienThoai}" placeholder="Nhập số điện thoại"
+                                                <input type="text" th:value="${client.soDienThoai}" placeholder="Nhập số điện thoại"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                     id="billing_phone" name="billing_phone" class="input-text" required>
                                             </p>
@@ -437,7 +437,7 @@
                                                     Tổng giỏ hàng
                                                 </th>
                                                 <td>
-                                                	<span class="amount" th:text="${#numbers.formatDecimal(gioHang.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                	<span class="amount" th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -460,7 +460,7 @@
                                                 </th>
                                                 <td>
                                                     <strong>
-                                                        <span class="amount" th:text="${#numbers.formatDecimal(gioHang.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                                        <span class="amount" th:text="${#numbers.formatDecimal(cart.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                                             64.990.000 ₫
                                                         </span>
                                                     </strong>

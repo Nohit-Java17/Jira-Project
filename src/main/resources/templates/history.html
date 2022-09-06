@@ -86,7 +86,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="donHang,i : ${khachHang.dsDonHang}" class="text-sm">
+                                <tr th:each="donHang,i : ${client.dsDonHang}" class="text-sm">
                                     <td th:text="${i.index+1}" class="align-middle py-3">
                                         1
                                     </td>
@@ -123,7 +123,7 @@
                                         </div>
                                     </td>
                                     <td class="align-middle py-3">
-                                        <a class="btn btn-outline-primary btn-sm" th:href="@{/order}">
+                                        <a class="btn btn-outline-primary btn-sm" th:href="@{/order/view(id=${donHang.id})}">
                                             Xem
                                         </a>
                                     </td>
