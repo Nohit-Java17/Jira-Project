@@ -63,6 +63,11 @@ public class GioHangController {
                 gioHang.setId(id);
                 gioHangService.saveGioHang(gioHang);
             }
+
+            if(gioHang.getTongGioHang() < 0){
+                gioHang.setTongGioHang(0);
+            }
+
             mIsByPass = false;
 
             mav.addObject("khachHang", mCurrentAccount);
@@ -102,12 +107,20 @@ public class GioHangController {
     //         }
 
     //         // xóa
-    //         chiTietGioHangService.deleteChiTietGioHang(id);
+    //         ChiTietGioHangId selectedChiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), id);
+    //         gioHang.setTongGioHang(gioHang.getTongGioHang()
+    //                 - chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).getTongTienSanPham());
+    //         gioHang.setTongSoLuong(gioHang.getTongSoLuong()
+    //                 - chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).getSoLuongSanPhan());
+    //         chiTietGioHangService.deleteChiTietGioHang(selectedChiTietGioHang);
 
     //         mIsByPass = false;
     //         mav.addObject("khachHang", mCurrentAccount);
     //         mav.addObject("gioHang", gioHang);
     //         mav.addObject("listChiTietGioHang", gioHang.getDsChiTietGioHang());
+    //         mav.addObject("some_products", productService.getDsSanPhamAscendingPriceOrder().subList(0, 2));
+    //         mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 2));
+    //         mav.addObject("some_topsaleProducts", productService.getDsSanPhamTopSale().subList(0, 2));
     //         showMessageBox(mav);
     //         return mav;
     //     }
@@ -116,17 +129,75 @@ public class GioHangController {
     // Delete San Pham
     @RequestMapping(value = "/delete", method = { GET, DELETE })
     public String sanPhamDelete(int id) {
-    // check current account still valid
-    if (!isValidAccount()) {
-    return REDIRECT_PREFIX + LOGOUT_VIEW;
-    } else {
+        // check current account still valid
+        if (!isValidAccount()) {
+            return REDIRECT_PREFIX + LOGOUT_VIEW;
+        } else {
 
-    chiTietGioHangService.deleteChiTietGioHang(new ChiTietGioHangId(mCurrentAccount.getId(),id));
-    mIsMsgShow = true;
-    mMsg = "Xóa sản phẩm thành công!";
-    return REDIRECT_PREFIX + CART_VIEW;
+            var idAccount = mCurrentAccount.getId();
+            GioHang gioHang = gioHangService.getGioHang(idAccount);
+            // check gio_hang exist
+            if (gioHang == null) {
+                gioHang = new GioHang();
+                gioHang.setId(idAccount);
+                gioHangService.saveGioHang(gioHang);
+            }
 
+            // xóa
+            ChiTietGioHangId selectedChiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), id);
+            gioHang.setTongGioHang(gioHang.getTongGioHang()
+                    - chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).getTongTienSanPham());
+            gioHang.setTongSoLuong(gioHang.getTongSoLuong()
+                    - chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).getSoLuongSanPhan());
+            chiTietGioHangService.deleteChiTietGioHang(selectedChiTietGioHang);
+            
+            mIsMsgShow = true;
+            mMsg = "Xóa sản phẩm thành công!";
+            return REDIRECT_PREFIX + CART_VIEW;
+        }
     }
+
+    // // Add new task
+    // @GetMapping("/saveCart")
+    // public String saveCart(List<ChiTietGioHang> listChiTietGioHang) {
+    //     // check current account still valid
+    //     if (!isValidAccount()) {
+    //         return REDIRECT_PREFIX + LOGOUT_VIEW;
+    //     } else {
+    //         var idAccount = mCurrentAccount.getId();
+    //         GioHang gioHang = gioHangService.getGioHang(idAccount);
+    //         // check gio_hang exist
+    //         if (gioHang == null) {
+    //             gioHang = new GioHang();
+    //             gioHang.setId(idAccount);
+    //             gioHangService.saveGioHang(gioHang);
+    //         }
+    //         // chiTietGioHangNew = (List<ChiTietGioHang>) chiTietGioHangService.getDsChiTietGioHang();
+    //         listChiTietGioHang.forEach(chiTiet -> chiTietGioHangService.saveChiTietGioHang(chiTiet));
+    //         gioHang.setDsChiTietGioHang(listChiTietGioHang);
+
+    //         return REDIRECT_PREFIX + CART_VIEW;
+    //     }
+    // }
+
+    // Add new task
+    @RequestMapping(value = "/saveCart", method = RequestMethod.POST)
+    public String saveCart(@RequestBody String json) {
+        // check current account still valid
+        if (!isValidAccount()) {
+            return REDIRECT_PREFIX + LOGOUT_VIEW;
+        } else {
+            var idAccount = mCurrentAccount.getId();
+            GioHang gioHang = gioHangService.getGioHang(idAccount);
+            // check gio_hang exist
+            if (gioHang == null) {
+                gioHang = new GioHang();
+                gioHang.setId(idAccount);
+                gioHangService.saveGioHang(gioHang);
+            }
+            
+            return REDIRECT_PREFIX + CART_VIEW;
+        }
     }
 
     // Check valid account
