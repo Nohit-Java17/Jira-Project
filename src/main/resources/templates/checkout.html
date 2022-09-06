@@ -128,8 +128,14 @@
                                                 <label class="" for="billing_first_name">
                                                     Họ tên
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="text" th:value="${client.hoTen}" id="billing_first_name"
                                                     class="input-text" readonly>
+=======
+                                                <input type="text" th:value="${client.hoTen}" placeholder="Nhập họ và tên"
+                                                    id="billing_first_name" name="billing_first_name" class="input-text"
+                                                    required>
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_address_1_field"
@@ -137,8 +143,14 @@
                                                 <label class="" for="billing_address_1">
                                                     Địa chỉ
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="text" th:value="${client.diaChi}" id="billing_address_1"
                                                     class="input-text" readonly>
+=======
+                                                <input type="text" th:value="${client.diaChi}" placeholder="Nhập địa chỉ"
+                                                    id="billing_address_1" name="billing_address_1" class="input-text"
+                                                    required>
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -147,8 +159,13 @@
                                                 <label class="" for="billing_city">
                                                     Xã / Phường
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="text" th:value="${client.xaPhuong}" id="billing_city"
                                                     class="input-text" readonly>
+=======
+                                                <input type="text" th:value="${client.xaPhuong}" placeholder="Nhập Huyện / Quận"
+                                                    id="billing_city" name="billing_city" class="input-text" required>
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_city_field"
@@ -157,8 +174,13 @@
                                                 <label class="" for="billing_city">
                                                     Huyện / Quận
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="text" th:value="${client.huyenQuan}" id="billing_city"
                                                     class="input-text" readonly>
+=======
+                                                <input type="text" th:value="${client.huyenQuan}" placeholder="Nhập Huyện / Quận"
+                                                    id="billing_city" name="billing_city" class="input-text" required>
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_country_field"
@@ -167,8 +189,18 @@
                                                 <label class="" for="billing_country">
                                                     Tỉnh / Thành
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="text" th:value="${client.tinhThanh.ten}"
                                                     id="billing_country" class="input-text" readonly>
+=======
+                                                <select class="country_to_state country_select" id="billing_country"
+                                                    name="billing_country">
+                                                    <option th:each="tinhThanh : ${dsTinhThanh}"
+                                                                th:value="${tinhThanh.id}" th:text="${tinhThanh.ten}"
+                                                                th:selected="${tinhThanh.id}==${client.idTinhThanh}">
+                                                    </option>
+                                                </select>
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_email_field"
@@ -176,8 +208,13 @@
                                                 <label class="" for="billing_email">
                                                     Email
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="email" th:value="${client.email}" id="billing_email"
                                                     class="input-text" readonly>
+=======
+                                                <input type="email" th:value="${client.email}" placeholder="Nhập thư điện tử"
+                                                    id="billing_email" name="billing_email" class="input-text" required>
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                             </p>
                                             <div class="clear"></div>
                                             <p id="billing_phone_field"
@@ -185,7 +222,11 @@
                                                 <label class="" for="billing_phone">
                                                     Điện thoại
                                                 </label>
+<<<<<<< HEAD
                                                 <input type="text" th:value="${client.soDienThoai}"
+=======
+                                                <input type="text" th:value="${client.soDienThoai}" placeholder="Nhập số điện thoại"
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                     id="billing_phone" class="input-text" readonly>
                                             </p>
@@ -354,8 +395,12 @@
                                                     Tổng giỏ hàng
                                                 </th>
                                                 <td>
+<<<<<<< HEAD
                                                     <span class="amount"
                                                         th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+=======
+                                                	<span class="amount" th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                                         64.990.000 ₫
                                                     </span>
                                                 </td>
@@ -377,8 +422,12 @@
                                                 </th>
                                                 <td>
                                                     <strong>
+<<<<<<< HEAD
                                                         <span class="amount"
                                                             th:text="${#numbers.formatDecimal(cart.tongGioHang+client.tinhThanh.chiPhiVanChuyen-cart.giamGia, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+=======
+                                                        <span class="amount" th:text="${#numbers.formatDecimal(cart.tongGioHang - phiVanChuyen.chiPhiVanChuyen, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+>>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
                                                             64.990.000 ₫
                                                         </span>
                                                     </strong>
