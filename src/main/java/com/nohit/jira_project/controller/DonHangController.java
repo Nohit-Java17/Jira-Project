@@ -44,19 +44,19 @@ public class DonHangController {
             return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
         } else {
             var mav = new ModelAndView(ORDER_TEMP);
-            var idKH = khachHang.getId();
-            var gioHang = gioHangService.getGioHang(idKH);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idKH);
-                gioHangService.saveGioHang(gioHang);
-            }
+            // var idKH = khachHang.getId();
+            // var gioHang = gioHangService.getGioHang(idKH);
+            // // check gio_hang exist
+            // if (gioHang == null) {
+            //     gioHang = new GioHang();
+            //     gioHang.setId(idKH);
+            //     gioHangService.saveGioHang(gioHang);
+            // }
             
-            mav.addObject("order", chiTietDonHangService.getChiTietDonHang(id));
-            mav.addObject("client", khachHang);
-            mav.addObject("cart", gioHang);
-            mav.addObject("login", khachHang != null);
+            // mav.addObject("order", chiTietDonHangService.getChiTietDonHang(id));
+            // mav.addObject("client", khachHang);
+            // mav.addObject("cart", gioHang);
+            // mav.addObject("login", khachHang != null);
             return mav;
         }
     }

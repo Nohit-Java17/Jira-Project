@@ -76,20 +76,6 @@ public class ThanhToanController {
             mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
             mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
         }
-<<<<<<< HEAD
-=======
-
-        mav.addObject("client", mCurrentAccount);
-        mav.addObject("dsTinhThanh", thanhService.getDsTinhThanh());
-        mav.addObject("cart", gioHang);
-        mav.addObject("newProducts", productService.getDsSanPhamNewest());
-        mav.addObject("some_products", productService.getDsSanPhamAscendingPrice().subList(0, 3));
-        mav.addObject("some_newProducts", productService.getDsSanPhamNewest().subList(0, 3));
-        mav.addObject("phiVanChuyen", thanhService.getTinhThanh(mCurrentAccount.getIdTinhThanh()));
-        mav.addObject("login", mCurrentAccount != null);
-        mav.addObject("dsHang", gioHang.getDsChiTietGioHang());
-        
->>>>>>> 24267b3c5216efd1fb3057ab3bcdc3cd0c19623b
         showMessageBox(mav);
         mIsByPass = false;
         return mav;
