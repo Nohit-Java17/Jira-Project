@@ -47,6 +47,7 @@ public class ApplicationController {
         }
     }
 
+<<<<<<< HEAD
     // Register
     @PostMapping(REGISTER_VIEW)
     public String register(KhachHang khachHang) {
@@ -82,6 +83,28 @@ public class ApplicationController {
         } else {
             return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
         }
+=======
+    // Load detail
+    @GetMapping(value = { DETAIL_VIEW })
+    public ModelAndView detail() {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(DETAIL_TEMP);
+        mIsByPass = false;
+        return mav;
+
+    }
+
+    // Load register
+    @GetMapping(value = { REGISTER_VIEW })
+    public ModelAndView register() {
+        // All can go to pages: homepage/product/details/about/contact
+        // User must login fisrt to go to pages cart and checkout
+        var mav = new ModelAndView(REGISTER_TEMP);
+        mIsByPass = false;
+        return mav;
+
+>>>>>>> origin/feCart
     }
 
     // Load password-reset
