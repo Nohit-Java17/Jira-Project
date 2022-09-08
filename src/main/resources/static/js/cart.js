@@ -55,6 +55,20 @@ for (let i = 0; i < addProducts.length; i++) {
   });
 }
 
+// update when type in
+
+for (let i = 0; i < sumProducts.length; i++) {
+    sumProducts[i].addEventListener("change", () => {
+  
+      sumProducts[i].value = parseInt(sumProducts[i].value);
+      // console.log(sumProducts[i].value);
+  
+      valueTemp = parseInt($(giaMotSanPham[i]).text()) * sumProducts[i].value;
+      giaNSanPham[i].textContent = valueTemp;
+      updateBill();
+    });
+  }
+
 function updateBill() {
   tongTienThanhToanBill.textContent = 0;
   tongTienHangBill.textContent = 0;
@@ -115,6 +129,7 @@ $("#updateButton").click(function (e) {
     type: "post",
     url: "/cart/saveCart",
     data: finalString,
+    contentType: "application/json",
     dataType: "json"
   }).done(function (result) {
     console.log(result);
