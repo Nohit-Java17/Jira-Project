@@ -43,8 +43,8 @@
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form th:action="@{/checkout}" enctype="multipart/form-data" class="checkout" method="post"
-                                name="checkout">
+                            <form th:action="@{/checkout/action}" enctype="multipart/form-data" class="checkout"
+                                method="post" name="checkout">
                                 <div id="customer_details" class="col2-set">
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
@@ -191,7 +191,7 @@
                                                     </label>
                                                     <input type="text" value="" placeholder="Nhập Huyện / Quận"
                                                         id="shipping_city" name="huyenQuan"
-                                                        class="input-text chk-required">
+                                                        class="input-text chk-required" th:value="${defaultWard}">
                                                 </p>
                                                 <div class="clear"></div>
                                                 <p id="shipping_country_field"
@@ -385,21 +385,6 @@
     <!-- Main Script -->
     <script src="js/main.js"></script>
     <!-- Add required if checkbox checked -->
-    <!-- <script>
-        $(document).ready(function () {
-            $('input[type="checkbox"]').change(function () {
-                if ($('.chk-required').attr('required')) {
-                    $('.chk-required').removeAttr('required');
-                    $('#ship-to-different-address-checkbox').val(0);
-                    $('#idNguoiNhan').val(0);
-                } else {
-                    $('.chk-required').attr('required', 'required');
-                    $('#ship-to-different-address-checkbox').val(1);
-                    $('#idNguoiNhan').val(0);
-                }
-            });
-        });
-    </script> -->
     <script>
         $(document).ready(function () {
             $('input[type="checkbox"]').change(function () {

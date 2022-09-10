@@ -5,11 +5,11 @@ import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
-import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
+import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -17,65 +17,97 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping(CATEGORY_VIEW)
 public class PhanLoaiController {
     @Autowired
-    private AuthenticationUtil authenticationUtil;
-
-    @Autowired
     private SanPhamService sanPhamService;
 
     @Autowired
-    private GioHangService gioHangService;
+    private AuthenticationUtil authenticationUtil;
+
+    @Autowired
+    private ApplicationUtil applicationUtil;
 
     // Load category
     @GetMapping("")
     public ModelAndView category() {
         var mav = new ModelAndView(CATEGORY_TEMP);
-        GioHang gioHang;
         var khachHang = authenticationUtil.getAccount();
-        // check current account still valid
-        if (khachHang == null) {
-            gioHang = new GioHang();
-        } else {
-            var idKhachHang = khachHang.getId();
-            gioHang = gioHangService.getGioHang(idKhachHang);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idKhachHang);
-                gioHangService.saveGioHang(gioHang);
-            }
-        }
-        mav.addObject("client", khachHang);
-        mav.addObject("cart", gioHang);
+        var dsTonkho = sanPhamService.getDsSanPhamTonKho();
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
-        mav.addObject("products", sanPhamService.getDsSanPhamTonKho());
+        mav.addObject("products", dsTonkho.subList(0, 8));
         mav.addObject("radioCheck", DEFAULT_CATEGORY);
+        mav.addObject("maxSize", (dsTonkho.size() - 1) / DEFAULT_SIZE_PAGE + 1);
+        mav.addObject("view", PAGE_VIEW + "?page=");
+        mav.addObject("previous", PAGE_VIEW + "?page=" + 1);
+        mav.addObject("next", PAGE_VIEW + "?page=" + 2);
         return mav;
     }
 
-    // Load top sale products
+    // Load category from page
+    @GetMapping(PAGE_VIEW)
+    public ModelAndView category(int page) {
+        var mav = new ModelAndView(CATEGORY_TEMP);
+        var khachHang = authenticationUtil.getAccount();
+        var dsTonkho = sanPhamService.getDsSanPhamTonKho();
+        var maxDsTonkho = dsTonkho.size();
+        var maxPage = page * DEFAULT_SIZE_PAGE;
+        var maxSize = (maxDsTonkho - 1) / DEFAULT_SIZE_PAGE + 1;
+        var previous = page - 1;
+        var next = page + 1;
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject("choosenOne", PHAN_LOAI);
+        mav.addObject("login", khachHang != null);
+        mav.addObject("products",
+                dsTonkho.subList((page - 1) * DEFAULT_SIZE_PAGE, maxPage > maxDsTonkho ? maxDsTonkho : maxPage));
+        mav.addObject("radioCheck", DEFAULT_CATEGORY);
+        mav.addObject("maxSize", maxSize);
+        mav.addObject("view", PAGE_VIEW + "?page=");
+        mav.addObject("previous", PAGE_VIEW + "?page=" + (previous < 1 ? 1 : previous));
+        mav.addObject("next", PAGE_VIEW + "?page=" + (next > maxSize ? maxSize : next));
+        return mav;
+    }
+
+    // Load filter products
     @GetMapping(FILTER_VIEW)
     public ModelAndView categoryFilter(String filter) {
         var mav = new ModelAndView(CATEGORY_TEMP);
-        GioHang gioHang;
         var khachHang = authenticationUtil.getAccount();
-        // check current account still valid
-        if (khachHang == null) {
-            gioHang = new GioHang();
-        } else {
-            var idKhachHang = khachHang.getId();
-            gioHang = gioHangService.getGioHang(idKhachHang);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idKhachHang);
-                gioHangService.saveGioHang(gioHang);
-            }
-        }
-        mav.addObject("client", khachHang);
-        mav.addObject("cart", gioHang);
+        var dsTonkho = sanPhamService.getDsSanPham(filter);
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
-        mav.addObject("products", sanPhamService.getDsSanPham(filter));
+        mav.addObject("products", dsTonkho.subList(0, 8));
         mav.addObject("radioCheck", CATEGORIES_MAP.get(filter));
+        mav.addObject("maxSize", (dsTonkho.size() - 1) / DEFAULT_SIZE_PAGE + 1);
+        mav.addObject("view", FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=");
+        mav.addObject("previous", FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + 1);
+        mav.addObject("next", FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + 2);
+        return mav;
+    }
+
+    // Load filter products from page
+    @GetMapping(FILTER_VIEW + PAGE_VIEW)
+    public ModelAndView categoryFilter(String filter, int page) {
+        var mav = new ModelAndView(CATEGORY_TEMP);
+        var khachHang = authenticationUtil.getAccount();
+        var dsTonkho = sanPhamService.getDsSanPham(filter);
+        var maxDsTonkho = dsTonkho.size();
+        var maxPage = page * DEFAULT_SIZE_PAGE;
+        var maxSize = (maxDsTonkho - 1) / DEFAULT_SIZE_PAGE + 1;
+        var previous = page - 1;
+        var next = page + 1;
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject("choosenOne", PHAN_LOAI);
+        mav.addObject("login", khachHang != null);
+        mav.addObject("products",
+                dsTonkho.subList((page - 1) * DEFAULT_SIZE_PAGE, maxPage > maxDsTonkho ? maxDsTonkho : maxPage));
+        mav.addObject("radioCheck", CATEGORIES_MAP.get(filter));
+        mav.addObject("maxSize", maxSize);
+        mav.addObject("view", FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=");
+        mav.addObject("previous",
+                FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + (previous < 1 ? 1 : previous));
+        mav.addObject("next",
+                FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + (next > maxSize ? maxSize : next));
         return mav;
     }
 }

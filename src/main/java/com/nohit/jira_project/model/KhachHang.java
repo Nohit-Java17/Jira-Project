@@ -49,7 +49,7 @@ public class KhachHang {
     @Column(name = "vai_tro")
     private String vaiTro;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "id_tinh_thanh", referencedColumnName = "id", insertable = false, updatable = false)
     private TinhThanh tinhThanh;
 
