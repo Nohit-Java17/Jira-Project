@@ -55,30 +55,28 @@ public class ThanhToanController {
     // Load checkout
     @GetMapping("")
     public ModelAndView checkout() {
-        ModelAndView mav;
         // check current account still valid
         if (!isValidAccount()) {
-            mav = new ModelAndView(REDIRECT_PREFIX + LOGIN_VIEW);
+            return new ModelAndView(LOGIN_TEMP);
         } else {
-            mav = new ModelAndView(CHECKOUT_TEMP);
-            var idKhacHang = mCurrentAccount.getId();
-            var gioHang = gioHangService.getGioHang(idKhacHang);
+            var mav = new ModelAndView(CHECKOUT_TEMP);
+            var idKhachHang = mCurrentAccount.getId();
+            var gioHang = gioHangService.getGioHang(idKhachHang);
             // check gio_hang exist
             if (gioHang == null) {
-                gioHangService.createGioHang(idKhacHang);
+                // gioHangService.createGioHang(idKhachHang);
             }
             mav.addObject("client", mCurrentAccount);
             mav.addObject("cart", gioHang);
             mav.addObject("login", mCurrentAccount != null);
-            mav.addObject("defaultProvince", DEFAULT_PROVINCE);
             mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
             mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
-            mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
             mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
+            mav.addObject("defaultProvince", DEFAULT_PROVINCE);
+            showMessageBox(mav);
+            mIsByPass = false;
+            return mav;
         }
-        showMessageBox(mav);
-        mIsByPass = false;
-        return mav;
     }
 
     // Checkout
@@ -136,7 +134,7 @@ public class ThanhToanController {
                         chiTietGioHangService.deleteChiTietGioHang(new ChiTietGioHangId(idGioHang, idSanPham));
                     }
                     gioHangService.deleteGioHang(idGioHang);
-                    gioHangService.createGioHang(idGioHang);
+                    // gioHangService.createGioHang(idGioHang);
                     mMsg = "Đơn hàng đã được đặt thành công!";
                     return REDIRECT_PREFIX + HISTORY_VIEW;
                 }

@@ -90,6 +90,8 @@ CREATE TABLE
         tong_so_luong INT NOT NULL,
         giam_gia INT NOT NULL,
         tong_gio_hang INT NOT NULL,
+        huyen_quan NVARCHAR(50),
+        id_tinh_thanh INT NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (id) REFERENCES khach_hang(id)
     );
@@ -528,7 +530,7 @@ VALUES (
 
 -- add data to gio_hang
 
-INSERT INTO gio_hang VALUES (1, 6, 100000, 39989000);
+INSERT INTO gio_hang VALUES (1, 6, 100000, 40089000, 'Q.10', 29);
 
 -- add data to chi_tiet_gio_hang
 

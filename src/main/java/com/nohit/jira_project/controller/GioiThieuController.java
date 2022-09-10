@@ -5,10 +5,9 @@ import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
-import com.nohit.jira_project.model.*;
-import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -16,33 +15,19 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping(ABOUT_VIEW)
 public class GioiThieuController {
     @Autowired
-    private GioHangService gioHangService;
+    private ApplicationUtil applicationUtil;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
-    // Load contact
+    // Load about
     @GetMapping("")
     public ModelAndView contact() {
         var mav = new ModelAndView(ABOUT_TEMP);
-        GioHang gioHang;
         var khachHang = authenticationUtil.getAccount();
-        // check current account still valid
-        if (khachHang == null) {
-            gioHang = new GioHang();
-        } else {
-            var idKhachHang = khachHang.getId();
-            gioHang = gioHangService.getGioHang(idKhachHang);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idKhachHang);
-                gioHangService.saveGioHang(gioHang);
-            }
-        }
-        mav.addObject("client", khachHang);
-        mav.addObject("cart", gioHang);
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
+        mav.addObject("choosenOne", GIOI_THIEU);
         return mav;
     }
 }

@@ -22,7 +22,10 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping("")
 public class ApplicationController {
     @Autowired
-    KhachHangService khachHangService;
+    private KhachHangService khachHangService;
+
+    @Autowired
+    private GioHangService gioHangService;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -61,6 +64,7 @@ public class ApplicationController {
             khachHang.setIdTinhThanh(DEFAULT_PROVINCE);
             khachHang.setVaiTro(DEFAULT_ROLE);
             khachHangService.saveKhachHang(khachHang);
+            gioHangService.createGioHang(khachHang);
             mMsg = "Tài khoản đã được đăng ký thành công!";
             return REDIRECT_PREFIX + LOGIN_VIEW;
         }
