@@ -202,8 +202,8 @@
                         <h2 class="sidebar-title">
                             Tra cứu
                         </h2>
-                        <form action="#">
-                            <input type="text" placeholder="Nhập vào tên sản phẩm..." required>
+                        <form th:action="@{/detail/search}" method="get">
+                            <input type="text" placeholder="Nhập vào tên sản phẩm..." name="name" required>
                             <input class="btn-search" type="submit" value="Tìm kiếm">
                         </form>
                     </div>

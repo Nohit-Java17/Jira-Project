@@ -10,5 +10,6 @@ import com.nohit.jira_project.model.*;
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
     public List<SanPham> findByPhanLoai(String phanLoai);
-    public SanPham findByTen(String nameProduct);
+
+    public SanPham findByTen(String name);
 }

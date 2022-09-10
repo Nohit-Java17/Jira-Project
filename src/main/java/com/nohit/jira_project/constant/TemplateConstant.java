@@ -2,6 +2,7 @@ package com.nohit.jira_project.constant;
 
 public class TemplateConstant {
     public static final String NOT_FOUND_TEMP = "404";
+    public static final String BLANK_TEMP = "blank";
     public static final String ABOUT_TEMP = "about";
     public static final String CART_TEMP = "cart";
     public static final String CATEGORY_TEMP = "category";

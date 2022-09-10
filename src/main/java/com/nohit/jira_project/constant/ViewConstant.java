@@ -2,6 +2,7 @@ package com.nohit.jira_project.constant;
 
 public class ViewConstant {
     public static final String NOT_FOUND_VIEW = "/404";
+    public static final String BLANK_VIEW = "/blank";
     public static final String ABOUT_VIEW = "/about";
     public static final String CART_VIEW = "/cart";
     public static final String CATEGORY_VIEW = "/category";
@@ -42,4 +43,6 @@ public class ViewConstant {
     public static final String PAGE_VIEW = "/page";
 
     public static final String ADD_VIEW = "/add";
+
+    public static final String SEARCH_VIEW = "/search";
 }

@@ -12,7 +12,6 @@ import static javax.persistence.FetchType.*;
 @NoArgsConstructor
 public class CreditCard {
     @Id
-    @GeneratedValue
     @Column(name = "id")
     private int id;
 
