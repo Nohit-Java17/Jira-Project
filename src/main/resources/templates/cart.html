@@ -43,7 +43,7 @@
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post" th:action="@{cart/save}">
+                            <form method="put" th:action="@{/cart/save}">
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -72,7 +72,7 @@
                                             value="${listChiTietGioHang}" class="cart_item">
                                             <td class="product-remove">
                                                 <a title="Remove this item" class="remove"
-                                                    th:href="@{/cart/delete/(idSanPham=${element.sanPham.id})}">
+                                                    th:href="@{/cart/delete(idSanPham=${element.sanPham.id})}">
                                                     ×
                                                 </a>
                                             </td>
@@ -121,14 +121,14 @@
                                                         <input type="text" placeholder="Mã khuyến mãi" name="couponCode"
                                                             id="coupon_code" class="input-text coupon-code">
                                                         <input type="submit" value="Áp dụng" name="coupon"
-                                                            th:formaction="@{/cart/coupon}"
-                                                            id="apply_coupon" class="button">
+                                                            th:formaction="@{/cart/coupon}" id="apply_coupon"
+                                                            class="button">
                                                     </div>
                                                     <div class="voucher-sp">
                                                         <input type="submit" value="Cập nhật" id="updateButton"
                                                             name="update" class="button">
                                                         <input type="submit" value="Thanh toán" name="proceed"
-                                                            th:formaction="@{/checkout}"
+                                                            th:formaction="@{/checkout}" formmethod="get"
                                                             class="checkout-button button alt wc-forward">
                                                     </div>
                                                     <div class="clear"></div>

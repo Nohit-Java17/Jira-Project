@@ -185,7 +185,7 @@
                         </a>
                     </li>
                 </ul>
-                <ul th:case="'Phân Loại'" class="nav navbar-nav">
+                <ul th:case="'Phân loại'" class="nav navbar-nav">
                     <li>
                         <a th:href="@{/index}">
                             Trang chủ
@@ -684,5 +684,34 @@
                 </a>
             </li>
         </ul>
+    </div>
+</div>
+<div class="row" th:fragment="split-page">
+    <div class="col-md-12">
+        <div class="product-pagination text-center">
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a th:href="@{'/category'+${previous}}" aria-label="Previous">
+                            <span aria-hidden="true">
+                                &laquo;
+                            </span>
+                        </a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(1,maxSize,1)}">
+                        <a th:text="${i}" th:href="@{'/category'+${view}+${i}}">
+                            1
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{'/category'+${next}}" aria-label="Next">
+                            <span aria-hidden="true">
+                                &raquo;
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>

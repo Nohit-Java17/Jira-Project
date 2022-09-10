@@ -12,6 +12,7 @@ public class ApplicationConstant {
     public static final String DEFAULT_STATUS = "Đang giao";
     public static final int DEFAULT_PROVINCE = 29;
     public static final int DEFAULT_CATEGORY = 0;
+    public static final int DEFAULT_SIZE_PAGE = 8;
 
     public class Role {
         public static final String ADMIN = "ADMIN";
