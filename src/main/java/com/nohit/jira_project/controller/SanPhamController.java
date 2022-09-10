@@ -120,15 +120,15 @@ public class SanPhamController {
     // }
 
     // Load filter products
-    @GetMapping(FILTER_VIEW)
-    public ModelAndView productFilter(String filter) {
+    @GetMapping(SORT_VIEW)
+    public ModelAndView productFilter(String sort) {
         var mav = new ModelAndView(PRODUCT_TEMP);
         var khachHang = authenticationUtil.getAccount();
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
-        mav.addObject("products", sanPhamService.getDsSanPhamInProductPage(filter));
-        mav.addObject("radioCheck", PRODUCTS_MAP.get(filter));
+        mav.addObject("products", sanPhamService.getDsSanPhamInProductPage(sort));
+        mav.addObject("radioCheck", PRODUCTS_MAP.get(sort));
         return mav;
     }
 
