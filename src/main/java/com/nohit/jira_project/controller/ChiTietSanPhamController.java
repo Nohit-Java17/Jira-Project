@@ -50,7 +50,7 @@ public class ChiTietSanPhamController {
         mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
         mav.addObject("limit", sanPham.getTonKho());
-        showMessageBox(mav);
+        mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
 
@@ -90,16 +90,6 @@ public class ChiTietSanPhamController {
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
             return REDIRECT_PREFIX + DETAIL_VIEW + VIEW_VIEW + "?id=" + nhanXet.getIdSanPham();
-        }
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
         }
     }
 }

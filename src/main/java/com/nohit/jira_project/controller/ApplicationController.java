@@ -31,6 +31,9 @@ public class ApplicationController {
     private AuthenticationUtil authenticationUtil;
 
     @Autowired
+    private ApplicationUtil applicationUtil;
+
+    @Autowired
     private StringUtil stringUtil;
 
     // Fields
@@ -43,7 +46,7 @@ public class ApplicationController {
         // check current account still valid
         if (authenticationUtil.getAccount() == null) {
             var mav = new ModelAndView(REGISTER_TEMP);
-            showMessageBox(mav);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             return mav;
         } else {
             return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
@@ -81,10 +84,10 @@ public class ApplicationController {
                 mIsMsgShow = true;
                 mMsg = "Tài khoản đăng nhập chưa đúng!";
             }
-            showMessageBox(mav);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             return mav;
         } else {
-            return new ModelAndView(REDIRECT_PREFIX + PROFILE_VIEW);
+            return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
         }
     }
 
@@ -92,7 +95,7 @@ public class ApplicationController {
     @GetMapping(PASSWORD_RESET_VIEW)
     public ModelAndView resetPassword() {
         var mav = new ModelAndView(PASSWORD_RESET_TEMP);
-        showMessageBox(mav);
+        mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
 
@@ -109,16 +112,6 @@ public class ApplicationController {
             khachHangService.resetPassword(email);
             mMsg = "Mật khẩu mới đã gửi về email. Vui lòng kiểm tra lại!";
             return REDIRECT_PREFIX + LOGIN_VIEW;
-        }
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
         }
     }
 }
