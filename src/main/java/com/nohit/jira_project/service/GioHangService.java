@@ -11,5 +11,5 @@ public interface GioHangService {
 
     public void deleteGioHang(int id);
 
-    public GioHang createGioHang(int id);
+    public GioHang createGioHang(KhachHang khachHang);
 }

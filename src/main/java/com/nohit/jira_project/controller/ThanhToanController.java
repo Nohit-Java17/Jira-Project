@@ -1,10 +1,7 @@
 package com.nohit.jira_project.controller;
 
-<<<<<<< HEAD
 import java.util.*;
 
-=======
->>>>>>> origin/feCart
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +11,6 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
-<<<<<<< HEAD
 import lombok.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
@@ -34,34 +30,11 @@ public class ThanhToanController {
 
     @Autowired
     private GioHangService gioHangService;
-=======
-import static com.nohit.jira_project.constant.AttributeConstant.*;
-import static com.nohit.jira_project.constant.TemplateConstant.*;
-import static com.nohit.jira_project.constant.ViewConstant.*;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
-@Controller
-@RequestMapping(value = { CHECKOUT_VIEW, "/giohang" })
-public class ThanhToanController {
-
-    @Autowired
-    private AuthenticationUtil authenticationUtil;
-
-    @Autowired
-    StringUtil stringUtil;
-
-    @Autowired
-    KhachHangService khachHangService;
-
-    @Autowired
-    private SanPhamService productService;
->>>>>>> origin/feCart
 
     @Autowired
     private ChiTietGioHangService chiTietGioHangService;
 
     @Autowired
-<<<<<<< HEAD
     private DonHangService donHangService;
 
     @Autowired
@@ -75,56 +48,35 @@ public class ThanhToanController {
 
     // Fields
     private KhachHang mCurrentAccount;
-=======
-    private CreditCardService creditCardService;
-
-    @Autowired
-    private NguoiNhanService nguoiNhanService;
-
-    @Autowired
-    private TinhThanhService thanhService;
-
-    @Autowired
-    private GioHangService gioHangService;
-
-    // Fields
-    private KhachHang mCurrentAccount;
-    private NguoiNhan mCurrentNguoiNhan;
-    private ChiTietGioHang mChoosenOne;
-    private SanPham mChoosenOneSP;
->>>>>>> origin/feCart
     private String mMsg;
     private boolean mIsByPass;
     private boolean mIsMsgShow;
 
-<<<<<<< HEAD
     // Load checkout
     @GetMapping("")
     public ModelAndView checkout() {
-        ModelAndView mav;
         // check current account still valid
         if (!isValidAccount()) {
-            mav = new ModelAndView(REDIRECT_PREFIX + LOGIN_VIEW);
+            return new ModelAndView(LOGIN_TEMP);
         } else {
-            mav = new ModelAndView(CHECKOUT_TEMP);
-            var idKhacHang = mCurrentAccount.getId();
-            var gioHang = gioHangService.getGioHang(idKhacHang);
+            var mav = new ModelAndView(CHECKOUT_TEMP);
+            var idKhachHang = mCurrentAccount.getId();
+            var gioHang = gioHangService.getGioHang(idKhachHang);
             // check gio_hang exist
             if (gioHang == null) {
-                gioHangService.createGioHang(idKhacHang);
+                // gioHangService.createGioHang(idKhachHang);
             }
             mav.addObject("client", mCurrentAccount);
             mav.addObject("cart", gioHang);
             mav.addObject("login", mCurrentAccount != null);
-            mav.addObject("defaultProvince", DEFAULT_PROVINCE);
             mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
             mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
-            mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
             mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
+            mav.addObject("defaultProvince", DEFAULT_PROVINCE);
+            showMessageBox(mav);
+            mIsByPass = false;
+            return mav;
         }
-        showMessageBox(mav);
-        mIsByPass = false;
-        return mav;
     }
 
     // Checkout
@@ -182,71 +134,11 @@ public class ThanhToanController {
                         chiTietGioHangService.deleteChiTietGioHang(new ChiTietGioHangId(idGioHang, idSanPham));
                     }
                     gioHangService.deleteGioHang(idGioHang);
-                    gioHangService.createGioHang(idGioHang);
+                    // gioHangService.createGioHang(idGioHang);
                     mMsg = "Đơn hàng đã được đặt thành công!";
                     return REDIRECT_PREFIX + HISTORY_VIEW;
                 }
             }
-=======
-
-    // Load checkout
-    @GetMapping(value = { "" })
-    public ModelAndView checkout() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        if (!isValidAccount()) {
-            return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
-        } else {
-            var mav = new ModelAndView(CHECKOUT_TEMP);
-            var id = mCurrentAccount.getId();
-            var creditCard = creditCardService.getCreditCard(id);
-            
-            var gioHang = gioHangService.getGioHang(id);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(id);
-                gioHangService.saveGioHang(gioHang);
-            }
-            mav.addObject("dsTinhThanh", thanhService.getDsTinhThanh());
-            mav.addObject("khachHang", mCurrentAccount);
-            // mav.addObject("nguoinhan", mCurrentNguoiNhan);
-            mav.addObject("creditCard", creditCard);
-            mav.addObject("gioHang", gioHang);
-            mav.addObject("some_products", productService.getDsSanPhamAscendingPriceOrder().subList(0, 2));
-            mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 2));
-            mav.addObject("login", mCurrentAccount != null);
-            showMessageBox(mav);
-            mIsByPass = false;
-            return mav;
-        }
-    }
-
-    // Update info
-    @RequestMapping(value = INFO_VIEW, method = { GET, PUT })
-    public String profileInfo(@RequestParam("myCheckbox") boolean checkbox, NguoiNhan nguoiNhan) {
-        // check current account still valid
-        if (!isValidAccount()) {
-            return REDIRECT_PREFIX + LOGOUT_VIEW;
-        } else {
-            if(checkbox = true){
-                System.out.println("Checkbox is checked");
-                nguoiNhan.setHoTen(mCurrentNguoiNhan.getHoTen());
-                nguoiNhan.setDiaChi(mCurrentNguoiNhan.getDiaChi());
-                nguoiNhan.setXaPhuong(mCurrentNguoiNhan.getXaPhuong());
-                nguoiNhan.setHuyenQuan(mCurrentNguoiNhan.getHuyenQuan());
-                nguoiNhan.setTinhThanh(mCurrentNguoiNhan.getTinhThanh());
-                nguoiNhan.setSoDienThoai(mCurrentNguoiNhan.getSoDienThoai());
-                nguoiNhan.setGhiChu(mCurrentNguoiNhan.getGhiChu());
-                nguoiNhanService.saveNguoiNhan(nguoiNhan);
-                System.out.println(nguoiNhan.getHoTen());
-            }
-            
-            mIsMsgShow = true;
-            mMsg = "Thông tin cơ bản đã được cập nhật thành công!";
-            mIsByPass = true;
-            return REDIRECT_PREFIX + PROFILE_VIEW;
->>>>>>> origin/feCart
         }
     }
 
@@ -257,10 +149,6 @@ public class ThanhToanController {
             return true;
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
-<<<<<<< HEAD
-=======
-            // System.out.print(mCurrentAccount.getHoTen());
->>>>>>> origin/feCart
             return mCurrentAccount != null;
         }
     }
@@ -274,8 +162,4 @@ public class ThanhToanController {
             mIsMsgShow = false;
         }
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> origin/feCart
 }

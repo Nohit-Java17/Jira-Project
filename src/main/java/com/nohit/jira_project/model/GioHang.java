@@ -27,6 +27,16 @@ public class GioHang {
     @Column(name = "tong_gio_hang")
     private int tongGioHang;
 
+    @Column(name = "huyen_quan")
+    private String huyenQuan;
+
+    @Column(name = "id_tinh_thanh")
+    private int idTinhThanh;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "id_tinh_thanh", referencedColumnName = "id", insertable = false, updatable = false)
+    private TinhThanh tinhThanh;
+
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     private KhachHang khachHang;

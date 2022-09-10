@@ -1,6 +1,5 @@
 package com.nohit.jira_project.controller;
 
-import java.lang.reflect.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
@@ -8,200 +7,162 @@ import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
-import com.google.gson.*;
-import com.google.gson.reflect.*;
 import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import lombok.*;
+
+import static com.nohit.jira_project.constant.ApplicationConstant.*;
+import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Controller
-@RequestMapping(value = { CART_VIEW, "/giohang" })
+@RequestMapping(CART_VIEW)
 public class GioHangController {
+    @Autowired
+    private SanPhamService sanPhamService;
 
     @Autowired
-    private AuthenticationUtil authenticationUtil;
-
-    @Autowired
-    StringUtil stringUtil;
-
-    @Autowired
-    KhachHangService khachHangService;
-
-    @Autowired
-    private SanPhamService productService;
+    private GioHangService gioHangService;
 
     @Autowired
     private ChiTietGioHangService chiTietGioHangService;
 
     @Autowired
-    private GioHangService gioHangService;
+    private TinhThanhService tinhThanhService;
+
+    @Autowired
+    private AuthenticationUtil authenticationUtil;
 
     // Fields
     private KhachHang mCurrentAccount;
-    private ChiTietGioHang mChoosenOne;
-    private SanPham mChoosenOneSP;
+    private GioHang mClienCart;
     private String mMsg;
     private boolean mIsByPass;
     private boolean mIsMsgShow;
 
-    @GetMapping(value = { "" })
+    // Load cart
+    @GetMapping("")
     public ModelAndView cart() {
-        // All can go to pages: homepage/product/details/about/contact
-        // User must login fisrt to go to pages cart and checkout
-        var mav = new ModelAndView(CART_TEMP);
-        GioHang gioHang;
-
         // Check current account still valid
         if (!isValidAccount()) {
             return new ModelAndView(LOGIN_TEMP);
         } else {
-            var id = mCurrentAccount.getId();
-            gioHang = gioHangService.getGioHang(id);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(id);
-                gioHangService.saveGioHang(gioHang);
+            var mav = new ModelAndView(CART_TEMP);
+            mClienCart = gioHangService.getGioHang(mCurrentAccount.getId());
+            var tongSoLuong = mClienCart.getTongSoLuong();
+            var dsTonkho = new ArrayList<>();
+            for (var item : mClienCart.getDsChiTietGioHang()) {
+                dsTonkho.add(item.getSanPham().getTonKho());
             }
-
-            if (gioHang.getTongGioHang() < 0) {
-                gioHang.setTongGioHang(0);
-            }
-
-            mIsByPass = false;
-
-            mav.addObject("khachHang", mCurrentAccount);
-            mav.addObject("gioHang", gioHang);
-            mav.addObject("listChiTietGioHang", gioHang.getDsChiTietGioHang());
-            // mav.addObject("dsSanPham", gioHang.getDsChiTietGioHang());
+            mav.addObject("cart", mClienCart);
             mav.addObject("login", mCurrentAccount != null);
-            mav.addObject("some_products", productService.getDsSanPhamAscendingPriceOrder().subList(0, 2));
-            mav.addObject("some_newProducts", productService.getDsSanPhamNewestOrder().subList(0, 2));
-            mav.addObject("some_topsaleProducts", productService.getDsSanPhamTopSale().subList(0, 2));
+            mav.addObject("choosenOne", GIO_HANG);
+            mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+            mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
+            mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 2));
+            mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
+            mav.addObject("coupon", tongSoLuong < 1 ? 0 : mClienCart.getGiamGia());
+            mav.addObject("shipFee", tongSoLuong < 1 ? 0 : mClienCart.getTinhThanh().getChiPhiVanChuyen());
+            mav.addObject("limit", dsTonkho);
             showMessageBox(mav);
+            mIsByPass = false;
             return mav;
         }
-
     }
 
-    // Delete San Pham
-    @RequestMapping(value = "/delete", method = { GET, DELETE })
-    public String sanPhamDelete(int id) {
+    // Update cart
+    @PostMapping(SAVE_VIEW)
+    public String cartSave(int[] productSize) {
         // check current account still valid
         if (!isValidAccount()) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-
-            var idAccount = mCurrentAccount.getId();
-            GioHang gioHang = gioHangService.getGioHang(idAccount);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idAccount);
-                gioHangService.saveGioHang(gioHang);
+            var tongSoLuong = 0;
+            var tongGioHang = 0;
+            var index = 0;
+            // update chi_tiet_gio_hang
+            for (var item : mClienCart.getDsChiTietGioHang()) {
+                var tongTienSanPham = productSize[index] * item.getGiaBanSanPham();
+                item.setSoLuongSanPhan(productSize[index]);
+                item.setTongTienSanPham(tongTienSanPham);
+                chiTietGioHangService.saveChiTietGioHang(item);
+                tongSoLuong += productSize[index];
+                tongGioHang += tongTienSanPham;
+                index++;
             }
-
-            // delete
-            ChiTietGioHangId selectedChiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), id);
-
-            // update attribute of current gioHang before deleting
-            gioHang.setTongGioHang(gioHang.getTongGioHang()
-                    - chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).getTongTienSanPham());
-            gioHang.setTongSoLuong(gioHang.getTongSoLuong()
-                    - chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).getSoLuongSanPhan());
-            gioHangService.saveGioHang(gioHang);
-            chiTietGioHangService.deleteChiTietGioHang(selectedChiTietGioHang);
-
-            mIsMsgShow = true;
-            mMsg = "Xóa sản phẩm thành công!";
-            return REDIRECT_PREFIX + CART_VIEW;
-        }
-    }
-
-    // // Add new task
-    // @GetMapping("/saveCart")
-    // public String saveCart(List<ChiTietGioHang> listChiTietGioHang) {
-    // // check current account still valid
-    // if (!isValidAccount()) {
-    // return REDIRECT_PREFIX + LOGOUT_VIEW;
-    // } else {
-    // var idAccount = mCurrentAccount.getId();
-    // GioHang gioHang = gioHangService.getGioHang(idAccount);
-    // // check gio_hang exist
-    // if (gioHang == null) {
-    // gioHang = new GioHang();
-    // gioHang.setId(idAccount);
-    // gioHangService.saveGioHang(gioHang);
-    // }
-    // // chiTietGioHangNew = (List<ChiTietGioHang>)
-    // chiTietGioHangService.getDsChiTietGioHang();
-    // listChiTietGioHang.forEach(chiTiet ->
-    // chiTietGioHangService.saveChiTietGioHang(chiTiet));
-    // gioHang.setDsChiTietGioHang(listChiTietGioHang);
-
-    // return REDIRECT_PREFIX + CART_VIEW;
-    // }
-    // }
-
-    // Add new task
-    @RequestMapping(value = "/saveCart", method = RequestMethod.POST)
-    public String saveCart(@RequestBody String json) {
-        // check current account still valid
-        if (!isValidAccount()) {
-            return REDIRECT_PREFIX + LOGOUT_VIEW;
-        } else {
-            var idAccount = mCurrentAccount.getId();
-            GioHang gioHang = gioHangService.getGioHang(idAccount);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(idAccount);
-                gioHangService.saveGioHang(gioHang);
-            }
-
-            // Process data products of json
-            List<ProductSimple> products;
-            Type listType = new TypeToken<List<ProductSimple>>() {}.getType();
-            products = new Gson().fromJson(json, listType);
-
-            // Update every chiTietGioHang in gioHang
-            List<ChiTietGioHang> chiTietGioHang = (List<ChiTietGioHang>) chiTietGioHangService.getDsChiTietGioHang();
-            
-            int numberProductsInCart = 0;
-            int priceProductsInCart = 0;
-            ChiTietGioHangId selectedChiTietGioHang;
-            int flag = 0;
-            for(ChiTietGioHang element : chiTietGioHang){
-                selectedChiTietGioHang = new ChiTietGioHangId(gioHang.getId(), element.getSanPham().getId());
-                
-                element.setSoLuongSanPhan(Integer.parseInt(products.get(flag).getAmount()));
-                element.setTongTienSanPham(element.getSoLuongSanPhan() * element.getGiaBanSanPham());
-                chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).setTongTienSanPham(element.getTongTienSanPham());
-                chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang).setSoLuongSanPhan(element.getSoLuongSanPhan());
-                chiTietGioHangService.saveChiTietGioHang(chiTietGioHangService.getChiTietGioHang(selectedChiTietGioHang));
-                
-                priceProductsInCart += element.getTongTienSanPham();
-                numberProductsInCart += element.getSoLuongSanPhan();
-                flag++;
-            }
-
-            // Update gioHang
-            gioHang.setTongSoLuong(numberProductsInCart);
-            gioHang.setTongGioHang(priceProductsInCart);
-            gioHangService.saveGioHang(gioHang);
-
+            mClienCart.setTongSoLuong(tongSoLuong);
+            mClienCart.setTongGioHang(tongGioHang);
+            gioHangService.saveGioHang(mClienCart);
             mIsMsgShow = true;
             mMsg = "Cập nhật giỏ hàng thành công!";
-
+            mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
 
+    // Update coupon
+    @PostMapping(COUPON_VIEW)
+    public String cartCoupon(String couponCode) {
+        // check current account still valid
+        if (!isValidAccount()) {
+            return REDIRECT_PREFIX + LOGOUT_VIEW;
+        } else {
+            var coupon = COUPON_MAP.get(couponCode);
+            mIsMsgShow = true;
+            if (coupon == null) {
+                mMsg = "Mã giảm giá chưa chính xác!";
+            } else {
+                mClienCart.setGiamGia(coupon);
+                gioHangService.saveGioHang(mClienCart);
+                mMsg = "Áp dụng giảm giá thành công!";
+            }
+            mIsByPass = true;
+            return REDIRECT_PREFIX + CART_VIEW;
+        }
+    }
+
+    // Load ship fee
+    @RequestMapping(value = SHIP_FEE_VIEW, method = { GET, PUT })
+    public String cartShipFee(int idTinhThanh, String huyenQuan) {
+        // Check current account still valid
+        if (!isValidAccount()) {
+            return REDIRECT_PREFIX + LOGOUT_VIEW;
+        } else {
+            mClienCart.setHuyenQuan(huyenQuan);
+            mClienCart.setIdTinhThanh(idTinhThanh);
+            gioHangService.saveGioHang(mClienCart);
+            mIsMsgShow = true;
+            mMsg = "Cập nhật  địa chỉ giao hàng cho giỏ hàng thành công!";
+            mIsByPass = true;
+            return REDIRECT_PREFIX + CART_VIEW;
+        }
+    }
+
+    // Delete chi_tiet_gio_hang
+    @RequestMapping(value = DELETE_VIEW, method = { GET, DELETE })
+    public String cartDeleteProduct(int idSanPham) {
+        // check current account still valid
+        if (!isValidAccount()) {
+            return REDIRECT_PREFIX + LOGOUT_VIEW;
+        } else {
+            var chiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), idSanPham);
+            mClienCart.setTongGioHang(mClienCart.getTongGioHang()
+                    - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getTongTienSanPham());
+            mClienCart.setTongSoLuong(mClienCart.getTongSoLuong()
+                    - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getSoLuongSanPhan());
+            gioHangService.saveGioHang(mClienCart);
+            chiTietGioHangService.deleteChiTietGioHang(chiTietGioHang);
+            mIsMsgShow = true;
+            mMsg = sanPhamService.getSanPham(idSanPham).getTen() + " đã được xóa khỏi giỏ hàng thành công!";
+            mIsByPass = true;
+            return REDIRECT_PREFIX + CART_VIEW;
+        }
+    }
 
     // Check valid account
     private boolean isValidAccount() {
@@ -210,7 +171,6 @@ public class GioHangController {
             return true;
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
-            // System.out.print(mCurrentAccount.getHoTen());
             return mCurrentAccount != null;
         }
     }
@@ -224,5 +184,4 @@ public class GioHangController {
             mIsMsgShow = false;
         }
     }
-
 }
