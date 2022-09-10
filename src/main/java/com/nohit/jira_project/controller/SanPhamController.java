@@ -10,7 +10,6 @@ import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
-import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -48,7 +47,6 @@ public class SanPhamController {
                 gioHangService.saveGioHang(gioHang);
             }
         }
-        
         mav.addObject("client", khachHang);
         mav.addObject("cart", gioHang);
         mav.addObject("login", khachHang != null);
@@ -125,7 +123,6 @@ public class SanPhamController {
         var mav = new ModelAndView(PRODUCT_TEMP);
         var khachHang = authenticationUtil.getAccount();
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
         mav.addObject("products", sanPhamService.getDsSanPhamInProductPage(sort));
         mav.addObject("radioCheck", PRODUCTS_MAP.get(sort));

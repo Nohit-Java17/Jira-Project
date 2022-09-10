@@ -20,10 +20,16 @@ public class LienHeController {
     private ThuPhanHoiService thuPhanHoiService;
 
     @Autowired
+    private SubcribeService subcribeService;
+
+    @Autowired
     private ApplicationUtil applicationUtil;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
+
+    @Autowired
+    private StringUtil stringUtil;
 
     // Fields
     private String mMsg;
@@ -46,6 +52,22 @@ public class LienHeController {
         thuPhanHoiService.saveThuPhanHoi(thuPhanHoi);
         mIsMsgShow = true;
         mMsg = "Cảm ơn quý khách đã liên hệ với chúng tôi!";
+        return REDIRECT_PREFIX + CONTACT_VIEW;
+    }
+
+    // Add thu_phan_hoi
+    @PostMapping(SUB_VIEW)
+    public String subcribe(Subcribe subcribe) {
+        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(subcribe.getEmail()).toLowerCase();
+        mIsMsgShow = true;
+        // check email is already exist
+        if (subcribeService.getSubcribe(trueEmail) != null) {
+            mMsg = "Email này đã được đăng ký!";
+        } else {
+            subcribe.setEmail(trueEmail);
+            subcribeService.saveSubcribe(subcribe);
+            mMsg = "Đăng ký nhận thông báo thành công!";
+        }
         return REDIRECT_PREFIX + CONTACT_VIEW;
     }
 
