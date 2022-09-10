@@ -186,7 +186,7 @@
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
                         <h2>
-                            Đơn hàng
+                            Chi tiết đơn hàng
                         </h2>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
                                         class="align-middle border-gray-300 py-3">
                                         64.990.000 ₫
                                     </td>
-                                    <td th:text="${element.soLuongSanPhan}" class="align-middle border-gray-300 py-3">
+                                    <td th:text="${element.soLuongSanPham}" class="align-middle border-gray-300 py-3">
                                         2
                                     </td>
                                     <td th:text="${#numbers.formatDecimal(element.tongTienSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}"
@@ -306,7 +306,7 @@
                     </div>
                     <p class="text-muted lead mb-5">
                         Nếu bạn có bất kỳ câu hỏi nào, xin vui lòng
-                        <a href="contact.html">
+                        <a th:href="@{/contact}">
                             liên hệ
                         </a>
                         với chúng tôi, trung tâm chăm sóc khách hàng của chúng tôi phục vụ 24/7.
@@ -426,8 +426,8 @@
                             bất kỳ nơi nào khác ngay trong hộp thư đến của bạn!
                         </p>
                         <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Nhập thư điện tử" required>
+                            <form th:action="@{/contact/subcribe}" method="post">
+                                <input type="email" placeholder="Nhập thư điện tử" name="email" required>
                                 <input type="submit" value="Đăng ký" class="btn-sub pull-right">
                             </form>
                         </div>

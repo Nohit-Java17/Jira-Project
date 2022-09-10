@@ -35,13 +35,13 @@ public class DonHangController {
         var khachHang = authenticationUtil.getAccount();
         // check current account still valid
         if (khachHang == null) {
-            return new ModelAndView(LOGIN_TEMP);
+            return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
         } else {
             var mav = new ModelAndView(ORDER_TEMP);
             var idKhachHang = khachHang.getId();
-            mav.addObject("order", donHangService.getDonHang(id));
             mav.addObject("cart", gioHangService.getGioHang(idKhachHang));
             mav.addObject("login", khachHang != null);
+            mav.addObject("order", donHangService.getDonHang(id));
             return mav;
         }
     }

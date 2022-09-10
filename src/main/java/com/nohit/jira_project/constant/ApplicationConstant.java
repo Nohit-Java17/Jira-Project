@@ -40,14 +40,6 @@ public class ApplicationConstant {
             "Điện thoại di động", 4,
             "Thiết bị ngoại vi", 5);
 
-    public static final Map<String, Integer> PRODUCTS_MAP = of(
-            "Tất cả", 0,
-            "Bán chạy", 1,
-            "Mới nhất", 2,
-            "Khuyến mãi", 3,
-            "Giá tăng dần", 4,
-            "Giá giảm dần", 5);
-
     public static final Map<String, Integer> COUPON_MAP = of(
             "nohit", 10000,
             "cybersoft", 100000);

@@ -13,7 +13,7 @@ public interface KhachHangService {
 
     public KhachHang getKhachHang(String email);
 
-    public void saveKhachHang(KhachHang khachHang);
+    public KhachHang saveKhachHang(KhachHang khachHang);
 
     public void saveKhachHangWithoutPassword(KhachHang khachHang);
 

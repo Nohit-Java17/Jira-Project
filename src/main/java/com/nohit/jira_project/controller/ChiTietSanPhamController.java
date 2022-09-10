@@ -1,5 +1,7 @@
 package com.nohit.jira_project.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +49,42 @@ public class ChiTietSanPhamController {
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
         mav.addObject("product", sanPhamService.getSanPham(id));
+        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
+        mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
+        showMessageBox(mav);
+        mIsByPass = false;
+        return mav;
+    }
+
+    // Load detail
+    @GetMapping(SEARCH_VIEW)
+    public ModelAndView detailFindByName(String nameProduct) {
+        var mav = new ModelAndView(DETAIL_TEMP);
+        // check current account still valid
+        if (!isValidAccount()) {
+            mCurrentCart = new GioHang();
+        } else {
+            var idKhacHang = mCurrentAccount.getId();
+            mCurrentCart = gioHangService.getGioHang(idKhacHang);
+            // check gio_hang exist
+            if (mCurrentCart == null) {
+                mCurrentCart = new GioHang();
+                mCurrentCart.setId(idKhacHang);
+                gioHangService.saveGioHang(mCurrentCart);
+            }
+        }
+
+        // Get and check null result
+        SanPham sanPhamFindByName = sanPhamService.getSanPhamByName(nameProduct);
+        if (sanPhamFindByName == null) {
+            mav = new ModelAndView(INDEX_TEMP);
+        }
+        mav.addObject("client", mCurrentAccount);
+        mav.addObject("cart", mCurrentCart);
+        mav.addObject("login", mCurrentAccount != null);
+        mav.addObject("product", sanPhamFindByName);
+        mav.addObject("listAllProducts", sanPhamService.getDsSanPham());
         mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));

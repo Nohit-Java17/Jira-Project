@@ -7,7 +7,9 @@
     <meta name="description" content="Capstone Project">
     <meta name="author" content="Nohit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Thông Tin Cá Nhân | nohitElectronics</title>
+    <title>
+        Thông Tin Cá Nhân | nohitElectronics
+    </title>
     <!-- Icon -->
     <link th:href="@{/img/logo.png}" rel="apple-touch-icon">
     <link th:href="@{/img/logo.png}" rel="shortcut icon">
@@ -562,8 +564,8 @@
                             bất kỳ nơi nào khác ngay trong hộp thư đến của bạn!
                         </p>
                         <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Nhập thư điện tử" required>
+                            <form th:action="@{/contact/subcribe}" method="post">
+                                <input type="email" placeholder="Nhập thư điện tử" name="email" required>
                                 <input type="submit" value="Đăng ký" class="btn-sub pull-right">
                             </form>
                         </div>

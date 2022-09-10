@@ -25,7 +25,7 @@ public class ChiTietGioHang {
     private SanPham sanPham;
 
     @Column(name = "so_luong_san_pham")
-    private int soLuongSanPhan;
+    private int soLuongSanPham;
 
     @Column(name = "gia_ban_san_pham")
     private int giaBanSanPham;

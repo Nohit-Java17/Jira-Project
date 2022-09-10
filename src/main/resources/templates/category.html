@@ -277,7 +277,7 @@
                                 <div class="product-option-shop">
                                     <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
                                         data-product_id="70" rel="nofollow"
-                                        th:href="@{/canvas/shop/?add-to-cart={id}(id=${element.id})}">
+                                        th:href="@{/cart/add(id=${element.id},soLuongSanPham=1)}">
                                         Thêm vào giỏ
                                     </a>
                                 </div>
@@ -428,8 +428,8 @@
                             bất kỳ nơi nào khác ngay trong hộp thư đến của bạn!
                         </p>
                         <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Nhập thư điện tử" required>
+                            <form th:action="@{/contact/subcribe}" method="post">
+                                <input type="email" placeholder="Nhập thư điện tử" name="email" required>
                                 <input type="submit" value="Đăng ký" class="btn-sub pull-right">
                             </form>
                         </div>

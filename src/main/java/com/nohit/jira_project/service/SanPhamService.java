@@ -9,9 +9,9 @@ public interface SanPhamService {
 
     public List<SanPham> getDsSanPham(String phanLoai);
 
-    public List<SanPham> getDsSanPhamInProductPage(String tieuchi);
-
     public SanPham getSanPham(int id);
+
+    public SanPham getSanPhamByName(String name);
 
     public void saveSanPham(SanPham sanPham);
 

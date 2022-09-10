@@ -280,14 +280,14 @@
                                                 </a>
                                             </td>
                                             <td class="product-thumbnail">
-                                                <a th:href="@{/detail}">
+                                                <a th:href="@{/detail/view(id=${element.sanPham.id})}">
                                                     <img width="145" height="145" alt="poster_1_up"
                                                         class="shop_thumbnail"
                                                         th:src="@{${'/img/' + element.sanPham.album + '/1.jpg'}}">
                                                 </a>
                                             </td>
                                             <td class="product-name">
-                                                <a th:href="@{/detail}" id="nameProducts"
+                                                <a th:href="@{/detail/view(id=${element.sanPham.id})}" id="nameProducts"
                                                     th:text="${element.sanPham.ten}">
                                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                                 </a>
@@ -303,7 +303,7 @@
                                                     <input type="button" id="downProduct" class="minus" value="-">
                                                     <input type="number" id="sumProducts" size="4"
                                                         class="input-text qty text" value="2" name="productSize"
-                                                        th:value="${element.soLuongSanPhan}" min="1" step="1">
+                                                        th:value="${element.soLuongSanPham}" min="1" step="1">
                                                     <input type="button" class="plus" id="upProduct" value="+">
                                                 </div>
                                             </td>
@@ -348,7 +348,7 @@
                                     </h2>
                                     <ul class="products">
                                         <li th:each="element: ${topSaleProducts}" class="product">
-                                            <a th:href="@{/detail}">
+                                            <a th:href="@{/detail/view(id=${element.id})}">
                                                 <img width="325" height="325" alt="T_4_front"
                                                     class="attachment-shop_catalog wp-post-image"
                                                     th:src="@{${'/img/' + element.album + '/0.jpg'}}">
@@ -364,7 +364,8 @@
                                                 </span>
                                             </a>
                                             <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
-                                                data-product_id="22" rel="nofollow" th:href="@{/detail}">
+                                                data-product_id="22" rel="nofollow"
+                                                th:href="@{/detail/view(id=${element.id})}">
                                                 Chi tiết
                                             </a>
                                         </li>
@@ -562,8 +563,8 @@
                             bất kỳ nơi nào khác ngay trong hộp thư đến của bạn!
                         </p>
                         <div class="newsletter-form">
-                            <form action="#">
-                                <input type="email" placeholder="Nhập thư điện tử" required>
+                            <form th:action="@{/contact/subcribe}" method="post">
+                                <input type="email" placeholder="Nhập thư điện tử" name="email" required>
                                 <input type="submit" value="Đăng ký" class="btn-sub pull-right">
                             </form>
                         </div>
