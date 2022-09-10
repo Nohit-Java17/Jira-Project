@@ -345,7 +345,6 @@
                                 </a>
                             </h2>
                             <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
-                                
                             </div>
                             <div class="product-wid-price">
                                 <ins
@@ -376,7 +375,7 @@
                                 </a>
                             </h2>
                             <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
-                                
+
                             </div>
                             <div class="product-wid-price">
                                 <ins
@@ -407,7 +406,7 @@
                                 </a>
                             </h2>
                             <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
-                                
+
                             </div>
                             <div class="product-wid-price">
                                 <ins
@@ -446,16 +445,17 @@
             Toastify({ text: msg, position: "center" }).showToast();
         }
     </script>
+    <!-- Average rate -->
     <script th:inline="javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             let arr = document.querySelectorAll('.rate');
-            for($i = 0; $i < arr.length; $i++) {
+            for ($i = 0; $i < arr.length; $i++) {
                 let count = $(arr[$i]).data('star');
-                let html= '';
-                for($j = 1; $j <= 5; $j++) {
-                    if($j <= count){
+                let html = '';
+                for ($j = 1; $j <= 5; $j++) {
+                    if ($j <= count) {
                         html += '<i class="fa fa-star" style="margin: 0 2px;"></i>';
-                    }else{
+                    } else {
                         html += '<i class="fa fa-star-o" style="margin: 0 2px;"></i>';
                     }
                 }
