@@ -13,8 +13,6 @@ import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(DETAIL_VIEW)
 public class ChiTietSanPhamController {
@@ -22,17 +20,16 @@ public class ChiTietSanPhamController {
     private SanPhamService sanPhamService;
 
     @Autowired
-    private GioHangService gioHangService;
-
-    @Autowired
     private NhanXetService nhanXetService;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
+    @Autowired
+    private ApplicationUtil applicationUtil;
+
     // Fields
     private KhachHang mCurrentAccount;
-    private GioHang mCurrentCart;
     private String mMsg;
     private boolean mIsByPass;
     private boolean mIsMsgShow;
@@ -46,22 +43,9 @@ public class ChiTietSanPhamController {
     @GetMapping(VIEW_VIEW)
     public ModelAndView detailFind(int id) {
         var mav = new ModelAndView(DETAIL_TEMP);
-        // check current account still valid
-        if (!isValidAccount()) {
-            mCurrentCart = new GioHang();
-        } else {
-            var idKhacHang = mCurrentAccount.getId();
-            mCurrentCart = gioHangService.getGioHang(idKhacHang);
-            // check gio_hang exist
-            if (mCurrentCart == null) {
-                mCurrentCart = new GioHang();
-                mCurrentCart.setId(idKhacHang);
-                gioHangService.saveGioHang(mCurrentCart);
-            }
-        }
-        mav.addObject("client", mCurrentAccount);
-        mav.addObject("cart", mCurrentCart);
-        mav.addObject("login", mCurrentAccount != null);
+        var khachHang = authenticationUtil.getAccount();
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject("login", khachHang != null);
         mav.addObject("product", sanPhamService.getSanPham(id));
         mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
@@ -74,28 +58,25 @@ public class ChiTietSanPhamController {
     // Rate product
     @PostMapping(RATE_VIEW)
     public String detailRate(NhanXet nhanXet) {
+        // check current account still valid
         if (!isValidAccount()) {
             return REDIRECT_PREFIX + LOGIN_VIEW;
         } else {
+            var sanPham = sanPhamService.getSanPham(nhanXet.getIdSanPham());
+            var dsNhanXet = sanPham.getDsNhanXet();
+            var dsNhanXetSize = dsNhanXet.size();
+            var danhGia = 0;
+            for (var i = 0; i < dsNhanXetSize; i++) {
+                danhGia += dsNhanXet.get(i).getDanhGia();
+            }
+            sanPham.setDanhGia(Math.round((danhGia + nhanXet.getDanhGia()) / (dsNhanXetSize + 1)));
+            sanPhamService.saveSanPham(sanPham);
             nhanXetService.saveNhanXet(nhanXet);
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
             mIsByPass = true;
-            
-            SanPham sanPham1 = sanPhamService.getSanPham(nhanXet.getIdSanPham());
-            sanPham1.setDanhGia(Math.round((sanPham1.getDanhGia()+nhanXet.getDanhGia())/2));
-            
-            sanPhamService.saveSanPham(sanPham1);
-            return REDIRECT_PREFIX + DETAIL_VIEW + "/view/?id=" + nhanXet.getIdSanPham();
+            return REDIRECT_PREFIX + DETAIL_VIEW + VIEW_VIEW + "?id=" + nhanXet.getIdSanPham();
         }
-    }
-    
-    //
-    private double calculateAverage(List <Integer> marks) {
-        return marks.stream()
-                    .mapToDouble(d -> d)
-                    .average()
-                    .orElse(0.0);
     }
 
     // Check valid account

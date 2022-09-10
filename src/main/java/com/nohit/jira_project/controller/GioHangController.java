@@ -14,7 +14,6 @@ import com.nohit.jira_project.util.*;
 import lombok.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
-import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -61,7 +60,6 @@ public class GioHangController {
             }
             mav.addObject("cart", mClienCart);
             mav.addObject("login", mCurrentAccount != null);
-            mav.addObject("choosenOne", GIO_HANG);
             mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
             mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
             mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 2));

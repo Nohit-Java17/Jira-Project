@@ -9,7 +9,6 @@ import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
-import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -33,7 +32,6 @@ public class PhanLoaiController {
         var dsTonkho = sanPhamService.getDsSanPhamTonKho();
         var maxDsTonkho = dsTonkho.size();
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
         mav.addObject("products",
                 dsTonkho.subList(0, maxDsTonkho < DEFAULT_SIZE_PAGE ? maxDsTonkho : DEFAULT_SIZE_PAGE));
@@ -57,7 +55,6 @@ public class PhanLoaiController {
         var previous = page - 1;
         var next = page + 1;
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
         mav.addObject("products",
                 dsTonkho.subList((page - 1) * DEFAULT_SIZE_PAGE, maxPage > maxDsTonkho ? maxDsTonkho : maxPage));
@@ -77,7 +74,6 @@ public class PhanLoaiController {
         var dsTonkho = sanPhamService.getDsSanPham(filter);
         var maxDsTonkho = dsTonkho.size();
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
         mav.addObject("products",
                 dsTonkho.subList(0, maxDsTonkho < DEFAULT_SIZE_PAGE ? maxDsTonkho : DEFAULT_SIZE_PAGE));
@@ -101,7 +97,6 @@ public class PhanLoaiController {
         var previous = page - 1;
         var next = page + 1;
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("choosenOne", PHAN_LOAI);
         mav.addObject("login", khachHang != null);
         mav.addObject("products",
                 dsTonkho.subList((page - 1) * DEFAULT_SIZE_PAGE, maxPage > maxDsTonkho ? maxDsTonkho : maxPage));

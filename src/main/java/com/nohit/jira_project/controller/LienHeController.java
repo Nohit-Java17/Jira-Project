@@ -17,10 +17,10 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping(CONTACT_VIEW)
 public class LienHeController {
     @Autowired
-    private GioHangService gioHangService;
+    private ThuPhanHoiService thuPhanHoiService;
 
     @Autowired
-    private ThuPhanHoiService thuPhanHoiService;
+    private ApplicationUtil applicationUtil;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -33,23 +33,8 @@ public class LienHeController {
     @GetMapping("")
     public ModelAndView contact() {
         var mav = new ModelAndView(CONTACT_TEMP);
-        GioHang gioHang;
         var khachHang = authenticationUtil.getAccount();
-        // check current account still valid
-        if (khachHang == null) {
-            gioHang = new GioHang();
-        } else {
-            var id = khachHang.getId();
-            gioHang = gioHangService.getGioHang(id);
-            // check gio_hang exist
-            if (gioHang == null) {
-                gioHang = new GioHang();
-                gioHang.setId(id);
-                gioHangService.saveGioHang(gioHang);
-            }
-        }
-        mav.addObject("client", khachHang);
-        mav.addObject("cart", gioHang);
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
         showMessageBox(mav);
         return mav;
