@@ -73,6 +73,39 @@ public class GioHangController {
         }
     }
 
+    // Add to cart
+    @RequestMapping(value = ADD_VIEW, method = { GET, POST })
+    public String cartAdd(int id, int soLuongSanPham) {
+        // check current account still valid
+        if (!isValidAccount()) {
+            return REDIRECT_PREFIX + LOGOUT_VIEW;
+        } else {
+            var idKhachHang = mCurrentAccount.getId();
+            var sanPham = sanPhamService.getSanPham(id);
+            var idChiTietGioHang = new ChiTietGioHangId(idKhachHang, id);
+            mIsMsgShow = true;
+            if (chiTietGioHangService.getChiTietGioHang(idChiTietGioHang) != null) {
+                mMsg = sanPham.getTen() + " đã tồn tại trong giỏ hàng!";
+            } else {
+                var chiTietGioHang = new ChiTietGioHang();
+                var giaBanSanPham = sanPham.getGiaGoc() - sanPham.getKhuyenMai();
+                var tongTienSanPham = giaBanSanPham * soLuongSanPham;
+                mClienCart = gioHangService.getGioHang(idKhachHang);
+                chiTietGioHang.setId(idChiTietGioHang);
+                chiTietGioHang.setSoLuongSanPham(soLuongSanPham);
+                chiTietGioHang.setGiaBanSanPham(giaBanSanPham);
+                chiTietGioHang.setTongTienSanPham(tongTienSanPham);
+                chiTietGioHangService.saveChiTietGioHang(chiTietGioHang);
+                mClienCart.setTongSoLuong(mClienCart.getTongSoLuong() + soLuongSanPham);
+                mClienCart.setTongGioHang(mClienCart.getTongGioHang() + tongTienSanPham);
+                gioHangService.saveGioHang(mClienCart);
+                mMsg = "Thêm " + sanPham.getTen() + " vào giỏ hàng thành công!";
+            }
+            mIsByPass = true;
+            return REDIRECT_PREFIX + CART_VIEW;
+        }
+    }
+
     // Update coupon
     @RequestMapping(value = COUPON_VIEW, method = { GET, PUT })
     public String cartCoupon(String couponCode) {
@@ -94,7 +127,7 @@ public class GioHangController {
         }
     }
 
-    // Load ship fee
+    // Update ship fee
     @RequestMapping(value = SHIP_FEE_VIEW, method = { GET, PUT })
     public String cartShipFee(int idTinhThanh, String huyenQuan) {
         // Check current account still valid
@@ -124,7 +157,7 @@ public class GioHangController {
             // update chi_tiet_gio_hang
             for (var item : mClienCart.getDsChiTietGioHang()) {
                 var tongTienSanPham = productSize[index] * item.getGiaBanSanPham();
-                item.setSoLuongSanPhan(productSize[index]);
+                item.setSoLuongSanPham(productSize[index]);
                 item.setTongTienSanPham(tongTienSanPham);
                 chiTietGioHangService.saveChiTietGioHang(item);
                 tongSoLuong += productSize[index];
@@ -152,7 +185,7 @@ public class GioHangController {
             mClienCart.setTongGioHang(mClienCart.getTongGioHang()
                     - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getTongTienSanPham());
             mClienCart.setTongSoLuong(mClienCart.getTongSoLuong()
-                    - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getSoLuongSanPhan());
+                    - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getSoLuongSanPham());
             gioHangService.saveGioHang(mClienCart);
             chiTietGioHangService.deleteChiTietGioHang(chiTietGioHang);
             mIsMsgShow = true;

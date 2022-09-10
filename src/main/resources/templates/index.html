@@ -355,9 +355,11 @@
                                 <div class="product-f-image">
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link">
+                                        <a th:href="@{/cart/add(id=${element.id},soLuongSanPham=1)}"
+                                            class="add-to-cart-link">
                                             <i class="fa fa-shopping-cart"></i>Thêm vào giỏ
-                                        </a> <a th:href="@{/detail/view(id=${element.id})}" class="view-details-link">
+                                        </a>
+                                        <a th:href="@{/detail/view(id=${element.id})}" class="view-details-link">
                                             <i class="fa fa-link"></i>Xem thông tin
                                         </a>
                                     </div>

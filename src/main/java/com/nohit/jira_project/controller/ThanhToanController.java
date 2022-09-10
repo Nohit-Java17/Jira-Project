@@ -124,7 +124,7 @@ public class ThanhToanController {
                     var idGioHang = mClienCart.getId();
                     for (var chiTietGioHang : mClienCart.getDsChiTietGioHang()) {
                         var chiTietDonHang = new ChiTietDonHang();
-                        chiTietDonHang.setSoLuongSanPhan(chiTietGioHang.getSoLuongSanPhan());
+                        chiTietDonHang.setSoLuongSanPham(chiTietGioHang.getSoLuongSanPham());
                         chiTietDonHang.setGiaBanSanPham(chiTietGioHang.getGiaBanSanPham());
                         chiTietDonHang.setTongTienSanPham(chiTietGioHang.getTongTienSanPham());
                         var idSanPham = chiTietGioHang.getSanPham().getId();

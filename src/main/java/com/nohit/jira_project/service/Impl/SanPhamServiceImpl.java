@@ -122,36 +122,4 @@ public class SanPhamServiceImpl implements SanPhamService {
         log.info("Fetching san_pham with descending discount");
         return dsSanPham;
     }
-
-    @Override
-    public List<SanPham> getDsSanPhamInProductPage(String tieuchi) {
-        var dsSanPham = getDsSanPhamTonKho();
-        switch (tieuchi) {
-                    case "topSale": {
-                        dsSanPham = this.getDsSanPhamTopSale();
-                        break;
-                    }
-                    case "newest": {
-                        dsSanPham = this.getDsSanPhamNewest();
-                        break;
-                    }
-                    case "discount": {
-                        dsSanPham = this.getDsSanPhamDescendingDiscount();
-                        break;
-                    }
-                    case "ascendingPrice": {
-                        dsSanPham = this.getDsSanPhamAscendingPrice();
-                        break;
-                    }
-                    case "descendingPrice": {
-                        dsSanPham = this.getDsSanPhamDescendingPrice();
-                        break;
-                    }
-                    default: {
-                        dsSanPham = this.getDsSanPham();
-                        break;
-                    }
-                }
-        return dsSanPham;
-    }
 }

@@ -44,7 +44,6 @@ public class GioHangServiceImpl implements GioHangService {
         var gioHang = new GioHang();
         var id = khachHang.getId();
         gioHang.setId(id);
-        gioHang.setHuyenQuan(khachHang.getHuyenQuan());
         gioHang.setIdTinhThanh(khachHang.getIdTinhThanh());
         log.info("Create gio_hang with id: {}", id);
         return gioHangRepository.save(gioHang);

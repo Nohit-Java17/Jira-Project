@@ -73,12 +73,12 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     }
 
     @Override
-    public void saveKhachHang(KhachHang khachHang) {
+    public KhachHang saveKhachHang(KhachHang khachHang) {
         khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(khachHang.getMatKhau())));
         khachHang.setHoTen(stringUtil.titleCase(stringUtil
                 .replaceMultiBySingleWhitespace(stringUtil.removeNumAndWhiteSpaceBeginAndEnd(khachHang.getHoTen()))));
         log.info("Saving khach_hang with email: {}", khachHang.getEmail());
-        khachHangRepository.save(khachHang);
+        return khachHangRepository.save(khachHang);
     }
 
     @Override

@@ -63,7 +63,7 @@ public class ApplicationController {
             khachHang.setEmail(trueEmail);
             khachHang.setIdTinhThanh(DEFAULT_PROVINCE);
             khachHang.setVaiTro(DEFAULT_ROLE);
-            khachHangService.saveKhachHang(khachHang);
+            khachHang = khachHangService.saveKhachHang(khachHang);
             gioHangService.createGioHang(khachHang);
             mMsg = "Tài khoản đã được đăng ký thành công!";
             return REDIRECT_PREFIX + LOGIN_VIEW;

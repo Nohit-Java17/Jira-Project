@@ -1,5 +1,7 @@
 package com.nohit.jira_project.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -55,78 +57,65 @@ public class SanPhamController {
         return mav;
     }
 
-    // // Load top sale products
-    // @GetMapping(SORT_VIEW)
-    // public ModelAndView productSort(String sort) {
-    //     var mav = new ModelAndView(PRODUCT_TEMP);
-    //     GioHang gioHang;
-    //     var khachHang = authenticationUtil.getAccount();
-    //     // check current account still valid
-    //     if (khachHang == null) {
-    //         gioHang = new GioHang();
-    //     } else {
-    //         var idKhachHang = khachHang.getId();
-    //         gioHang = gioHangService.getGioHang(idKhachHang);
-    //         // check gio_hang exist
-    //         if (gioHang == null) {
-    //             gioHang = new GioHang();
-    //             gioHang.setId(idKhachHang);
-    //             gioHangService.saveGioHang(gioHang);
-    //         }
-    //     }
-    //     List<SanPham> dsSanPham;
-    //     int radioCheck;
-    //     // filter function
-    //     switch (sort) {
-    //         case "topSale": {
-    //             dsSanPham = sanPhamService.getDsSanPhamTopSale();
-    //             radioCheck = 1;
-    //             break;
-    //         }
-    //         case "newest": {
-    //             dsSanPham = sanPhamService.getDsSanPhamNewest();
-    //             radioCheck = 2;
-    //             break;
-    //         }
-    //         case "discount": {
-    //             dsSanPham = sanPhamService.getDsSanPhamDescendingDiscount();
-    //             radioCheck = 3;
-    //             break;
-    //         }
-    //         case "ascendingPrice": {
-    //             dsSanPham = sanPhamService.getDsSanPhamAscendingPrice();
-    //             radioCheck = 4;
-    //             break;
-    //         }
-    //         case "descendingPrice": {
-    //             dsSanPham = sanPhamService.getDsSanPhamDescendingPrice();
-    //             radioCheck = 5;
-    //             break;
-    //         }
-    //         default: {
-    //             dsSanPham = sanPhamService.getDsSanPham();
-    //             radioCheck = 0;
-    //             break;
-    //         }
-    //     }
-    //     mav.addObject("client", khachHang);
-    //     mav.addObject("cart", gioHang);
-    //     mav.addObject("login", khachHang != null);
-    //     mav.addObject("products", dsSanPham);
-    //     mav.addObject("radioCheck", radioCheck);
-    //     return mav;
-    // }
-
     // Load filter products
     @GetMapping(SORT_VIEW)
-    public ModelAndView productFilter(String sort) {
+    public ModelAndView productSort(String sort) {
         var mav = new ModelAndView(PRODUCT_TEMP);
+        GioHang gioHang;
         var khachHang = authenticationUtil.getAccount();
-        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        // check current account still valid
+        if (khachHang == null) {
+            gioHang = new GioHang();
+        } else {
+            var idKhachHang = khachHang.getId();
+            gioHang = gioHangService.getGioHang(idKhachHang);
+            // check gio_hang exist
+            if (gioHang == null) {
+                gioHang = new GioHang();
+                gioHang.setId(idKhachHang);
+                gioHangService.saveGioHang(gioHang);
+            }
+        }
+        List<SanPham> dsSanPham;
+        int radioCheck;
+        // filter function
+        switch (sort) {
+            case "topSale": {
+                dsSanPham = sanPhamService.getDsSanPhamTopSale();
+                radioCheck = 1;
+                break;
+            }
+            case "newest": {
+                dsSanPham = sanPhamService.getDsSanPhamNewest();
+                radioCheck = 2;
+                break;
+            }
+            case "discount": {
+                dsSanPham = sanPhamService.getDsSanPhamDescendingDiscount();
+                radioCheck = 3;
+                break;
+            }
+            case "ascendingPrice": {
+                dsSanPham = sanPhamService.getDsSanPhamAscendingPrice();
+                radioCheck = 4;
+                break;
+            }
+            case "descendingPrice": {
+                dsSanPham = sanPhamService.getDsSanPhamDescendingPrice();
+                radioCheck = 5;
+                break;
+            }
+            default: {
+                dsSanPham = sanPhamService.getDsSanPham();
+                radioCheck = 0;
+                break;
+            }
+        }
+        mav.addObject("client", khachHang);
+        mav.addObject("cart", gioHang);
         mav.addObject("login", khachHang != null);
-        mav.addObject("products", sanPhamService.getDsSanPhamInProductPage(sort));
-        mav.addObject("radioCheck", PRODUCTS_MAP.get(sort));
+        mav.addObject("products", dsSanPham);
+        mav.addObject("radioCheck", radioCheck);
         return mav;
     }
-
 }
