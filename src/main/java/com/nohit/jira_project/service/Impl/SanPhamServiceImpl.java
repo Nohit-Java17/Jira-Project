@@ -154,4 +154,11 @@ public class SanPhamServiceImpl implements SanPhamService {
                 }
         return dsSanPham;
     }
+
+    @Override
+    public SanPham getSanPhamByName(String name) {
+        log.info("Fetching all san_pham by name_product {}", name);
+        var result = sanPhamRepository.findByTen(name);
+        return result;
+    }
 }

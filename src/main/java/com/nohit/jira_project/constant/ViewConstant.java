@@ -33,6 +33,7 @@ public class ViewConstant {
     public static final String PAGE_VIEW = "/page";
 
     public static final String VIEW_VIEW = "/view";
+    public static final String SEARCH_VIEW = "/search";
     public static final String RATE_VIEW = "/rate";
 
     public static final String ACTION_VIEW = "/action";

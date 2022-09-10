@@ -13,6 +13,8 @@ public interface SanPhamService {
 
     public SanPham getSanPham(int id);
 
+    public SanPham getSanPhamByName(String name);
+
     public void saveSanPham(SanPham sanPham);
 
     public void deleteSanPham(int id);
