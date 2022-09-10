@@ -279,31 +279,25 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Dư tg sẽ làm tiếp :(( -->
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="product-pagination text-center">
                                 <nav>
                                     <ul class="pagination">
                                         <li>
-                                            <a href="#" aria-label="Previous">
+                                            <a th:href="@{'/product'+${previous}}" aria-label="Previous">
                                                 <span aria-hidden="true">
                                                     &laquo;
                                                 </span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#">
+                                        <li th:each="i : ${#numbers.sequence(1,maxSize,1)}">
+                                            <a th:text="${i}" th:href="@{'/product'+${view}+${i}}">
                                                 1
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                2
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" aria-label="Next">
+                                            <a th:href="@{'/product'+${next}}" aria-label="Next">
                                                 <span aria-hidden="true">
                                                     &raquo;
                                                 </span>
@@ -313,7 +307,7 @@
                                 </nav>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>

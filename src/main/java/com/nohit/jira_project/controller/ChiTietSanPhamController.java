@@ -29,9 +29,7 @@ public class ChiTietSanPhamController {
     private ApplicationUtil applicationUtil;
 
     // Fields
-    private KhachHang mCurrentAccount;
     private String mMsg;
-    private boolean mIsByPass;
     private boolean mIsMsgShow;
 
     @GetMapping("")
@@ -44,14 +42,15 @@ public class ChiTietSanPhamController {
     public ModelAndView detailFind(int id) {
         var mav = new ModelAndView(DETAIL_TEMP);
         var khachHang = authenticationUtil.getAccount();
+        var sanPham = sanPhamService.getSanPham(id);
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
-        mav.addObject("product", sanPhamService.getSanPham(id));
+        mav.addObject("product", sanPham);
         mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
+        mav.addObject("limit", sanPham.getTonKho());
         showMessageBox(mav);
-        mIsByPass = false;
         return mav;
     }
 
@@ -59,15 +58,15 @@ public class ChiTietSanPhamController {
     @GetMapping(SEARCH_VIEW)
     public ModelAndView detailSearch(String name) {
         var khachHang = authenticationUtil.getAccount();
-        var product = sanPhamService.getSanPham(name);
-        var mav = product == null ? new ModelAndView(BLANK_TEMP) : new ModelAndView(DETAIL_TEMP);
+        var sanPham = sanPhamService.getSanPham(name);
+        var mav = sanPham == null ? new ModelAndView(BLANK_TEMP) : new ModelAndView(DETAIL_TEMP);
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
-        mav.addObject("product", product);
+        mav.addObject("product", sanPham);
         mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mIsByPass = false;
+        mav.addObject("limit", sanPham.getTonKho());
         return mav;
     }
 
@@ -75,7 +74,7 @@ public class ChiTietSanPhamController {
     @PostMapping(RATE_VIEW)
     public String detailRate(NhanXet nhanXet) {
         // check current account still valid
-        if (!isValidAccount()) {
+        if (authenticationUtil.getAccount() == null) {
             return REDIRECT_PREFIX + LOGIN_VIEW;
         } else {
             var sanPham = sanPhamService.getSanPham(nhanXet.getIdSanPham());
@@ -90,19 +89,7 @@ public class ChiTietSanPhamController {
             nhanXetService.saveNhanXet(nhanXet);
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
-            mIsByPass = true;
             return REDIRECT_PREFIX + DETAIL_VIEW + VIEW_VIEW + "?id=" + nhanXet.getIdSanPham();
-        }
-    }
-
-    // Check valid account
-    private boolean isValidAccount() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            mCurrentAccount = authenticationUtil.getAccount();
-            return mCurrentAccount != null;
         }
     }
 
