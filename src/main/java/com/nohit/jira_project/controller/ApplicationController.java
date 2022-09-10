@@ -84,7 +84,7 @@ public class ApplicationController {
             showMessageBox(mav);
             return mav;
         } else {
-            return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
+            return new ModelAndView(REDIRECT_PREFIX + PROFILE_VIEW);
         }
     }
 

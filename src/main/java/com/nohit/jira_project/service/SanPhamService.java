@@ -11,7 +11,7 @@ public interface SanPhamService {
 
     public SanPham getSanPham(int id);
 
-    public SanPham getSanPhamByName(String name);
+    public SanPham getSanPham(String name);
 
     public void saveSanPham(SanPham sanPham);
 

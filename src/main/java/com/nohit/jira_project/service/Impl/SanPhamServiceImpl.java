@@ -42,6 +42,12 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
+    public SanPham getSanPham(String name) {
+        log.info("Fetching san_pham with name {}", name);
+        return sanPhamRepository.findByTen(name);
+    }
+
+    @Override
     public void saveSanPham(SanPham sanPham) {
         log.info("Saving san_pham with name: {}", sanPham.getTen());
         sanPhamRepository.save(sanPham);

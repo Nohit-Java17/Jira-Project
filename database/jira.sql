@@ -43,10 +43,10 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS credit_card(
         id INT NOT NULL,
-        name_on_card NVARCHAR(50) NOT NULL,
-        card_number NVARCHAR(20) NOT NULL,
-        expiration NVARCHAR(5) NOT NULL,
-        security_code NVARCHAR(5) NOT NULL,
+        name_on_card NVARCHAR(50),
+        card_number NVARCHAR(20),
+        expiration NVARCHAR(5),
+        security_code NVARCHAR(5),
         PRIMARY KEY (id),
         FOREIGN KEY (id) REFERENCES khach_hang(id)
     );

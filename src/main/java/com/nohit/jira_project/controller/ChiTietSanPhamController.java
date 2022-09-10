@@ -1,7 +1,5 @@
 package com.nohit.jira_project.controller;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -59,36 +57,16 @@ public class ChiTietSanPhamController {
 
     // Load detail
     @GetMapping(SEARCH_VIEW)
-    public ModelAndView detailFindByName(String nameProduct) {
-        var mav = new ModelAndView(DETAIL_TEMP);
-        // check current account still valid
-        if (!isValidAccount()) {
-            mCurrentCart = new GioHang();
-        } else {
-            var idKhacHang = mCurrentAccount.getId();
-            mCurrentCart = gioHangService.getGioHang(idKhacHang);
-            // check gio_hang exist
-            if (mCurrentCart == null) {
-                mCurrentCart = new GioHang();
-                mCurrentCart.setId(idKhacHang);
-                gioHangService.saveGioHang(mCurrentCart);
-            }
-        }
-
-        // Get and check null result
-        SanPham sanPhamFindByName = sanPhamService.getSanPhamByName(nameProduct);
-        if (sanPhamFindByName == null) {
-            mav = new ModelAndView(INDEX_TEMP);
-        }
-        mav.addObject("client", mCurrentAccount);
-        mav.addObject("cart", mCurrentCart);
-        mav.addObject("login", mCurrentAccount != null);
-        mav.addObject("product", sanPhamFindByName);
-        mav.addObject("listAllProducts", sanPhamService.getDsSanPham());
+    public ModelAndView detailSearch(String name) {
+        var khachHang = authenticationUtil.getAccount();
+        var product = sanPhamService.getSanPham(name);
+        var mav = product == null ? new ModelAndView(BLANK_TEMP) : new ModelAndView(DETAIL_TEMP);
+        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject("login", khachHang != null);
+        mav.addObject("product", product);
         mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        showMessageBox(mav);
         mIsByPass = false;
         return mav;
     }
