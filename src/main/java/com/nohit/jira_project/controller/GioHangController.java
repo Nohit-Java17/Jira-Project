@@ -37,6 +37,9 @@ public class GioHangController {
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
+    @Autowired
+    private ApplicationUtil applicationUtil;
+
     // Fields
     private KhachHang mCurrentAccount;
     private GioHang mClienCart;
@@ -67,7 +70,7 @@ public class GioHangController {
             mav.addObject("coupon", tongSoLuong < 1 ? 0 : mClienCart.getGiamGia());
             mav.addObject("shipFee", tongSoLuong < 1 ? 0 : mClienCart.getTinhThanh().getChiPhiVanChuyen());
             mav.addObject("limit", dsTonkho);
-            showMessageBox(mav);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             mIsByPass = false;
             return mav;
         }
@@ -203,16 +206,6 @@ public class GioHangController {
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
             return mCurrentAccount != null;
-        }
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
         }
     }
 }

@@ -56,14 +56,17 @@ public class ThanhToanController {
     private AuthenticationUtil authenticationUtil;
 
     @Autowired
+    private ApplicationUtil applicationUtil;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     // Fields
     private KhachHang mCurrentAccount;
     private GioHang mClienCart;
     private String mMsg;
-    private boolean mIsByPass;
     private boolean mIsMsgShow;
+    private boolean mIsByPass;
 
     // Load checkout
     @GetMapping(CHECKOUT_VIEW)
@@ -85,7 +88,7 @@ public class ThanhToanController {
             mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
             mav.addObject("defaultProvince", differentAddress ? provinceCart : DEFAULT_PROVINCE);
             mav.addObject("defaultWard", differentAddress ? wardCart : "");
-            showMessageBox(mav);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             mIsByPass = false;
             return mav;
         }
@@ -185,7 +188,7 @@ public class ThanhToanController {
             mav.addObject("client", mCurrentAccount);
             mav.addObject("cart", gioHang);
             mav.addObject("login", mCurrentAccount != null);
-            showMessageBox(mav);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             mIsByPass = false;
             return mav;
         }
@@ -258,7 +261,7 @@ public class ThanhToanController {
             mav.addObject("cart", gioHangService.getGioHang(idKhachHang));
             mav.addObject("login", khachHang != null);
             mav.addObject("client", khachHang);
-            showMessageBox(mav);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             return mav;
         }
     }
@@ -271,16 +274,6 @@ public class ThanhToanController {
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
             return mCurrentAccount != null;
-        }
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
         }
     }
 }

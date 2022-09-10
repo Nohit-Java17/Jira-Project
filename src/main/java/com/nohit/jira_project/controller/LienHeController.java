@@ -42,7 +42,7 @@ public class LienHeController {
         var khachHang = authenticationUtil.getAccount();
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
-        showMessageBox(mav);
+        mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
 
@@ -69,15 +69,5 @@ public class LienHeController {
             mMsg = "Đăng ký nhận thông báo thành công!";
         }
         return REDIRECT_PREFIX + CONTACT_VIEW;
-    }
-
-    // Show message
-    private void showMessageBox(ModelAndView mav) {
-        // check flag
-        if (mIsMsgShow) {
-            mav.addObject(FLAG_MSG_PARAM, true);
-            mav.addObject(MSG_PARAM, mMsg);
-            mIsMsgShow = false;
-        }
     }
 }
