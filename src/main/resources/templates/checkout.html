@@ -31,8 +31,6 @@
 </head>
 
 <body>
-
-    <!-- Header -->
     <div id="header" class="header-area">
         <div class="container">
             <div class="row">
@@ -89,7 +87,6 @@
             </div>
         </div>
     </div>
-    <!-- Branding -->
     <div class="site-branding-area">
         <div class="container">
             <div class="row">
@@ -123,7 +120,6 @@
             </div>
         </div>
     </div>
-    <!-- Menu -->
     <div class="mainmenu-area">
         <div class="container">
             <div class="row">
@@ -137,10 +133,10 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <div th:switch="${choosenOne}" class="navbar-collapse collapse">
-                    <ul th:case="'Trang chủ'" class="nav navbar-nav">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
                         <li class="active">
-                            <a th:href="@{/index}">
+                            <a>
                                 Trang chủ
                             </a>
                         </li>
@@ -164,343 +160,7 @@
                                 Giỏ hàng
                             </a>
                         </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Sản phẩm'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Phân loại'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Chi tiết'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Giỏ hàng'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Thanh toán'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Giới thiệu'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="'Liên hệ'" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/checkout}">
-                                Thanh toán
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/about}">
-                                Giới thiệu
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a th:href="@{/contact}">
-                                Liên hệ
-                            </a>
-                        </li>
-                    </ul>
-                    <ul th:case="*" class="nav navbar-nav">
-                        <li>
-                            <a th:href="@{/index}">
-                                Trang chủ
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/product}">
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/category}">
-                                Phân Loại
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/detail}">
-                                Chi tiết
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/cart}">
-                                Giỏ hàng
-                            </a>
-                        </li>
-                        <li>
+                        <li th:href="@{/index}">
                             <a th:href="@{/checkout}">
                                 Thanh toán
                             </a>
@@ -520,27 +180,23 @@
             </div>
         </div>
     </div>
-    <!-- Title -->
     <div class="product-big-title-area">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2 th:text="${choosenOne}">
-                            Giới thiệu
+                        <h2>
+                            Thanh toán
                         </h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-
-                <!-- Extend Bar -->
                 <div class="col-md-3">
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">
@@ -587,8 +243,6 @@
                         </ul>
                     </div>
                 </div>
-
-
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
@@ -919,9 +573,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End product widget area -->
-
-    <!-- Footer Top -->
+    </div>
     <div class="footer-top-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -1043,7 +695,6 @@
             </div>
         </div>
     </div>
-    <!-- Footer Bot -->
     <div class="footer-bottom-area">
         <div class="container">
             <div class="row">
@@ -1068,7 +719,6 @@
             </div>
         </div>
     </div>
-
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
     <!-- Bootstrap JS form CDN -->

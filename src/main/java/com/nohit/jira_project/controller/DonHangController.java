@@ -39,7 +39,7 @@ public class DonHangController {
         } else {
             var mav = new ModelAndView(ORDER_TEMP);
             var idKhachHang = khachHang.getId();
-            mav.addObject("orders", donHangService.getDonHang(id));
+            mav.addObject("order", donHangService.getDonHang(id));
             mav.addObject("cart", gioHangService.getGioHang(idKhachHang));
             mav.addObject("login", khachHang != null);
             return mav;
