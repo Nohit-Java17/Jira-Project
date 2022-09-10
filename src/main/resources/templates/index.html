@@ -344,12 +344,8 @@
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
+                                
                             </div>
                             <div class="product-wid-price">
                                 <ins
@@ -379,12 +375,8 @@
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
+                                
                             </div>
                             <div class="product-wid-price">
                                 <ins
@@ -414,12 +406,8 @@
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
-                            <div class="product-wid-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
+                                
                             </div>
                             <div class="product-wid-price">
                                 <ins
@@ -457,6 +445,23 @@
         if (flag) {
             Toastify({ text: msg, position: "center" }).showToast();
         }
+    </script>
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            let arr = document.querySelectorAll('.rate');
+            for($i = 0; $i < arr.length; $i++) {
+                let count = $(arr[$i]).data('star');
+                let html= '';
+                for($j = 1; $j <= 5; $j++) {
+                    if($j <= count){
+                        html += '<i class="fa fa-star" style="margin: 0 2px;"></i>';
+                    }else{
+                        html += '<i class="fa fa-star-o" style="margin: 0 2px;"></i>';
+                    }
+                }
+                $(arr[$i]).append(html)
+            }
+        });
     </script>
 </body>
 

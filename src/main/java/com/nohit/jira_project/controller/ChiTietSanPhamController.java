@@ -13,6 +13,8 @@ import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(DETAIL_VIEW)
 public class ChiTietSanPhamController {
@@ -79,8 +81,21 @@ public class ChiTietSanPhamController {
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
             mIsByPass = true;
-            return REDIRECT_PREFIX + DETAIL_VIEW + "/?id=" + nhanXet.getIdSanPham();
+            
+            SanPham sanPham1 = sanPhamService.getSanPham(nhanXet.getIdSanPham());
+            sanPham1.setDanhGia(Math.round((sanPham1.getDanhGia()+nhanXet.getDanhGia())/2));
+            
+            sanPhamService.saveSanPham(sanPham1);
+            return REDIRECT_PREFIX + DETAIL_VIEW + "/view/?id=" + nhanXet.getIdSanPham();
         }
+    }
+    
+    //
+    private double calculateAverage(List <Integer> marks) {
+        return marks.stream()
+                    .mapToDouble(d -> d)
+                    .average()
+                    .orElse(0.0);
     }
 
     // Check valid account
