@@ -31,8 +31,95 @@
 </head>
 
 <body>
-    <div th:replace="/form::header"></div>
-    <div th:replace="/form::branding"></div>
+    <div id="header" class="header-area">
+        <div class="container">
+            <div class="row">
+                <div class="user-menu">
+                    <ul>
+                        <li>
+                            <a th:href="@{/cart}">
+                                <i class="fa fa-shopping-cart"></i>
+                                Giỏ hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/checkout}">
+                                <i class="fa fa-credit-card"></i>
+                                Thanh toán
+                            </a>
+                        </li>
+                        <li>
+                            <div class="dropdown" th:switch="${login}">
+                                <a th:case="true" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-user"></i>
+                                    <span>
+                                        Thông tin
+                                    </span>
+                                </a>
+                                <a th:case="false" th:href="@{/login}">
+                                    <i class="fa fa-user"></i>
+                                    <span>
+                                        Đăng nhập
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a th:href="@{/profile}">
+                                            Cá nhân
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/history}">
+                                            Lịch sử
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a th:href="@{/logout}">
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1>
+                            <a th:href="@{/index}">
+                                nohit
+                                <span>
+                                    Electronics
+                                </span>
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="shopping-item">
+                        <a th:href="@{/cart}">
+                            Giỏ -
+                            <span th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}"
+                                class="cart-amunt">
+                                64.990.000 ₫
+                            </span>
+                            <i class="fa fa-shopping-cart"></i>
+                            <span th:text="${cart.tongSoLuong}" class="product-count">
+                                1
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="mainmenu-area">
         <div class="container">
             <div class="row">
@@ -92,7 +179,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End mainmenu area -->
+    </div>
     <div class="slider-area">
         <div class="zigzag-bottom"></div>
         <div id="slide-list" class="carousel carousel-fade slide" data-ride="carousel">
@@ -214,7 +301,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End slider area -->
+    </div>
     <div class="promo-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -253,7 +340,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End promo area -->
+    </div>
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -269,10 +356,8 @@
                                     <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Thêm vào giỏ
-                                        </a>
-                                        <a th:href="@{/detail/view(id=${element.id})}" class="view-details-link">
+                                            <i class="fa fa-shopping-cart"></i>Thêm vào giỏ
+                                        </a> <a th:href="@{/detail/view(id=${element.id})}" class="view-details-link">
                                             <i class="fa fa-link"></i>Xem thông tin
                                         </a>
                                     </div>
@@ -298,7 +383,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End main content area -->
+    </div>
     <div class="brands-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -322,7 +407,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End brands area -->
+    </div>
     <div class="product-widget-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -336,16 +421,15 @@
                             Xem thêm
                         </a>
                         <div th:each="element: ${topSaleProducts}" class="single-wid-product">
-                            <a th:href="@{/detail/view(id=${element.id})}">
-                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
+                            <a th:href="@{/detail/view(id=${element.id})}"> <img
+                                    th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
                             </a>
                             <h2>
                                 <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
-                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
-                            </div>
+                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}"></div>
                             <div class="product-wid-price">
                                 <ins
                                     th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
@@ -368,15 +452,14 @@
                         </a>
                         <div th:each="element: ${topPriceProducts}" class="single-wid-product">
                             <a th:href="@{/detail/view(id=${element.id})}">
-                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb"></a>
+                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
+                            </a>
                             <h2>
                                 <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                                     Máy tính xách tay MSI Vector GP76 12UGS
                                 </a>
                             </h2>
-                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
-
-                            </div>
+                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}"></div>
                             <div class="product-wid-price">
                                 <ins
                                     th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
@@ -399,15 +482,14 @@
                         </a>
                         <div th:each="element: ${topNewProducts}" class="single-wid-product">
                             <a th:href="@{/detail/view(id=${element.id})}">
-                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb"></a>
+                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
+                            </a>
                             <h2>
                                 <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
                                     Máy tính xách tay ASUS ROG Zephyrus G15 GA503RW-LN100W
                                 </a>
                             </h2>
-                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}">
-
-                            </div>
+                            <div class="product-wid-rating rate" th:data-star="${element.danhGia}"></div>
                             <div class="product-wid-price">
                                 <ins
                                     th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
@@ -422,9 +504,152 @@
                 </div>
             </div>
         </div>
-    </div> <!-- End product widget area -->
-    <div th:replace="/form::footer-top"></div>
-    <div th:replace="/form::footer-bot"></div>
+    </div>
+    <div class="footer-top-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-about-us">
+                        <h2>
+                            nohit
+                            <span>
+                                Electronics
+                            </span>
+                        </h2>
+                        <p>
+                            Công ty TNHH nohitElectronics được thành lập vào năm 2022, chuyên kinh doanh, phân phối Sỉ &
+                            Lẻ ngành hàng máy tính, dịch vụ công nghệ thông tin, dịch vụ tư vấn giải pháp công nghệ tối
+                            ưu và các dịch vụ khác liên quan đến máy tính trên toàn quốc.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com" target="_blank">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="https://www.youtube.com" target="_blank">
+                                <i class="fa fa-youtube"></i>
+                            </a>
+                            <a href="https://www.linkedin.com" target="_blank">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">
+                            Điều hướng
+                        </h2>
+                        <ul>
+                            <li>
+                                <a th:href="@{/profile}">
+                                    Tài khoản cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/history}">
+                                    Lịch sử đặt hàng
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/about}">
+                                    Giới thiệu về trang
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/contact}">
+                                    Liên hệ nhà cung cấp
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#header">
+                                    Về đầu trang
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-menu">
+                        <h2 class="footer-wid-title">
+                            Phân loại
+                        </h2>
+                        <ul>
+                            <li>
+                                <a th:href="@{/category/filter(filter='Máy tính xách tay')}">
+                                    Máy tính xách tay
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/category/filter(filter='Máy tính để bàn')}">
+                                    Máy tính để bàn
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/category/filter(filter='Máy tính bảng')}">
+                                    Máy tính bảng
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/category/filter(filter='Điện thoại di động')}">
+                                    Điện thoại di động
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/category/filter(filter='Thiết bị ngoại vi')}">
+                                    Thiết bị ngoại vi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-newsletter">
+                        <h2 class="footer-wid-title">
+                            Bảng tin
+                        </h2>
+                        <p>
+                            Đăng ký nhận bản tin của chúng tôi và nhận các ưu đãi độc quyền mà bạn sẽ không tìm thấy ở
+                            bất kỳ nơi nào khác ngay trong hộp thư đến của bạn!
+                        </p>
+                        <div class="newsletter-form">
+                            <form action="#">
+                                <input type="email" placeholder="Nhập thư điện tử" required>
+                                <input type="submit" value="Đăng ký" class="btn-sub pull-right">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="copyright">
+                        <p>
+                            &copy; 2022 nohitElectronics. All Rights Reserved. Coded by
+                            <a href="https://cybersoft.edu.vn" target="_blank">
+                                nohit Cybersoft
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-card-icon">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
     <!-- Bootstrap JS form CDN -->
@@ -439,29 +664,34 @@
     <!-- Toastify JS -->
     <script src="https://cdn.jsdelivr.net/npm/toastify-js" type="text/javascript"></script>
     <script th:inline="javascript">
-        var flag = /*[[${flag}]]*/ false;
-        var msg = /*[[${msg}]]*/ null;
+        var flag = /*[[${flag}]]*/false;
+        var msg = /*[[${msg}]]*/null;
         if (flag) {
-            Toastify({ text: msg, position: "center" }).showToast();
+            Toastify({
+                text: msg,
+                position: "center"
+            }).showToast();
         }
     </script>
     <!-- Average rate -->
     <script th:inline="javascript">
-        $(document).ready(function () {
-            let arr = document.querySelectorAll('.rate');
-            for ($i = 0; $i < arr.length; $i++) {
-                let count = $(arr[$i]).data('star');
-                let html = '';
-                for ($j = 1; $j <= 5; $j++) {
-                    if ($j <= count) {
-                        html += '<i class="fa fa-star" style="margin: 0 2px;"></i>';
-                    } else {
-                        html += '<i class="fa fa-star-o" style="margin: 0 2px;"></i>';
+        $(document)
+            .ready(
+                function () {
+                    let arr = document.querySelectorAll('.rate');
+                    for ($i = 0; $i < arr.length; $i++) {
+                        let count = $(arr[$i]).data('star');
+                        let html = '';
+                        for ($j = 1; $j <= 5; $j++) {
+                            if ($j <= count) {
+                                html += '<i class="fa fa-star" style="margin: 0 2px;"></i>';
+                            } else {
+                                html += '<i class="fa fa-star-o" style="margin: 0 2px;"></i>';
+                            }
+                        }
+                        $(arr[$i]).append(html)
                     }
-                }
-                $(arr[$i]).append(html)
-            }
-        });
+                });
     </script>
 </body>
 

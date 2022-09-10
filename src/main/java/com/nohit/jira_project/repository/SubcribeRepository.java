@@ -6,6 +6,6 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface KhachHangRepository extends JpaRepository<KhachHang, Integer> {
-    public KhachHang findByEmail(String email);
+public interface SubcribeRepository extends JpaRepository<Subcribe, Integer> {
+    public Subcribe findByEmail(String email);
 }

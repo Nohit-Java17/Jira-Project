@@ -165,10 +165,19 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS thu_phan_hoi(
         id INT NOT NULL AUTO_INCREMENT,
-        ho_ten NVARCHAR(50) NOT NULL,
+        ho_ten NVARCHAR(50),
         thu_dien_tu NVARCHAR(50) NOT NULL,
-        chu_de NVARCHAR(20) NOT NULL,
-        noi_dung TEXT NOT NULL,
+        chu_de NVARCHAR(20),
+        noi_dung TEXT,
+        PRIMARY KEY (id)
+    );
+
+-- create table subcribe
+
+CREATE TABLE
+    IF NOT EXISTS subcribe(
+        id INT NOT NULL AUTO_INCREMENT,
+        thu_dien_tu NVARCHAR(50) NOT NULL,
         PRIMARY KEY (id)
     );
 
@@ -247,7 +256,7 @@ VALUES (
         10,
         '2022-01-01',
         8,
-        5,
+        4,
         'Máy tính xách tay',
         'APPLE'
     ), (
@@ -526,7 +535,7 @@ VALUES (
         5,
         'Chất lượng sản phẩm tốt.',
         1
-    ), (5, NULL, 2), (5, NULL, 3), (5, NULL, 4), (5, NULL, 5), (5, NULL, 6), (5, NULL, 7), (5, NULL, 8), (5, NULL, 9), (5, NULL, 10), (5, NULL, 11), (5, NULL, 12), (5, NULL, 13), (1, NULL, 14), (2, NULL, 15), (3, NULL, 16), (4, NULL, 1);
+    ), (5, NULL, 2), (5, NULL, 3), (5, NULL, 4), (5, NULL, 5), (5, NULL, 6), (5, NULL, 7), (5, NULL, 8), (5, NULL, 9), (5, NULL, 10), (5, NULL, 11), (5, NULL, 12), (5, NULL, 13), (1, NULL, 14), (2, NULL, 15), (3, NULL, 16), (3, NULL, 1);
 
 -- add data to gio_hang
 
@@ -626,3 +635,7 @@ VALUES (
         'Dịch vụ',
         'Nhân viên tư vấn chưa tận tình.'
     );
+
+-- add data to subcribe
+
+INSERT INTO subcribe(thu_dien_tu) VALUES ('nguyenvana@gmail.com');

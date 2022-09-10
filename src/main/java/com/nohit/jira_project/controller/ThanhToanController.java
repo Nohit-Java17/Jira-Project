@@ -12,7 +12,6 @@ import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import lombok.*;
-import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Payment.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
@@ -68,7 +67,6 @@ public class ThanhToanController {
                     || !wardCart.equals(mCurrentAccount.getHuyenQuan());
             mav.addObject("cart", mClienCart);
             mav.addObject("login", mCurrentAccount != null);
-            mav.addObject("choosenOne", THANH_TOAN);
             mav.addObject("client", mCurrentAccount);
             mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
             mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
@@ -82,7 +80,7 @@ public class ThanhToanController {
     }
 
     // Checkout
-    @PostMapping(ACTION_VIEW)
+    @PostMapping("")
     public String checkout(NguoiNhan nguoiNhan, boolean differentAddress, String paymentMethod) {
         // check current account still valid
         if (!isValidAccount()) {

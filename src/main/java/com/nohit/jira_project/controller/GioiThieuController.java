@@ -7,7 +7,6 @@ import org.springframework.web.servlet.*;
 
 import com.nohit.jira_project.util.*;
 
-import static com.nohit.jira_project.constant.ApplicationConstant.ChoosenOne.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -27,7 +26,6 @@ public class GioiThieuController {
         var khachHang = authenticationUtil.getAccount();
         mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
         mav.addObject("login", khachHang != null);
-        mav.addObject("choosenOne", GIOI_THIEU);
         return mav;
     }
 }
