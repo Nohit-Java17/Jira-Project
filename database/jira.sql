@@ -74,11 +74,12 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS nhan_xet(
-        id INT NOT NULL AUTO_INCREMENT,
+        id_khach_hang INT NOT NULL,
+        id_san_pham INT NOT NULL,
         danh_gia INT NOT NULL,
         binh_luan TEXT,
-        id_san_pham INT NOT NULL,
-        PRIMARY KEY (id),
+        PRIMARY KEY (id_khach_hang, id_san_pham),
+        FOREIGN KEY (id_khach_hang) REFERENCES khach_hang(id),
         FOREIGN KEY (id_san_pham) REFERENCES san_pham(id)
     );
 
@@ -525,17 +526,13 @@ VALUES (
 
 -- add data to nhan_xet
 
-INSERT INTO
-    nhan_xet (
-        danh_gia,
-        binh_luan,
-        id_san_pham
-    )
+INSERT INTO nhan_xet
 VALUES (
-        5,
-        'Chất lượng sản phẩm tốt.',
-        1
-    ), (5, NULL, 2), (5, NULL, 3), (5, NULL, 4), (5, NULL, 5), (5, NULL, 6), (5, NULL, 7), (5, NULL, 8), (5, NULL, 9), (5, NULL, 10), (5, NULL, 11), (5, NULL, 12), (5, NULL, 13), (1, NULL, 14), (2, NULL, 15), (3, NULL, 16), (3, NULL, 1);
+        1,
+        1,
+        4,
+        'Chất lượng sản phẩm tốt.'
+    ), (1, 2, 5, NULL), (1, 3, 5, NULL), (1, 4, 5, NULL), (1, 5, 5, NULL), (1, 6, 5, NULL), (1, 7, 5, NULL), (1, 8, 5, NULL), (1, 9, 5, NULL), (1, 10, 5, NULL), (1, 11, 5, NULL), (1, 12, 5, NULL), (1, 13, 5, NULL), (1, 14, 1, NULL), (1, 15, 2, NULL), (1, 16, 3, NULL);
 
 -- add data to gio_hang
 

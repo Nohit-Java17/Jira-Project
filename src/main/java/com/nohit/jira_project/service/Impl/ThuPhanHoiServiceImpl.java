@@ -1,5 +1,9 @@
 package com.nohit.jira_project.service.Impl;
 
+import java.util.*;
+
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -11,6 +15,7 @@ import com.nohit.jira_project.util.*;
 import lombok.extern.slf4j.*;
 
 @Service
+@Transactional
 @Slf4j
 public class ThuPhanHoiServiceImpl implements ThuPhanHoiService {
     @Autowired
@@ -23,7 +28,7 @@ public class ThuPhanHoiServiceImpl implements ThuPhanHoiService {
     private TextUtil textUtil;
 
     @Override
-    public Iterable<ThuPhanHoi> getDsThuPhanHoi() {
+    public List<ThuPhanHoi> getDsThuPhanHoi() {
         log.info("Fetching all thu_phan_hoi");
         return phanHoiRepository.findAll();
     }
@@ -35,13 +40,12 @@ public class ThuPhanHoiServiceImpl implements ThuPhanHoiService {
     }
 
     @Override
-    public void saveThuPhanHoi(ThuPhanHoi thuPhanHoi) {
-        thuPhanHoi.setHoTen(stringUtil.titleCase(stringUtil
-                .replaceMultiBySingleWhitespace(stringUtil.removeNumAndWhiteSpaceBeginAndEnd(thuPhanHoi.getHoTen()))));
-        thuPhanHoi.setEmail(stringUtil.removeSpCharsBeginAndEnd(thuPhanHoi.getEmail()).toLowerCase());
+    public ThuPhanHoi saveThuPhanHoi(ThuPhanHoi thuPhanHoi) {
+        thuPhanHoi.setEmail(stringUtil.parseEmail(thuPhanHoi.getEmail()));
+        thuPhanHoi.setHoTen(stringUtil.parseName(thuPhanHoi.getHoTen()));
         thuPhanHoi.setNoiDung(textUtil.parseToLegalText(thuPhanHoi.getNoiDung()));
         log.info("Saving thu_phan_hoi with email: {}", thuPhanHoi.getEmail());
-        phanHoiRepository.save(thuPhanHoi);
+        return phanHoiRepository.save(thuPhanHoi);
     }
 
     @Override

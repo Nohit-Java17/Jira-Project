@@ -1,5 +1,9 @@
 package com.nohit.jira_project.service.Impl;
 
+import java.util.*;
+
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -10,13 +14,14 @@ import com.nohit.jira_project.service.*;
 import lombok.extern.slf4j.*;
 
 @Service
+@Transactional
 @Slf4j
 public class DonHangServiceImpl implements DonHangService {
     @Autowired
     private DonHangRepository donHangRepository;
 
     @Override
-    public Iterable<DonHang> getDsDonHang() {
+    public List<DonHang> getDsDonHang() {
         log.info("Fetching all don_hang");
         return donHangRepository.findAll();
     }
@@ -29,6 +34,7 @@ public class DonHangServiceImpl implements DonHangService {
 
     @Override
     public DonHang saveDonHang(DonHang donHang) {
+        donHang.setTongDonHang(donHang.getTongGioHang() + donHang.getChiPhiVanChuyen() - donHang.getGiamGia());
         log.info("Saving don_hang with id: {}", donHang.getId());
         return donHangRepository.save(donHang);
     }

@@ -13,11 +13,10 @@ public interface SanPhamService {
 
     public SanPham getSanPham(String name);
 
-    public void saveSanPham(SanPham sanPham);
+    public SanPham saveSanPham(SanPham sanPham);
 
     public void deleteSanPham(int id);
 
-    // Methods to sort in Product Controller
     public List<SanPham> getDsSanPhamTonKho();
 
     public List<SanPham> getDsSanPhamTopSale();

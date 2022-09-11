@@ -1,5 +1,9 @@
 package com.nohit.jira_project.service.Impl;
 
+import java.util.*;
+
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -10,13 +14,14 @@ import com.nohit.jira_project.service.*;
 import lombok.extern.slf4j.*;
 
 @Service
+@Transactional
 @Slf4j
 public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
     @Autowired
     private ChiTietDonHangRepository chiTietDonHangRepository;
 
     @Override
-    public Iterable<ChiTietDonHang> getDsChiTietDonHang() {
+    public List<ChiTietDonHang> getDsChiTietDonHang() {
         log.info("Fetching all chi_tiet_don_hang");
         return chiTietDonHangRepository.findAll();
     }
@@ -28,9 +33,10 @@ public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
     }
 
     @Override
-    public void saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
+    public ChiTietDonHang saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
+        chiTietDonHang.setTongTienSanPham(chiTietDonHang.getSoLuongSanPham() * chiTietDonHang.getGiaBanSanPham());
         log.info("Saving chi_tiet_don_hang with id: {}", chiTietDonHang.getId());
-        chiTietDonHangRepository.save(chiTietDonHang);
+        return chiTietDonHangRepository.save(chiTietDonHang);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.nohit.jira_project.service.Impl;
 
 import java.io.*;
+import java.util.*;
 
 import javax.mail.*;
 import javax.transaction.*;
@@ -37,11 +38,13 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     private StringUtil stringUtil;
 
     @Autowired
+    private AddressUtil addressUtil;
+
+    @Autowired
     private JavaMailSender mailSender;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Query data of user
         var user = khachHangRepository.findByEmail(username);
         // Check user exists
         if (user == null) {
@@ -55,7 +58,7 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     }
 
     @Override
-    public Iterable<KhachHang> getDsKhachHang() {
+    public List<KhachHang> getDsKhachHang() {
         log.info("Fetching all khach_hang");
         return khachHangRepository.findAll();
     }
@@ -68,34 +71,21 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
 
     @Override
     public KhachHang getKhachHang(String email) {
+        email = stringUtil.parseEmail(email);
         log.info("Fetching khach_hang with email: {}", email);
         return khachHangRepository.findByEmail(email);
     }
 
     @Override
     public KhachHang saveKhachHang(KhachHang khachHang) {
+        khachHang.setEmail(stringUtil.parseEmail(khachHang.getEmail()));
         khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(khachHang.getMatKhau())));
-        khachHang.setHoTen(stringUtil.titleCase(stringUtil
-                .replaceMultiBySingleWhitespace(stringUtil.removeNumAndWhiteSpaceBeginAndEnd(khachHang.getHoTen()))));
+        khachHang.setHoTen(stringUtil.parseName(khachHang.getHoTen()));
+        khachHang.setDiaChi(addressUtil.parseToLegalAddress(khachHang.getDiaChi()));
+        khachHang.setXaPhuong(addressUtil.parseToLegalAddress(khachHang.getXaPhuong()));
+        khachHang.setHuyenQuan(addressUtil.parseToLegalAddress(khachHang.getHuyenQuan()));
         log.info("Saving khach_hang with email: {}", khachHang.getEmail());
         return khachHangRepository.save(khachHang);
-    }
-
-    @Override
-    public void saveKhachHangWithoutPassword(KhachHang khachHang) {
-        khachHang.setMatKhau(getKhachHang(khachHang.getId()).getMatKhau());
-        khachHang.setHoTen(stringUtil.titleCase(stringUtil
-                .replaceMultiBySingleWhitespace(stringUtil.removeNumAndWhiteSpaceBeginAndEnd(khachHang.getHoTen()))));
-        log.info("Saving khach_hang with email: {}", khachHang.getEmail());
-        khachHangRepository.save(khachHang);
-    }
-
-    @Override
-    public void updatePassword(int id, String password) {
-        var khachHang = getKhachHang(id);
-        khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(password)));
-        log.info("Update khach_hang password with email: {}", khachHang.getEmail());
-        khachHangRepository.save(khachHang);
     }
 
     @Override
@@ -105,12 +95,30 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     }
 
     @Override
-    public void resetPassword(String email) throws UnsupportedEncodingException, MessagingException {
-        var randomCode = make(13);
+    public KhachHang saveKhachHangWithoutPassword(KhachHang khachHang) {
+        khachHang.setEmail(stringUtil.parseEmail(khachHang.getEmail()));
+        khachHang.setMatKhau(getKhachHang(khachHang.getId()).getMatKhau());
+        khachHang.setHoTen(stringUtil.parseName(khachHang.getHoTen()));
+        khachHang.setDiaChi(addressUtil.parseToLegalAddress(khachHang.getDiaChi()));
+        khachHang.setXaPhuong(addressUtil.parseToLegalAddress(khachHang.getXaPhuong()));
+        khachHang.setHuyenQuan(addressUtil.parseToLegalAddress(khachHang.getHuyenQuan()));
+        log.info("Saving khach_hang with email: {}", khachHang.getEmail());
+        return khachHangRepository.save(khachHang);
+    }
+
+    @Override
+    public KhachHang updatePassword(int id, String password) {
+        var khachHang = getKhachHang(id);
+        khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(password)));
+        log.info("Update khach_hang password with email: {}", khachHang.getEmail());
+        return khachHangRepository.save(khachHang);
+    }
+
+    @Override
+    public KhachHang resetPassword(String email) throws UnsupportedEncodingException, MessagingException {
+        email = stringUtil.parseEmail(email);
         var khachHang = getKhachHang(email);
-        log.info("Reset khach_hang password with email: {}", email);
-        khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(randomCode)));
-        khachHangRepository.save(khachHang);
+        var randomCode = make(13);
         var message = mailSender.createMimeMessage();
         var helper = new MimeMessageHelper(message);
         helper.setFrom("nohitshop@gmail.com", "Nohit Shop");
@@ -118,5 +126,8 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
         helper.setSubject("Quên mật khẩu");
         helper.setText("Mật khẩu mới của quý khách là:<br>" + "<h3>" + randomCode + "</h3>", true);
         mailSender.send(message);
+        khachHang.setMatKhau(passwordEncoder.encode(stringUtil.removeWhiteSpaceBeginAndEnd(randomCode)));
+        log.info("Reset khach_hang password with email: {}", email);
+        return khachHangRepository.save(khachHang);
     }
 }

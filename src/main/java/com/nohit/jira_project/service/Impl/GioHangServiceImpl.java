@@ -1,5 +1,9 @@
 package com.nohit.jira_project.service.Impl;
 
+import java.util.*;
+
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -10,13 +14,14 @@ import com.nohit.jira_project.service.*;
 import lombok.extern.slf4j.*;
 
 @Service
+@Transactional
 @Slf4j
 public class GioHangServiceImpl implements GioHangService {
     @Autowired
     private GioHangRepository gioHangRepository;
 
     @Override
-    public Iterable<GioHang> getDsGioHang() {
+    public List<GioHang> getDsGioHang() {
         log.info("Fetching all gio_hang");
         return gioHangRepository.findAll();
     }
@@ -28,9 +33,9 @@ public class GioHangServiceImpl implements GioHangService {
     }
 
     @Override
-    public void saveGioHang(GioHang gioHang) {
+    public GioHang saveGioHang(GioHang gioHang) {
         log.info("Saving gio_hang with id: {}", gioHang.getId());
-        gioHangRepository.save(gioHang);
+        return gioHangRepository.save(gioHang);
     }
 
     @Override
@@ -42,10 +47,9 @@ public class GioHangServiceImpl implements GioHangService {
     @Override
     public GioHang createGioHang(KhachHang khachHang) {
         var gioHang = new GioHang();
-        var id = khachHang.getId();
-        gioHang.setId(id);
+        gioHang.setId(khachHang.getId());
         gioHang.setIdTinhThanh(khachHang.getIdTinhThanh());
-        log.info("Create gio_hang with id: {}", id);
+        log.info("Create gio_hang with email: {}", khachHang.getEmail());
         return gioHangRepository.save(gioHang);
     }
 }

@@ -18,7 +18,6 @@ public class AuthenticationUtil {
     public KhachHang getAccount() {
         var authentication = getContext().getAuthentication();
         return authentication instanceof AnonymousAuthenticationToken ? null
-                // Get user by email address
                 : khachHangService.getKhachHang(authentication.getName());
     }
 }
