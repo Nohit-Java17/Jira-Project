@@ -16,7 +16,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 ## VIDEO DEMO
 <div align="center">
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3W1kdSJdITo/0.jpg)](https://youtu.be/3W1kdSJdITo)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3W1kdSJdITo/0.jpg)](https://www.youtube.com/watch?v=0mZWlULDHVA)
 
 </div>
 
