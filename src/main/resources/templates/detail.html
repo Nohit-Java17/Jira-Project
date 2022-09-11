@@ -355,8 +355,8 @@
                                                             <p>
                                                                 Đánh giá
                                                             </p>
-                                                            <div class="rating-wrap-post">
-                                                                <i class="fa fa-star-o rate" id="sao_1"
+                                                            <div class="rating-wrap-post rate" th:data-star="${product.danhGia}">
+                                                                <!-- <i class="fa fa-star-o rate" id="sao_1"
                                                                     data-value="1"></i>
                                                                 <i class="fa fa-star-o rate" id="sao_2"
                                                                     data-value="2"></i>
@@ -365,7 +365,7 @@
                                                                 <i class="fa fa-star-o rate" id="sao_4"
                                                                     data-value="4"></i>
                                                                 <i class="fa fa-star-o rate" id="sao_5"
-                                                                    data-value="5"></i>
+                                                                    data-value="5"></i> -->
                                                             </div>
                                                             <!-- <div class="rating-wrap-post rate" th:data-star="${product.danhGia}"></div> -->
                                                         </div>
@@ -595,7 +595,7 @@
             Toastify({ text: msg, position: "center" }).showToast();
         }
     </script>
-    <!-- <script th:inline="javascript">
+    <script th:inline="javascript">
         $(document).ready(function () {
             /* for (let i = 1; i <= 5; i++) {
                 $('#sao_' + i).addClass("chon");
@@ -620,9 +620,9 @@
                 }
             }
         });
-    </script> -->
+    </script>
     <!-- Rate -->
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             for (let i = 1; i <= 5; i++) {
                 $('#sao_' + i).addClass("chon");
@@ -637,7 +637,7 @@
                 }
             }
         })
-    </script>
+    </script> -->
 </body>
 
 </html>
