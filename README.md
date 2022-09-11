@@ -14,9 +14,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 </p>
 
 ## VIDEO DEMO
-<p align="center">
 [![ProjectJira-Team Nohit](https://img.youtube.com/vi/0mZWlULDHVA/0.jpg)](https://www.youtube.com/watch?v=0mZWlULDHVA)
-</p>
 
 ## CẤU HÌNH API REFRESH TOKEN
 ```java
