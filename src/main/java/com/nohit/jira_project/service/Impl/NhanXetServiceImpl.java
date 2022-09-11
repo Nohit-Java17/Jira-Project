@@ -1,22 +1,31 @@
 package com.nohit.jira_project.service.Impl;
 
+import java.util.*;
+
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
+import com.nohit.jira_project.util.*;
 
 import lombok.extern.slf4j.*;
 
 @Service
+@Transactional
 @Slf4j
 public class NhanXetServiceImpl implements NhanXetService {
     @Autowired
     private NhanXetRepository nhanXetRepository;
 
+    @Autowired
+    private TextUtil textUtil;
+
     @Override
-    public Iterable<NhanXet> getDsNhanXet() {
+    public List<NhanXet> getDsNhanXet() {
         log.info("Fetching all nhan_xet");
         return nhanXetRepository.findAll();
     }
@@ -28,9 +37,10 @@ public class NhanXetServiceImpl implements NhanXetService {
     }
 
     @Override
-    public void saveNhanXet(NhanXet nhanXet) {
+    public NhanXet saveNhanXet(NhanXet nhanXet) {
+        nhanXet.setBinhLuan(textUtil.parseToLegalText(nhanXet.getBinhLuan()));
         log.info("Saving nhan_xet with id: {}", nhanXet.getId());
-        nhanXetRepository.save(nhanXet);
+        return nhanXetRepository.save(nhanXet);
     }
 
     @Override

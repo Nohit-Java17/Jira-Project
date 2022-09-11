@@ -1,5 +1,9 @@
 package com.nohit.jira_project.service.Impl;
 
+import java.util.*;
+
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -10,13 +14,14 @@ import com.nohit.jira_project.service.*;
 import lombok.extern.slf4j.*;
 
 @Service
+@Transactional
 @Slf4j
 public class ChiTietGioHangServiceImpl implements ChiTietGioHangService {
     @Autowired
     private ChiTietGioHangRepository chiTietGioHangRepository;
 
     @Override
-    public Iterable<ChiTietGioHang> getDsChiTietGioHang() {
+    public List<ChiTietGioHang> getDsChiTietGioHang() {
         log.info("Fetching all chi_tiet_gio_hang");
         return chiTietGioHangRepository.findAll();
     }
@@ -28,9 +33,10 @@ public class ChiTietGioHangServiceImpl implements ChiTietGioHangService {
     }
 
     @Override
-    public void saveChiTietGioHang(ChiTietGioHang chiTietGioHang) {
+    public ChiTietGioHang saveChiTietGioHang(ChiTietGioHang chiTietGioHang) {
+        chiTietGioHang.setTongTienSanPham(chiTietGioHang.getSoLuongSanPham() * chiTietGioHang.getGiaBanSanPham());
         log.info("Saving chi_tiet_gio_hang with id: {}", chiTietGioHang.getId());
-        chiTietGioHangRepository.save(chiTietGioHang);
+        return chiTietGioHangRepository.save(chiTietGioHang);
     }
 
     @Override
@@ -38,5 +44,4 @@ public class ChiTietGioHangServiceImpl implements ChiTietGioHangService {
         log.info("Deleting chi_tiet_gio_hang with id: {}", id);
         chiTietGioHangRepository.deleteById(id);
     }
-
 }

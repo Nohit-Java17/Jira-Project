@@ -1,9 +1,11 @@
 package com.nohit.jira_project.service;
 
+import java.util.*;
+
 import com.nohit.jira_project.model.*;
 
 public interface NguoiNhanService {
-    public Iterable<NguoiNhan> getDsNguoiNhan();
+    public List<NguoiNhan> getDsNguoiNhan();
 
     public NguoiNhan getNguoiNhan(int id);
 

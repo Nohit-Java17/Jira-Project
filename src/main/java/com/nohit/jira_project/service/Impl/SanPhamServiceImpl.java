@@ -2,22 +2,32 @@ package com.nohit.jira_project.service.Impl;
 
 import java.util.*;
 
+import javax.transaction.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.repository.*;
 import com.nohit.jira_project.service.*;
+import com.nohit.jira_project.util.*;
 
 import lombok.extern.slf4j.*;
 
 import static java.util.stream.Collectors.*;
 
 @Service
+@Transactional
 @Slf4j
 public class SanPhamServiceImpl implements SanPhamService {
     @Autowired
     private SanPhamRepository sanPhamRepository;
+
+    @Autowired
+    private StringUtil stringUtil;
+
+    @Autowired
+    private TextUtil textUtil;
 
     @Override
     public List<SanPham> getDsSanPham() {
@@ -29,6 +39,7 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> getDsSanPham(String phanLoai) {
         log.info("Fetching all san_pham by phan_loai {}", phanLoai);
         var result = sanPhamRepository.findByPhanLoai(phanLoai);
+        // check exists san_pham
         if (result.size() == 0) {
             result = sanPhamRepository.findAll();
         }
@@ -48,9 +59,13 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
-    public void saveSanPham(SanPham sanPham) {
+    public SanPham saveSanPham(SanPham sanPham) {
+        sanPham.setTen(stringUtil.capitalizeCase(sanPham.getTen()));
+        sanPham.setMoTa(textUtil.parseToLegalText(sanPham.getMoTa()));
+        sanPham.setPhanLoai(stringUtil.sentenceCase(sanPham.getPhanLoai()));
+        sanPham.setThuongHieu(stringUtil.upperCase(sanPham.getThuongHieu()));
         log.info("Saving san_pham with name: {}", sanPham.getTen());
-        sanPhamRepository.save(sanPham);
+        return sanPhamRepository.save(sanPham);
     }
 
     @Override
@@ -89,9 +104,8 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> getDsSanPhamAscendingPrice() {
         var dsSanPham = getDsSanPhamTonKho();
         dsSanPham.sort((firstProduct, secondProduct) -> {
-            var firstGiaBan = firstProduct.getGiaGoc() - firstProduct.getKhuyenMai();
-            var secondGiaBan = secondProduct.getGiaGoc() - secondProduct.getKhuyenMai();
-            return secondGiaBan < firstGiaBan ? 1 : -1;
+            return secondProduct.getGiaGoc() - secondProduct.getKhuyenMai() < firstProduct.getGiaGoc()
+                    - firstProduct.getKhuyenMai() ? 1 : -1;
         });
         log.info("Fetching san_pham with ascending price");
         return dsSanPham;
@@ -101,9 +115,8 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> getDsSanPhamDescendingPrice() {
         var dsSanPham = getDsSanPhamTonKho();
         dsSanPham.sort((firstProduct, secondProduct) -> {
-            var firstGiaBan = firstProduct.getGiaGoc() - firstProduct.getKhuyenMai();
-            var secondGiaBan = secondProduct.getGiaGoc() - secondProduct.getKhuyenMai();
-            return secondGiaBan > firstGiaBan ? 1 : -1;
+            return secondProduct.getGiaGoc() - secondProduct.getKhuyenMai() > firstProduct.getGiaGoc()
+                    - firstProduct.getKhuyenMai() ? 1 : -1;
         });
         log.info("Fetching san_pham with ascending price");
         return dsSanPham;
