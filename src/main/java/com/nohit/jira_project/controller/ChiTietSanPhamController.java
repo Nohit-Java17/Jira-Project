@@ -77,7 +77,7 @@ public class ChiTietSanPhamController {
         if (authenticationUtil.getAccount() == null) {
             return REDIRECT_PREFIX + LOGIN_VIEW;
         } else {
-            var sanPham = sanPhamService.getSanPham(nhanXet.getIdSanPham());
+            var sanPham = nhanXet.getSanPham();
             var dsNhanXet = sanPham.getDsNhanXet();
             var dsNhanXetSize = dsNhanXet.size();
             var danhGia = 0;
@@ -89,7 +89,7 @@ public class ChiTietSanPhamController {
             nhanXetService.saveNhanXet(nhanXet);
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
-            return REDIRECT_PREFIX + DETAIL_VIEW + VIEW_VIEW + "?id=" + nhanXet.getIdSanPham();
+            return REDIRECT_PREFIX + DETAIL_VIEW + VIEW_VIEW + "?id=" + nhanXet.getSanPham().getId();
         }
     }
 }

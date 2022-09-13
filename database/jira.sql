@@ -94,7 +94,8 @@ CREATE TABLE
         huyen_quan NVARCHAR(50),
         id_tinh_thanh INT NOT NULL,
         PRIMARY KEY (id),
-        FOREIGN KEY (id) REFERENCES khach_hang(id)
+        FOREIGN KEY (id) REFERENCES khach_hang(id),
+        FOREIGN KEY (id_tinh_thanh) REFERENCES tinh_thanh(id)
     );
 
 -- create table chi_tiet_gio_hang

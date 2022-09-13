@@ -31,7 +31,7 @@ public class NhanXetServiceImpl implements NhanXetService {
     }
 
     @Override
-    public NhanXet getNhanXet(int id) {
+    public NhanXet getNhanXet(NhanXetId id) {
         log.info("Fetching nhan_xet with id {}", id);
         return nhanXetRepository.findById(id).orElse(null);
     }
@@ -44,7 +44,7 @@ public class NhanXetServiceImpl implements NhanXetService {
     }
 
     @Override
-    public void deleteNhanXet(int id) {
+    public void deleteNhanXet(NhanXetId id) {
         log.info("Deleting nhan_xet with id: {}", id);
         nhanXetRepository.deleteById(id);
     }

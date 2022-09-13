@@ -44,12 +44,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
         var user = (User) authResult.getPrincipal();
-        // Algorithm to encode the secret key (to base64?)
         var algorithm = HMAC256(SECRET_KEY.getBytes());
         var tokens = new HashMap<>();
         var userName = user.getUsername();
         var requestUrl = request.getRequestURL().toString();
-        // Create Token with params
         tokens.put(ACCESS_TOKEN_KEY,
                 create().withSubject(userName).withExpiresAt(new Date(currentTimeMillis() + EXPIRATION_TIME))
                         .withIssuer(requestUrl)
