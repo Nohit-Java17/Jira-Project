@@ -5,29 +5,28 @@ import javax.persistence.*;
 import lombok.*;
 
 import static javax.persistence.FetchType.*;
-import static javax.persistence.GenerationType.*;
 
 @Entity(name = "nhan_xet")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class NhanXet {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @EmbeddedId
+    private NhanXetId id;
 
     @Column(name = "danh_gia")
     private int danhGia;
 
-    @NonNull
     @Column(name = "binh_luan")
     private String binhLuan;
 
-    @Column(name = "id_san_pham")
-    private int idSanPham;
+    @ManyToOne(fetch = LAZY)
+    @MapsId("id_khach_hang")
+    @JoinColumn(name = "id_khach_hang", referencedColumnName = "id", insertable = false, updatable = false)
+    private KhachHang khachHang;
 
     @ManyToOne(fetch = LAZY)
+    @MapsId("id_san_pham")
     @JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
     private SanPham sanPham;
 }

@@ -31,4 +31,7 @@ public class TinhThanh {
 
     @OneToMany(mappedBy = "tinhThanh")
     private List<NguoiNhan> dsNguoiNhan;
+
+    @OneToMany(mappedBy = "tinhThanh")
+    private List<GioHang> dsGioHang;
 }

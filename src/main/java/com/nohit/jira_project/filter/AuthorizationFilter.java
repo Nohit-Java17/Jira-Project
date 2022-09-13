@@ -32,27 +32,24 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         var servletPath = request.getServletPath();
-        // Urls login vs refresh pass
+        // urls login vs refresh pass
         if (servletPath.equals(API_VIEW + LOGIN_VIEW) || servletPath.equals(API_VIEW + TOKEN_VIEW + REFRESH_VIEW)) {
             filterChain.doFilter(request, response);
             return;
         } else {
-            // Get Token from Header
             var header = request.getHeader(AUTHORIZATION);
+            // get token from header
             if (header != null && header.startsWith(TOKEN_PREFIX)) {
                 try {
-                    // Validate and decode Token
                     var decodedJwt = require(HMAC256(SECRET_KEY.getBytes())).build()
                             .verify(header.substring(TOKEN_PREFIX.length()));
                     var authorities = new ArrayList<SimpleGrantedAuthority>();
-                    // Add role
                     stream(decodedJwt.getClaim(ROLE_CLAIM_KEY).asArray(String.class))
                             .forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
                     getContext().setAuthentication(
                             new UsernamePasswordAuthenticationToken(decodedJwt.getSubject(), null, authorities));
                     filterChain.doFilter(request, response);
                 } catch (Exception e) {
-                    // Log error if have no Token
                     var errorMsg = e.getMessage();
                     log.error("Error logging in: {}", errorMsg);
                     response.setHeader(ERROR_HEADER_KEY, errorMsg);

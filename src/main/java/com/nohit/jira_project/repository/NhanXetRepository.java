@@ -6,5 +6,5 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface NhanXetRepository extends JpaRepository<NhanXet, Integer> {
+public interface NhanXetRepository extends JpaRepository<NhanXet, NhanXetId> {
 }

@@ -63,4 +63,7 @@ public class KhachHang {
 
     @OneToMany(mappedBy = "khachHang")
     private List<DonHang> dsDonHang;
+
+    @OneToMany(mappedBy = "khachHang")
+    private List<NhanXet> dsNhanXet;
 }

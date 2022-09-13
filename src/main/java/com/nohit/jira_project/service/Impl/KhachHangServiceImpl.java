@@ -46,7 +46,7 @@ public class KhachHangServiceImpl implements KhachHangService, UserDetailsServic
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = khachHangRepository.findByEmail(username);
-        // Check user exists
+        // check user exists
         if (user == null) {
             log.error("khach_hang not found");
             throw new UsernameNotFoundException("khach_hang not found");

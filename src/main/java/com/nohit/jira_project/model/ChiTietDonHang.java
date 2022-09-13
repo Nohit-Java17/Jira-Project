@@ -14,16 +14,6 @@ public class ChiTietDonHang {
     @EmbeddedId
     private ChiTietDonHangId id;
 
-    @ManyToOne(fetch = LAZY)
-    @MapsId("id_don_hang")
-    @JoinColumn(name = "id_don_hang")
-    private DonHang donHang;
-
-    @ManyToOne(fetch = LAZY)
-    @MapsId("id_san_pham")
-    @JoinColumn(name = "id_san_pham")
-    private SanPham sanPham;
-
     @Column(name = "so_luong_san_pham")
     private int soLuongSanPham;
 
@@ -32,4 +22,14 @@ public class ChiTietDonHang {
 
     @Column(name = "tong_tien_san_pham")
     private int tongTienSanPham;
+
+    @ManyToOne(fetch = LAZY)
+    @MapsId("id_don_hang")
+    @JoinColumn(name = "id_don_hang", referencedColumnName = "id", insertable = false, updatable = false)
+    private DonHang donHang;
+
+    @ManyToOne(fetch = LAZY)
+    @MapsId("id_san_pham")
+    @JoinColumn(name = "id_san_pham", referencedColumnName = "id", insertable = false, updatable = false)
+    private SanPham sanPham;
 }
