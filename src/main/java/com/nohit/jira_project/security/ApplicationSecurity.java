@@ -49,7 +49,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(CART_VIEW + FREE_VIEW, CHECKOUT_VIEW + FREE_VIEW, HISTORY_VIEW + FREE_VIEW,
                         ORDER_VIEW + FREE_VIEW, PROFILE_VIEW + FREE_VIEW)
-                .hasRole(CLIENT).anyRequest().authenticated().and().formLogin().loginPage(LOGIN_VIEW)
+                .hasRole(CLIENT).anyRequest().permitAll().and().formLogin().loginPage(LOGIN_VIEW)
                 .loginProcessingUrl(LOGIN_VIEW).defaultSuccessUrl(INDEX_VIEW).failureUrl(LOGIN_VIEW + "?error=true")
                 .permitAll().and().logout().invalidateHttpSession(true).clearAuthentication(true).permitAll().and()
                 .exceptionHandling().accessDeniedPage(LOGIN_VIEW).and().rememberMe()
