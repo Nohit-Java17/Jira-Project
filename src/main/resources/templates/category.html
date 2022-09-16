@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-lg-9 tab-content">
                     <div class="row">
-                        <div th:each="item: ${products}" class="col-md-3 col-sm-6">
+                        <div th:each="item : ${products}" class="col-md-3 col-sm-6">
                             <div class="single-shop-product">
                                 <div class="product-upper">
                                     <img th:src="@{${'/img/' + item.album + '/0.jpg'}}" alt="">

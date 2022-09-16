@@ -173,7 +173,7 @@
                                 Gợi ý
                             </h2>
                             <div class="related-products-carousel">
-                                <div class="single-product" th:each="item: ${topSaleProducts}">
+                                <div class="single-product" th:each="item : ${topSaleProducts}">
                                     <div class="product-f-image">
                                         <img th:src="@{${'/img/' + item.album + '/0.jpg'}}" alt="">
                                         <div class="product-hover">

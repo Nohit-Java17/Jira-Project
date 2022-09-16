@@ -35,7 +35,7 @@
             Mới nhất
         </h2>
         <ul>
-            <li th:each="item: ${topNewProducts}">
+            <li th:each="item : ${topNewProducts}">
                 <a th:text="${item.ten}" th:href="@{/detail/view(id=${item.id})}">
                     Name
                 </a>

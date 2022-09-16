@@ -68,7 +68,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="item: ${cart.dsChiTietGioHang}" name="listChiTietGioHang"
+                                        <tr th:each="item : ${cart.dsChiTietGioHang}" name="listChiTietGioHang"
                                             value="${listChiTietGioHang}" class="cart_item">
                                             <td class="product-remove">
                                                 <a title="Remove this item" class="remove"
@@ -144,7 +144,7 @@
                                         Gợi ý
                                     </h2>
                                     <ul class="products">
-                                        <li th:each="item: ${topSaleProducts}" class="product">
+                                        <li th:each="item : ${topSaleProducts}" class="product">
                                             <a th:href="@{/detail/view(id=${item.id})}">
                                                 <img width="325" height="325" alt="T_4_front"
                                                     class="attachment-shop_catalog wp-post-image"
@@ -224,9 +224,9 @@
                                         <p class="form-row form-row-wide">
                                             <select rel="calc_shipping_state" class="country_to_state"
                                                 id="calc_shipping_country" name="idTinhThanh">
-                                                <option th:each="tinhThanh : ${provinces}" th:value="${tinhThanh.id}"
-                                                    th:text="${tinhThanh.ten}"
-                                                    th:selected="${tinhThanh.id}==${cart.idTinhThanh}">
+                                                <option th:each="item : ${provinces}" th:value="${item.id}"
+                                                    th:text="${item.ten}"
+                                                    th:selected="${item.id}==${cart.idTinhThanh}">
                                                 </option>
                                             </select>
                                         </p>
