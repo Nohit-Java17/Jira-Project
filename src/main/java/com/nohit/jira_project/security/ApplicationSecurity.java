@@ -45,7 +45,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                         REGISTER_VIEW + FREE_VIEW, PRODUCT_VIEW + FREE_VIEW, CATEGORY_VIEW + FREE_VIEW,
                         ABOUT_VIEW + FREE_VIEW, NOT_FOUND_VIEW + FREE_VIEW, BLANK_VIEW + FREE_VIEW,
                         INDEX_VIEW + FREE_VIEW, PASSWORD_RESET_VIEW + FREE_VIEW, CONTACT_VIEW + FREE_VIEW,
-                        DETAIL_VIEW + FREE_VIEW, "css/**", "assets/**", "js/**", "img/***")
+                        DETAIL_VIEW + FREE_VIEW, "/css/**", "/assets/**", "/js/**", "/img/**")
                 .permitAll()
                 .antMatchers(CART_VIEW + FREE_VIEW, CHECKOUT_VIEW + FREE_VIEW, HISTORY_VIEW + FREE_VIEW,
                         ORDER_VIEW + FREE_VIEW, PROFILE_VIEW + FREE_VIEW)

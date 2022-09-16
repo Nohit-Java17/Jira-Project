@@ -1,0 +1,31 @@
+<div th:fragment="branding" class="site-branding-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="logo">
+                    <h1>
+                        <a th:href="@{/index}">nohit
+                            <span>
+                                Electronics
+                            </span>
+                        </a>
+                    </h1>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="shopping-item">
+                    <a th:href="@{/cart}">Giỏ -
+                        <span th:text="${#numbers.formatDecimal(cart.tongGioHang, 0, 'COMMA', 0, 'POINT')+' ₫'}"
+                            class="cart-amunt">
+                            Total
+                        </span>
+                        <i class="fa fa-shopping-cart"></i>
+                        <span th:text="${cart.tongSoLuong}" class="product-count">
+                            Count
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
