@@ -1,0 +1,45 @@
+<div th:fragment="side-bar" class="col-md-3">
+    <div class="single-sidebar">
+        <h2 class="sidebar-title">
+            Tra cứu
+        </h2>
+        <form th:action="@{/detail/search}" method="get">
+            <input type="text" placeholder="Nhập vào tên sản phẩm..." name="name" required>
+            <input class="btn-search" type="submit" value="Tìm kiếm">
+        </form>
+    </div>
+    <div class="single-sidebar one-line">
+        <h2 class="sidebar-title">
+            Sản phẩm
+        </h2>
+        <div th:each="item: ${topPriceProducts}" class="thubmnail-recent">
+            <img th:src="@{${'/img/' + item.album + '/1.jpg'}}" class="recent-thumb" alt="">
+            <h2>
+                <a th:text="${item.ten}" th:href="@{/detail/view(id=${item.id})}">
+                    Name
+                </a>
+            </h2>
+            <div class="product-sidebar-price">
+                <ins th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                    Discount
+                </ins>
+                <br>
+                <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                    Price
+                </del>
+            </div>
+        </div>
+    </div>
+    <div class="single-sidebar one-line">
+        <h2 class="sidebar-title">
+            Mới nhất
+        </h2>
+        <ul>
+            <li th:each="item: ${topNewProducts}">
+                <a th:text="${item.ten}" th:href="@{/detail/view(id=${item.id})}">
+                    Name
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

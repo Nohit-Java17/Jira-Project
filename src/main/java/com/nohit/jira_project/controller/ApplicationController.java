@@ -46,6 +46,7 @@ public class ApplicationController {
         // check current account still valid
         if (authenticationUtil.getAccount() == null) {
             var mav = new ModelAndView(REGISTER_TEMP);
+            mav.addObject(TITLE_PARAM, "Đăng ký");
             mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             return mav;
         } else {
@@ -84,6 +85,7 @@ public class ApplicationController {
                 mIsMsgShow = true;
                 mMsg = "Tài khoản đăng nhập chưa đúng!";
             }
+            mav.addObject(TITLE_PARAM, "Đăng nhập");
             mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             return mav;
         } else {
@@ -95,11 +97,12 @@ public class ApplicationController {
     @GetMapping(PASSWORD_RESET_VIEW)
     public ModelAndView resetPassword() {
         var mav = new ModelAndView(PASSWORD_RESET_TEMP);
+        mav.addObject(TITLE_PARAM, "Quên mật khẩu");
         mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
 
-    // quên mật khẩu
+    // Reset password
     @PostMapping(PASSWORD_RESET_VIEW)
     public String resetPassword(String email) throws UnsupportedEncodingException, MessagingException {
         var trueEmail = stringUtil.removeSpCharsBeginAndEnd(email).toLowerCase();
