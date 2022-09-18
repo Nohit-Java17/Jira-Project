@@ -23,18 +23,22 @@ public class ViewConstant {
     public static final String TOKEN_VIEW = "/token";
     public static final String REFRESH_VIEW = "/refresh";
     public static final String FREE_VIEW = "/**";
-    public static final String COUPON_VIEW = "/coupon";
+
+    public static final String ADD_VIEW = "/add";
+    public static final String EDIT_VIEW = "/edit";
     public static final String SAVE_VIEW = "/save";
     public static final String DELETE_VIEW = "/delete";
+
+    public static final String FIND_VIEW = "/find";
+    public static final String SEARCH_VIEW = "/search";
+
+    public static final String COUPON_VIEW = "/coupon";
     public static final String SHIP_FEE_VIEW = "/ship-fee";
     public static final String INFO_VIEW = "/info";
     public static final String PASSWORD_VIEW = "/password";
     public static final String CARD_VIEW = "/card";
-    public static final String VIEW_VIEW = "/view";
     public static final String RATE_VIEW = "/rate";
     public static final String SORT_VIEW = "/sort";
     public static final String FILTER_VIEW = "/filter";
     public static final String PAGE_VIEW = "/page";
-    public static final String ADD_VIEW = "/add";
-    public static final String SEARCH_VIEW = "/search";
 }

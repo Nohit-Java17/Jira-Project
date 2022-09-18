@@ -32,6 +32,21 @@ public class ApplicationConstant {
         public static final String CANCELLED = "Đã hủy";
     }
 
+    public class Menu {
+        public static final String TRANG_CHU = "Trang chủ";
+        public static final String SAN_PHAM = "Sản phẩm";
+        public static final String PHAN_LOAI = "Phân loại";
+        public static final String CHI_TIET = "Chi tiết";
+        public static final String GIO_HANG = "Giỏ hàng";
+        public static final String THANH_TOAN = "Thanh toán";
+        public static final String GIOI_THIEU = "Giới thiệu";
+        public static final String LIEN_HE = "Liên hệ";
+        public static final String DANG_KY = "Đăng ký";
+        public static final String DANG_NHAP = "Đăng nhập";
+        public static final String MAT_KHAU = "Mật khẩu";
+        public static final String DON_HANG = "Đơn hàng";
+    }
+
     public static final Map<String, Integer> CATEGORIES_MAP = of(
             "Tất cả", 0,
             "Máy tính xách tay", 1,

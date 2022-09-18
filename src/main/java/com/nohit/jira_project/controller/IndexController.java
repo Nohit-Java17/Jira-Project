@@ -8,6 +8,8 @@ import org.springframework.web.servlet.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
+import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -28,12 +30,13 @@ public class IndexController {
     public ModelAndView index() {
         var mav = new ModelAndView(INDEX_TEMP);
         var khachHang = authenticationUtil.getAccount();
-        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("login", khachHang != null);
-        mav.addObject("newProducts", sanPhamService.getDsSanPhamNewest().subList(0, 6));
-        mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 3));
-        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
-        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
+        mav.addObject(TITLE_PARAM, TRANG_CHU);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject(LOGIN_PARAM, khachHang != null);
+        mav.addObject(NEW_PRODUCTS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 6));
+        mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 3));
+        mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
         return mav;
     }
 }

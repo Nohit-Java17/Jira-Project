@@ -205,31 +205,30 @@
                             Sản phẩm mới nhất
                         </h2>
                         <div class="product-carousel">
-                            <div th:each="element: ${newProducts}" class="single-product">
+                            <div th:each="item : ${newProducts}" class="single-product">
                                 <div class="product-f-image">
-                                    <img th:src="@{${'/img/' + element.album + '/0.jpg'}}" alt="">
+                                    <img th:src="@{${'/img/' + item.album + '/0.jpg'}}" alt="">
                                     <div class="product-hover">
-                                        <a th:href="@{/cart/add(id=${element.id},soLuongSanPham=1)}"
+                                        <a th:href="@{/cart/add/product(id=${item.id},soLuongSanPham=1)}"
                                             class="add-to-cart-link">
                                             <i class="fa fa-shopping-cart"></i>Thêm vào giỏ
                                         </a>
-                                        <a th:href="@{/detail/view(id=${element.id})}" class="view-details-link">
+                                        <a th:href="@{/detail/find(id=${item.id})}" class="view-details-link">
                                             <i class="fa fa-link"></i>Xem thông tin
                                         </a>
                                     </div>
                                 </div>
                                 <h2>
-                                    <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
+                                    <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                                         Name
                                     </a>
                                 </h2>
                                 <div class="product-carousel-price">
                                     <ins
-                                        th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                        th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         Discount
                                     </ins>
-                                    <del
-                                        th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         Price
                                     </del>
                                 </div>
@@ -276,22 +275,22 @@
                         <a th:href="@{/product/sort?sort=topSale}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div th:each="element: ${topSaleProducts}" class="single-wid-product">
-                            <a th:href="@{/detail/view(id=${element.id})}">
-                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
+                        <div th:each="item : ${topSales}" class="single-wid-product">
+                            <a th:href="@{/detail/find(id=${item.id})}">
+                                <img th:src="@{${'/img/' + item.album + '/1.jpg'}}" alt="" class="product-thumb">
                             </a>
                             <h2>
-                                <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
+                                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                                     Name
                                 </a>
                             </h2>
-                            <div class="product-wid-rating star" th:data-star="${element.danhGia}"></div>
+                            <div class="product-wid-rating star" th:data-star="${item.danhGia}"></div>
                             <div class="product-wid-price">
                                 <ins
-                                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     Discount
                                 </ins>
-                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     Price
                                 </del>
                             </div>
@@ -306,22 +305,22 @@
                         <a th:href="@{/product/sort?sort=discount}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div th:each="element: ${topPriceProducts}" class="single-wid-product">
-                            <a th:href="@{/detail/view(id=${element.id})}">
-                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
+                        <div th:each="item : ${topDiscounts}" class="single-wid-product">
+                            <a th:href="@{/detail/find(id=${item.id})}">
+                                <img th:src="@{${'/img/' + item.album + '/1.jpg'}}" alt="" class="product-thumb">
                             </a>
                             <h2>
-                                <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
+                                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                                     Name
                                 </a>
                             </h2>
-                            <div class="product-wid-rating star" th:data-star="${element.danhGia}"></div>
+                            <div class="product-wid-rating star" th:data-star="${item.danhGia}"></div>
                             <div class="product-wid-price">
                                 <ins
-                                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     Discount
                                 </ins>
-                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     Price
                                 </del>
                             </div>
@@ -336,22 +335,22 @@
                         <a th:href="@{/product/sort?sort=newest}" class="wid-view-more">
                             Xem thêm
                         </a>
-                        <div th:each="element: ${topNewProducts}" class="single-wid-product">
-                            <a th:href="@{/detail/view(id=${element.id})}">
-                                <img th:src="@{${'/img/' + element.album + '/1.jpg'}}" alt="" class="product-thumb">
+                        <div th:each="item : ${topNews}" class="single-wid-product">
+                            <a th:href="@{/detail/find(id=${item.id})}">
+                                <img th:src="@{${'/img/' + item.album + '/1.jpg'}}" alt="" class="product-thumb">
                             </a>
                             <h2>
-                                <a th:text="${element.ten}" th:href="@{/detail/view(id=${element.id})}">
+                                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                                     Name
                                 </a>
                             </h2>
-                            <div class="product-wid-rating star" th:data-star="${element.danhGia}"></div>
+                            <div class="product-wid-rating star" th:data-star="${item.danhGia}"></div>
                             <div class="product-wid-price">
                                 <ins
-                                    th:text="${#numbers.formatDecimal(element.giaGoc-element.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     Discount
                                 </ins>
-                                <del th:text="${#numbers.formatDecimal(element.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                     Price
                                 </del>
                             </div>

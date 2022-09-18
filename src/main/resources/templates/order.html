@@ -76,31 +76,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="element,i : ${order.dsChiTietDonHang}" class="text-sm">
+                                <tr th:each="item,i : ${order.dsChiTietDonHang}" class="text-sm">
                                     <td th:text="${i.index+1}" class="align-middle border-gray-300 py-3">
                                         No.
                                     </td>
                                     <td class="align-middle border-gray-300 py-3">
-                                        <a th:href="@{/detail/view(id=${element.sanPham.id})}">
+                                        <a th:href="@{/detail/find(id=${item.sanPham.id})}">
                                             <img class="img-fluid flex-shrink-0"
-                                                th:src="@{${'/img/' + element.sanPham.album + '/1.jpg'}}"
+                                                th:src="@{${'/img/' + item.sanPham.album + '/1.jpg'}}"
                                                 alt="White Blouse Armani" style="min-width: 50px" width="50">
                                         </a>
                                     </td>
                                     <td class="align-middle border-gray-300 py-3">
-                                        <a th:text="${element.sanPham.ten}"
-                                            th:href="@{/detail/view(id=${element.sanPham.id})}">
+                                        <a th:text="${item.sanPham.ten}"
+                                            th:href="@{/detail/find(id=${item.sanPham.id})}">
                                             Name
                                         </a>
                                     </td>
-                                    <td th:text="${#numbers.formatDecimal(element.giaBanSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}"
+                                    <td th:text="${#numbers.formatDecimal(item.giaBanSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}"
                                         class="align-middle border-gray-300 py-3">
                                         Price
                                     </td>
-                                    <td th:text="${element.soLuongSanPham}" class="align-middle border-gray-300 py-3">
+                                    <td th:text="${item.soLuongSanPham}" class="align-middle border-gray-300 py-3">
                                         Count
                                     </td>
-                                    <td th:text="${#numbers.formatDecimal(element.tongTienSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}"
+                                    <td th:text="${#numbers.formatDecimal(item.tongTienSanPham, 0, 'COMMA', 0, 'POINT')+' ₫'}"
                                         class="align-middle border-gray-300 py-3">
                                         Total
                                     </td>

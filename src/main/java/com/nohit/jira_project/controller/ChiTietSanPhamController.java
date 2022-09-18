@@ -9,9 +9,11 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
+import static java.lang.Math.*;
 
 @Controller
 @RequestMapping(DETAIL_VIEW)
@@ -38,35 +40,37 @@ public class ChiTietSanPhamController {
     }
 
     // Load detail
-    @GetMapping(VIEW_VIEW)
+    @GetMapping(FIND_VIEW)
     public ModelAndView detailFind(int id) {
         var mav = new ModelAndView(DETAIL_TEMP);
         var khachHang = authenticationUtil.getAccount();
         var sanPham = sanPhamService.getSanPham(id);
-        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("login", khachHang != null);
-        mav.addObject("product", sanPham);
-        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
-        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
-        mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mav.addObject("limit", sanPham.getTonKho());
+        mav.addObject(TITLE_PARAM, CHI_TIET);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject(LOGIN_PARAM, khachHang != null);
+        mav.addObject(PRODUCT_PARAM, sanPham);
+        mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
+        mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 4));
+        mav.addObject(LIMIT_PARAM, sanPham.getTonKho());
         mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
 
-    // Load detail
+    // Load search
     @GetMapping(SEARCH_VIEW)
     public ModelAndView detailSearch(String name) {
         var khachHang = authenticationUtil.getAccount();
         var sanPham = sanPhamService.getSanPham(name);
         var mav = sanPham == null ? new ModelAndView(BLANK_TEMP) : new ModelAndView(DETAIL_TEMP);
-        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("login", khachHang != null);
-        mav.addObject("product", sanPham);
-        mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
-        mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
-        mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mav.addObject("limit", sanPham.getTonKho());
+        mav.addObject(TITLE_PARAM, CHI_TIET);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject(LOGIN_PARAM, khachHang != null);
+        mav.addObject(PRODUCT_PARAM, sanPham);
+        mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
+        mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 4));
+        mav.addObject(LIMIT_PARAM, sanPham.getTonKho());
         return mav;
     }
 
@@ -81,15 +85,16 @@ public class ChiTietSanPhamController {
             var dsNhanXet = sanPham.getDsNhanXet();
             var dsNhanXetSize = dsNhanXet.size();
             var danhGia = 0;
+            // get all danh_gia of product
             for (var i = 0; i < dsNhanXetSize; i++) {
                 danhGia += dsNhanXet.get(i).getDanhGia();
             }
-            sanPham.setDanhGia(Math.round((danhGia + nhanXet.getDanhGia()) / (dsNhanXetSize + 1)));
-            sanPhamService.saveSanPham(sanPham);
-            nhanXetService.saveNhanXet(nhanXet);
+            sanPham.setDanhGia(round((danhGia + nhanXet.getDanhGia()) / (dsNhanXetSize + 1)));
+            sanPham = sanPhamService.saveSanPham(sanPham);
+            nhanXet = nhanXetService.saveNhanXet(nhanXet);
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
-            return REDIRECT_PREFIX + DETAIL_VIEW + VIEW_VIEW + "?id=" + nhanXet.getSanPham().getId();
+            return REDIRECT_PREFIX + DETAIL_VIEW + FIND_VIEW + "?id=" + sanPham.getId();
         }
     }
 }
