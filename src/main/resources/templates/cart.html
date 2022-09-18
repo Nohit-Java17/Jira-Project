@@ -72,19 +72,19 @@
                                             value="${listChiTietGioHang}" class="cart_item">
                                             <td class="product-remove">
                                                 <a title="Remove this item" class="remove"
-                                                    th:href="@{/cart/delete(idSanPham=${item.sanPham.id})}">
+                                                    th:href="@{/cart/delete/product(id=${item.sanPham.id})}">
                                                     ×
                                                 </a>
                                             </td>
                                             <td class="product-thumbnail">
-                                                <a th:href="@{/detail/view(id=${item.sanPham.id})}">
+                                                <a th:href="@{/detail/find(id=${item.sanPham.id})}">
                                                     <img width="145" height="145" alt="poster_1_up"
                                                         class="shop_thumbnail"
                                                         th:src="@{${'/img/' + item.sanPham.album + '/1.jpg'}}">
                                                 </a>
                                             </td>
                                             <td class="product-name">
-                                                <a th:href="@{/detail/view(id=${item.sanPham.id})}" id="nameProducts"
+                                                <a th:href="@{/detail/find(id=${item.sanPham.id})}" id="nameProducts"
                                                     th:text="${item.sanPham.ten}">
                                                     Name
                                                 </a>
@@ -121,7 +121,7 @@
                                                         <input type="text" placeholder="Mã khuyến mãi" name="couponCode"
                                                             id="coupon_code" class="input-text coupon-code">
                                                         <input type="submit" value="Áp dụng" name="coupon"
-                                                            th:formaction="@{/cart/coupon}" id="apply_coupon"
+                                                            th:formaction="@{/cart/edit/coupon}" id="apply_coupon"
                                                             class="button">
                                                     </div>
                                                     <div class="voucher-sp">
@@ -144,8 +144,8 @@
                                         Gợi ý
                                     </h2>
                                     <ul class="products">
-                                        <li th:each="item : ${topSaleProducts}" class="product">
-                                            <a th:href="@{/detail/view(id=${item.id})}">
+                                        <li th:each="item : ${topSales}" class="product">
+                                            <a th:href="@{/detail/find(id=${item.id})}">
                                                 <img width="325" height="325" alt="T_4_front"
                                                     class="attachment-shop_catalog wp-post-image"
                                                     th:src="@{${'/img/' + item.album + '/0.jpg'}}">
@@ -162,7 +162,7 @@
                                             </a>
                                             <a class="add_to_cart_button" data-quantity="1" data-product_sku=""
                                                 data-product_id="22" rel="nofollow"
-                                                th:href="@{/detail/view(id=${item.id})}">
+                                                th:href="@{/detail/find(id=${item.id})}">
                                                 Chi tiết
                                             </a>
                                         </li>
@@ -212,7 +212,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <form method="put" th:action="@{/cart/ship-fee}" class="shipping_calculator">
+                                <form method="put" th:action="@{/cart/edit/ship-fee}" class="shipping_calculator">
                                     <h2>
                                         <a class="shipping-calculator-button" data-toggle="collapse"
                                             href="#calcalute-shipping-wrap" aria-expanded="false"
@@ -223,7 +223,7 @@
                                     <section id="calcalute-shipping-wrap" class="shipping-calculator-form collapse">
                                         <p class="form-row form-row-wide">
                                             <select rel="calc_shipping_state" class="country_to_state"
-                                                id="calc_shipping_country" name="idTinhThanh">
+                                                id="calc_shipping_country" name="id">
                                                 <option th:each="item : ${provinces}" th:value="${item.id}"
                                                     th:text="${item.ten}"
                                                     th:selected="${item.id}==${cart.idTinhThanh}">
@@ -278,7 +278,7 @@
         let priceproducts = document.querySelectorAll("#priceproducts");
         let sumProducts = document.querySelectorAll("#sumProducts");
         let nameProducts = document.querySelectorAll("#nameProducts");
-        let limit = /*[[${limit}]]*/ null;
+        let limits = /*[[${limits}]]*/ null;
         for (let i = 0; i < downProducts.length; i++) {
             downProducts[i].addEventListener("click", () => {
                 sumProducts[i].value = sumProducts[i].value > 1 ? parseInt(sumProducts[i].value) - 1 : 1
@@ -288,7 +288,7 @@
         }
         for (let i = 0; i < upProducts.length; i++) {
             upProducts[i].addEventListener("click", () => {
-                sumProducts[i].value = sumProducts[i].value < limit[i] ? parseInt(sumProducts[i].value) + 1 : sumProducts[i].value
+                sumProducts[i].value = sumProducts[i].value < limits[i] ? parseInt(sumProducts[i].value) + 1 : sumProducts[i].value
                 let str = $(priceProduct[i]).text();
                 priceproducts[i].textContent = (parseInt(str.substring(0, str.length - 2).replace(/,/g, '')) * sumProducts[i].value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " ₫";
             });
@@ -298,7 +298,7 @@
         })
         function checkIndex(event) {
             let index = Array.from(sumProducts).indexOf(event.target);
-            let lim = limit[index];
+            let lim = limits[index];
             sumProducts[index].setAttribute("max", lim);
             let str = $(priceProduct[index]).text();
             priceproducts[index].textContent = (parseInt(str.substring(0, str.length - 2).replace(/,/g, '')) * sumProducts[index].value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " ₫";

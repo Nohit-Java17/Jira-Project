@@ -14,6 +14,7 @@ import com.nohit.jira_project.util.*;
 import lombok.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -44,8 +45,8 @@ public class GioHangController {
     private KhachHang mCurrentAccount;
     private GioHang mClienCart;
     private String mMsg;
-    private boolean mIsByPass;
     private boolean mIsMsgShow;
+    private boolean mIsByPass;
 
     // Load cart
     @GetMapping("")
@@ -55,21 +56,22 @@ public class GioHangController {
             return new ModelAndView(LOGIN_TEMP);
         } else {
             var mav = new ModelAndView(CART_TEMP);
-            mClienCart = gioHangService.getGioHang(mCurrentAccount.getId());
             var tongSoLuong = mClienCart.getTongSoLuong();
             var dsTonkho = new ArrayList<>();
+            // get ton_kho each product
             for (var item : mClienCart.getDsChiTietGioHang()) {
                 dsTonkho.add(item.getSanPham().getTonKho());
             }
-            mav.addObject("cart", mClienCart);
-            mav.addObject("login", mCurrentAccount != null);
-            mav.addObject("topPriceProducts", sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
-            mav.addObject("topNewProducts", sanPhamService.getDsSanPhamNewest().subList(0, 3));
-            mav.addObject("topSaleProducts", sanPhamService.getDsSanPhamTopSale().subList(0, 2));
-            mav.addObject("provinces", tinhThanhService.getDsTinhThanh());
-            mav.addObject("coupon", tongSoLuong < 1 ? 0 : mClienCart.getGiamGia());
-            mav.addObject("shipFee", tongSoLuong < 1 ? 0 : mClienCart.getTinhThanh().getChiPhiVanChuyen());
-            mav.addObject("limit", dsTonkho);
+            mav.addObject(TITLE_PARAM, GIO_HANG);
+            mav.addObject(CART_PARAM, mClienCart);
+            mav.addObject(LOGIN_PARAM, mCurrentAccount != null);
+            mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+            mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
+            mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 2));
+            mav.addObject(PROVINCES_PARAM, tinhThanhService.getDsTinhThanh());
+            mav.addObject(COUPON_PARAM, tongSoLuong < 1 ? 0 : mClienCart.getGiamGia());
+            mav.addObject(SHIPFEE_PARAM, tongSoLuong < 1 ? 0 : mClienCart.getTinhThanh().getChiPhiVanChuyen());
+            mav.addObject(LIMITS_PARAM, dsTonkho);
             mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
             mIsByPass = false;
             return mav;
@@ -77,8 +79,8 @@ public class GioHangController {
     }
 
     // Add to cart
-    @RequestMapping(value = ADD_VIEW, method = { GET, POST })
-    public String cartAdd(int id, int soLuongSanPham) {
+    @RequestMapping(value = ADD_VIEW + PRODUCT_VIEW, method = { GET, POST })
+    public String cartAddProduct(int id, int soLuongSanPham) {
         // check current account still valid
         if (!isValidAccount()) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
@@ -87,21 +89,20 @@ public class GioHangController {
             var sanPham = sanPhamService.getSanPham(id);
             var idChiTietGioHang = new ChiTietGioHangId(idKhachHang, id);
             mIsMsgShow = true;
+            // chech chi_tiet_gio_hang exist
             if (chiTietGioHangService.getChiTietGioHang(idChiTietGioHang) != null) {
                 mMsg = sanPham.getTen() + " đã tồn tại trong giỏ hàng!";
             } else {
                 var chiTietGioHang = new ChiTietGioHang();
                 var giaBanSanPham = sanPham.getGiaGoc() - sanPham.getKhuyenMai();
-                var tongTienSanPham = giaBanSanPham * soLuongSanPham;
                 mClienCart = gioHangService.getGioHang(idKhachHang);
                 chiTietGioHang.setId(idChiTietGioHang);
                 chiTietGioHang.setSoLuongSanPham(soLuongSanPham);
                 chiTietGioHang.setGiaBanSanPham(giaBanSanPham);
-                chiTietGioHang.setTongTienSanPham(tongTienSanPham);
-                chiTietGioHangService.saveChiTietGioHang(chiTietGioHang);
+                chiTietGioHang = chiTietGioHangService.saveChiTietGioHang(chiTietGioHang);
                 mClienCart.setTongSoLuong(mClienCart.getTongSoLuong() + soLuongSanPham);
-                mClienCart.setTongGioHang(mClienCart.getTongGioHang() + tongTienSanPham);
-                gioHangService.saveGioHang(mClienCart);
+                mClienCart.setTongGioHang(mClienCart.getTongGioHang() + chiTietGioHang.getTongTienSanPham());
+                mClienCart = gioHangService.saveGioHang(mClienCart);
                 mMsg = "Thêm " + sanPham.getTen() + " vào giỏ hàng thành công!";
             }
             mIsByPass = true;
@@ -110,19 +111,20 @@ public class GioHangController {
     }
 
     // Update coupon
-    @RequestMapping(value = COUPON_VIEW, method = { GET, PUT })
-    public String cartCoupon(String couponCode) {
+    @RequestMapping(value = EDIT_VIEW + COUPON_VIEW, method = { GET, PUT })
+    public String cartEditCoupon(String couponCode) {
         // check current account still valid
         if (!isValidAccount()) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
             var coupon = COUPON_MAP.get(couponCode);
             mIsMsgShow = true;
+            // check coupon
             if (coupon == null) {
                 mMsg = "Mã giảm giá chưa chính xác!";
             } else {
                 mClienCart.setGiamGia(coupon);
-                gioHangService.saveGioHang(mClienCart);
+                mClienCart = gioHangService.saveGioHang(mClienCart);
                 mMsg = "Áp dụng giảm giá thành công!";
             }
             mIsByPass = true;
@@ -131,15 +133,15 @@ public class GioHangController {
     }
 
     // Update ship fee
-    @RequestMapping(value = SHIP_FEE_VIEW, method = { GET, PUT })
-    public String cartShipFee(int idTinhThanh, String huyenQuan) {
+    @RequestMapping(value = EDIT_VIEW + SHIP_FEE_VIEW, method = { GET, PUT })
+    public String cartEditShipFee(int id, String huyenQuan) {
         // Check current account still valid
         if (!isValidAccount()) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
             mClienCart.setHuyenQuan(huyenQuan);
-            mClienCart.setIdTinhThanh(idTinhThanh);
-            gioHangService.saveGioHang(mClienCart);
+            mClienCart.setIdTinhThanh(id);
+            mClienCart = gioHangService.saveGioHang(mClienCart);
             mIsMsgShow = true;
             mMsg = "Cập nhật  địa chỉ giao hàng cho giỏ hàng thành công!";
             mIsByPass = true;
@@ -159,17 +161,15 @@ public class GioHangController {
             var index = 0;
             // update chi_tiet_gio_hang
             for (var item : mClienCart.getDsChiTietGioHang()) {
-                var tongTienSanPham = productSize[index] * item.getGiaBanSanPham();
                 item.setSoLuongSanPham(productSize[index]);
-                item.setTongTienSanPham(tongTienSanPham);
-                chiTietGioHangService.saveChiTietGioHang(item);
+                item = chiTietGioHangService.saveChiTietGioHang(item);
                 tongSoLuong += productSize[index];
-                tongGioHang += tongTienSanPham;
+                tongGioHang += item.getTongTienSanPham();
                 index++;
             }
             mClienCart.setTongSoLuong(tongSoLuong);
             mClienCart.setTongGioHang(tongGioHang);
-            gioHangService.saveGioHang(mClienCart);
+            mClienCart = gioHangService.saveGioHang(mClienCart);
             mIsMsgShow = true;
             mMsg = "Cập nhật giỏ hàng thành công!";
             mIsByPass = true;
@@ -178,21 +178,21 @@ public class GioHangController {
     }
 
     // Delete chi_tiet_gio_hang
-    @RequestMapping(value = DELETE_VIEW, method = { GET, DELETE })
-    public String cartDeleteProduct(int idSanPham) {
+    @RequestMapping(value = DELETE_VIEW + PRODUCT_VIEW, method = { GET, DELETE })
+    public String cartDeleteProduct(int id) {
         // check current account still valid
         if (!isValidAccount()) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var chiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), idSanPham);
+            var chiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), id);
             mClienCart.setTongGioHang(mClienCart.getTongGioHang()
                     - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getTongTienSanPham());
             mClienCart.setTongSoLuong(mClienCart.getTongSoLuong()
                     - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getSoLuongSanPham());
-            gioHangService.saveGioHang(mClienCart);
+            mClienCart = gioHangService.saveGioHang(mClienCart);
             chiTietGioHangService.deleteChiTietGioHang(chiTietGioHang);
             mIsMsgShow = true;
-            mMsg = sanPhamService.getSanPham(idSanPham).getTen() + " đã được xóa khỏi giỏ hàng thành công!";
+            mMsg = sanPhamService.getSanPham(id).getTen() + " đã được xóa khỏi giỏ hàng thành công!";
             mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
         }
@@ -205,7 +205,9 @@ public class GioHangController {
             return true;
         } else {
             mCurrentAccount = authenticationUtil.getAccount();
-            return mCurrentAccount != null;
+            var result = mCurrentAccount != null;
+            mClienCart = result ? gioHangService.getGioHang(mCurrentAccount.getId()) : new GioHang();
+            return result;
         }
     }
 }

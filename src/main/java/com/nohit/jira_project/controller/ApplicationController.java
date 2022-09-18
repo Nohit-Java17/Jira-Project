@@ -14,6 +14,7 @@ import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -33,38 +34,36 @@ public class ApplicationController {
     @Autowired
     private ApplicationUtil applicationUtil;
 
-    @Autowired
-    private StringUtil stringUtil;
-
     // Fields
     private String mMsg;
     private boolean mIsMsgShow;
+    private boolean mIsByPass;
 
     // Load register
     @GetMapping(REGISTER_VIEW)
     public ModelAndView register() {
-        // check current account still valid
-        if (authenticationUtil.getAccount() == null) {
-            var mav = new ModelAndView(REGISTER_TEMP);
-            mav.addObject(TITLE_PARAM, "Đăng ký");
-            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
-            return mav;
-        } else {
+        // check login
+        if (!isDirect()) {
             return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
+        } else {
+            var mav = new ModelAndView(REGISTER_TEMP);
+            mav.addObject(TITLE_PARAM, DANG_KY);
+            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
+            mIsByPass = false;
+            return mav;
         }
     }
 
     // Register
     @PostMapping(REGISTER_VIEW)
     public String register(KhachHang khachHang) {
-        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(khachHang.getEmail()).toLowerCase();
         mIsMsgShow = true;
+        mIsByPass = true;
         // check email is already exist
-        if (khachHangService.getKhachHang(trueEmail) != null) {
+        if (khachHangService.getKhachHang(khachHang.getEmail()) != null) {
             mMsg = "Email này đã được đăng ký!";
             return REDIRECT_PREFIX + REGISTER_VIEW;
         } else {
-            khachHang.setEmail(trueEmail);
             khachHang.setIdTinhThanh(DEFAULT_PROVINCE);
             khachHang.setVaiTro(DEFAULT_ROLE);
             khachHang = khachHangService.saveKhachHang(khachHang);
@@ -77,19 +76,20 @@ public class ApplicationController {
     // Load login
     @GetMapping(LOGIN_VIEW)
     public ModelAndView login(boolean error) {
-        // check current account still valid
-        if (authenticationUtil.getAccount() == null) {
+        // check login
+        if (!isDirect()) {
+            return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
+        } else {
             var mav = new ModelAndView(LOGIN_TEMP);
             // login failed
             if (error) {
                 mIsMsgShow = true;
                 mMsg = "Tài khoản đăng nhập chưa đúng!";
             }
-            mav.addObject(TITLE_PARAM, "Đăng nhập");
+            mav.addObject(TITLE_PARAM, DANG_NHAP);
             mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
+            mIsByPass = false;
             return mav;
-        } else {
-            return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
         }
     }
 
@@ -97,7 +97,7 @@ public class ApplicationController {
     @GetMapping(PASSWORD_RESET_VIEW)
     public ModelAndView resetPassword() {
         var mav = new ModelAndView(PASSWORD_RESET_TEMP);
-        mav.addObject(TITLE_PARAM, "Quên mật khẩu");
+        mav.addObject(TITLE_PARAM, MAT_KHAU);
         mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
@@ -105,16 +105,26 @@ public class ApplicationController {
     // Reset password
     @PostMapping(PASSWORD_RESET_VIEW)
     public String resetPassword(String email) throws UnsupportedEncodingException, MessagingException {
-        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(email).toLowerCase();
         mIsMsgShow = true;
         // check email is already exist
-        if (khachHangService.getKhachHang(trueEmail) == null) {
-            mMsg = "Email này chưa được đăng ký. Vui lòng thử lại!";
+        if (khachHangService.getKhachHang(email) == null) {
+            mMsg = "Email này chưa được đăng ký!";
             return REDIRECT_PREFIX + PASSWORD_RESET_VIEW;
         } else {
             khachHangService.resetPassword(email);
-            mMsg = "Mật khẩu mới đã gửi về email. Vui lòng kiểm tra lại!";
+            mMsg = "Mật khẩu mới đã được gửi về địa chỉ email " + email + " thành công!";
+            mIsByPass = true;
             return REDIRECT_PREFIX + LOGIN_VIEW;
+        }
+    }
+
+    // Check direct
+    private boolean isDirect() {
+        // check bypass
+        if (mIsByPass) {
+            return true;
+        } else {
+            return authenticationUtil.getAccount() == null;
         }
     }
 }

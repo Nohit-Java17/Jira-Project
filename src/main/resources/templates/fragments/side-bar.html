@@ -12,10 +12,10 @@
         <h2 class="sidebar-title">
             Sản phẩm
         </h2>
-        <div th:each="item: ${topPriceProducts}" class="thubmnail-recent">
+        <div th:each="item: ${topDiscounts}" class="thubmnail-recent">
             <img th:src="@{${'/img/' + item.album + '/1.jpg'}}" class="recent-thumb" alt="">
             <h2>
-                <a th:text="${item.ten}" th:href="@{/detail/view(id=${item.id})}">
+                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                     Name
                 </a>
             </h2>
@@ -35,8 +35,8 @@
             Mới nhất
         </h2>
         <ul>
-            <li th:each="item : ${topNewProducts}">
-                <a th:text="${item.ten}" th:href="@{/detail/view(id=${item.id})}">
+            <li th:each="item : ${topNews}">
+                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                     Name
                 </a>
             </li>

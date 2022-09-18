@@ -2,8 +2,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                    <h2 th:text="${title}">
+                <div th:switch="${title}" class="product-bit-title text-center">
+                    <h2 th:case="'Thông tin'">
+                        Thông tin cá nhân
+                    </h2>
+                    <h2 th:case="'Lịch sử'">
+                        Lịch sử mua hàng
+                    </h2>
+                    <h2 th:case="'Đơn hàng'">
+                        Chi tiết đơn hàng
+                    </h2>
+                    <h2 th:case="*" th:text="${title}">
                         Title
                     </h2>
                 </div>

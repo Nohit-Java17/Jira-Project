@@ -8,6 +8,7 @@ import org.springframework.web.servlet.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -30,7 +31,7 @@ public class DonHangController {
     }
 
     // Load order
-    @GetMapping(VIEW_VIEW)
+    @GetMapping(FIND_VIEW)
     public ModelAndView orderFind(int id) {
         var khachHang = authenticationUtil.getAccount();
         // check current account still valid
@@ -38,10 +39,10 @@ public class DonHangController {
             return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
         } else {
             var mav = new ModelAndView(ORDER_TEMP);
-            var idKhachHang = khachHang.getId();
-            mav.addObject("cart", gioHangService.getGioHang(idKhachHang));
-            mav.addObject("login", khachHang != null);
-            mav.addObject("order", donHangService.getDonHang(id));
+            mav.addObject(TITLE_PARAM, DON_HANG);
+            mav.addObject(CART_PARAM, gioHangService.getGioHang(khachHang.getId()));
+            mav.addObject(LOGIN_PARAM, khachHang != null);
+            mav.addObject(ORDER_PARAM, donHangService.getDonHang(id));
             return mav;
         }
     }

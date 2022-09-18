@@ -81,7 +81,7 @@
                                         No.
                                     </td>
                                     <td class="align-middle border-gray-300 py-3">
-                                        <a th:href="@{/detail/view(id=${item.sanPham.id})}">
+                                        <a th:href="@{/detail/find(id=${item.sanPham.id})}">
                                             <img class="img-fluid flex-shrink-0"
                                                 th:src="@{${'/img/' + item.sanPham.album + '/1.jpg'}}"
                                                 alt="White Blouse Armani" style="min-width: 50px" width="50">
@@ -89,7 +89,7 @@
                                     </td>
                                     <td class="align-middle border-gray-300 py-3">
                                         <a th:text="${item.sanPham.ten}"
-                                            th:href="@{/detail/view(id=${item.sanPham.id})}">
+                                            th:href="@{/detail/find(id=${item.sanPham.id})}">
                                             Name
                                         </a>
                                     </td>

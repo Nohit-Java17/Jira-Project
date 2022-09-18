@@ -17,4 +17,17 @@ public class AttributeConstant {
     public static final String MSG_PARAM = "msg";
     public static final String REMEMBER_ME_PARAM = "remember-me";
     public static final String TITLE_PARAM = "title";
+    public static final String LOGIN_PARAM = "login";
+    public static final String LIMIT_PARAM = "limit";
+    public static final String COUPON_PARAM = "coupon";
+    public static final String SHIPFEE_PARAM = "shipFee";
+    public static final String LIMITS_PARAM = "limits";
+    public static final String CART_PARAM = "cart";
+    public static final String PRODUCT_PARAM = "product";
+    public static final String ORDER_PARAM = "order";
+    public static final String PROVINCES_PARAM = "provinces";
+    public static final String NEW_PRODUCTS_PARAM = "newProducts";
+    public static final String TOP_SALES_PARAM = "topSales";
+    public static final String TOP_DISCOUNTS_PARAM = "topDiscounts";
+    public static final String TOP_NEWS_PARAM = "topNews";
 }

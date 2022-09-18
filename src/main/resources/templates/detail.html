@@ -89,7 +89,7 @@
                                             Price
                                         </del>
                                     </div>
-                                    <form th:action="@{/cart/add}" method="post" class="cart">
+                                    <form th:action="@{/cart/add/product}" method="post" class="cart">
                                         <div class="quantity">
                                             <input type="hidden" size="4" class="input-text qty text"
                                                 th:value="${product.id}" name="id" min="1" step="1">
@@ -173,23 +173,23 @@
                                 Gợi ý
                             </h2>
                             <div class="related-products-carousel">
-                                <div class="single-product" th:each="item : ${topSaleProducts}">
+                                <div class="single-product" th:each="item : ${topSales}">
                                     <div class="product-f-image">
                                         <img th:src="@{${'/img/' + item.album + '/0.jpg'}}" alt="">
                                         <div class="product-hover">
-                                            <a th:href="@{/cart/add(id=${item.id},soLuongSanPham=1)}"
+                                            <a th:href="@{/cart/add/product(id=${item.id},soLuongSanPham=1)}"
                                                 class="add-to-cart-link">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Thêm vào giỏ
                                             </a>
-                                            <a th:href="@{/detail/view(id=${item.id})}" class="view-details-link">
+                                            <a th:href="@{/detail/find(id=${item.id})}" class="view-details-link">
                                                 <i class="fa fa-link"></i>
                                                 Xem thông tin
                                             </a>
                                         </div>
                                     </div>
                                     <h2>
-                                        <a th:text="${item.ten}" th:href="@{/detail/view(id=${item.id})}">
+                                        <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
                                             Name
                                         </a>
                                     </h2>
