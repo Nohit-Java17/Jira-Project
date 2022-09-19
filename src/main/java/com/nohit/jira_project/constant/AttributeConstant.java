@@ -22,6 +22,7 @@ public class AttributeConstant {
     public static final String COUPON_PARAM = "coupon";
     public static final String SHIPFEE_PARAM = "shipFee";
     public static final String LIMITS_PARAM = "limits";
+    public static final String CLIENT_PARAM = "client";
     public static final String CART_PARAM = "cart";
     public static final String PRODUCT_PARAM = "product";
     public static final String ORDER_PARAM = "order";

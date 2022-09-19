@@ -43,7 +43,8 @@
                 <div class="col-md-9">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="put" th:action="@{/cart/save}">
+                            <form id="coupon" th:action="@{/cart/edit/coupon}" method="put"></form>
+                            <form id="cart-save" th:action="@{/cart/save}" method="put">
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -119,17 +120,17 @@
                                                             Phiếu mua hàng:
                                                         </label>
                                                         <input type="text" placeholder="Mã khuyến mãi" name="couponCode"
-                                                            id="coupon_code" class="input-text coupon-code">
+                                                            form="coupon" id="coupon_code"
+                                                            class="input-text coupon-code" required>
                                                         <input type="submit" value="Áp dụng" name="coupon"
-                                                            th:formaction="@{/cart/edit/coupon}" id="apply_coupon"
-                                                            class="button">
+                                                            id="apply_coupon" form="coupon" class="button">
                                                     </div>
                                                     <div class="voucher-sp">
                                                         <input type="submit" value="Cập nhật" id="updateButton"
                                                             name="update" class="button">
-                                                        <input type="submit" value="Thanh toán" name="proceed"
-                                                            th:formaction="@{/checkout}" formmethod="get"
-                                                            class="checkout-button button alt wc-forward">
+                                                        <input type="submit" value="Thanh toán" form="checkout"
+                                                            class="checkout-button button alt wc-forward"
+                                                            onclick="window.location.href='/checkout'">
                                                     </div>
                                                     <div class="clear"></div>
                                                 </div>
@@ -225,8 +226,7 @@
                                             <select rel="calc_shipping_state" class="country_to_state"
                                                 id="calc_shipping_country" name="id">
                                                 <option th:each="item : ${provinces}" th:value="${item.id}"
-                                                    th:text="${item.ten}"
-                                                    th:selected="${item.id}==${cart.idTinhThanh}">
+                                                    th:text="${item.ten}" th:selected="${item.id}==${cart.idTinhThanh}">
                                                 </option>
                                             </select>
                                         </p>

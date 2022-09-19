@@ -42,38 +42,36 @@ public class GioHangController {
     private ApplicationUtil applicationUtil;
 
     // Fields
-    private KhachHang mCurrentAccount;
-    private GioHang mClienCart;
     private String mMsg;
     private boolean mIsMsgShow;
-    private boolean mIsByPass;
 
     // Load cart
     @GetMapping("")
     public ModelAndView cart() {
+        var khachHang = authenticationUtil.getAccount();
         // Check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             return new ModelAndView(LOGIN_TEMP);
         } else {
             var mav = new ModelAndView(CART_TEMP);
-            var tongSoLuong = mClienCart.getTongSoLuong();
+            var gioHang = gioHangService.getGioHang(khachHang.getId());
+            var tongSoLuong = gioHang.getTongSoLuong();
             var dsTonkho = new ArrayList<>();
             // get ton_kho each product
-            for (var item : mClienCart.getDsChiTietGioHang()) {
+            for (var item : gioHang.getDsChiTietGioHang()) {
                 dsTonkho.add(item.getSanPham().getTonKho());
             }
             mav.addObject(TITLE_PARAM, GIO_HANG);
-            mav.addObject(CART_PARAM, mClienCart);
-            mav.addObject(LOGIN_PARAM, mCurrentAccount != null);
+            mav.addObject(CART_PARAM, gioHang);
+            mav.addObject(LOGIN_PARAM, khachHang != null);
             mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
             mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
             mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 2));
             mav.addObject(PROVINCES_PARAM, tinhThanhService.getDsTinhThanh());
-            mav.addObject(COUPON_PARAM, tongSoLuong < 1 ? 0 : mClienCart.getGiamGia());
-            mav.addObject(SHIPFEE_PARAM, tongSoLuong < 1 ? 0 : mClienCart.getTinhThanh().getChiPhiVanChuyen());
+            mav.addObject(COUPON_PARAM, tongSoLuong < 1 ? 0 : gioHang.getGiamGia());
+            mav.addObject(SHIPFEE_PARAM, tongSoLuong < 1 ? 0 : gioHang.getTinhThanh().getChiPhiVanChuyen());
             mav.addObject(LIMITS_PARAM, dsTonkho);
             mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
-            mIsByPass = false;
             return mav;
         }
     }
@@ -81,11 +79,13 @@ public class GioHangController {
     // Add to cart
     @RequestMapping(value = ADD_VIEW + PRODUCT_VIEW, method = { GET, POST })
     public String cartAddProduct(int id, int soLuongSanPham) {
-        // check current account still valid
-        if (!isValidAccount()) {
+        var khachHang = authenticationUtil.getAccount();
+        // Check current account still valid
+        if (khachHang == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var idKhachHang = mCurrentAccount.getId();
+            var idKhachHang = khachHang.getId();
+            var gioHang = gioHangService.getGioHang(idKhachHang);
             var sanPham = sanPhamService.getSanPham(id);
             var idChiTietGioHang = new ChiTietGioHangId(idKhachHang, id);
             mIsMsgShow = true;
@@ -95,17 +95,15 @@ public class GioHangController {
             } else {
                 var chiTietGioHang = new ChiTietGioHang();
                 var giaBanSanPham = sanPham.getGiaGoc() - sanPham.getKhuyenMai();
-                mClienCart = gioHangService.getGioHang(idKhachHang);
                 chiTietGioHang.setId(idChiTietGioHang);
                 chiTietGioHang.setSoLuongSanPham(soLuongSanPham);
                 chiTietGioHang.setGiaBanSanPham(giaBanSanPham);
                 chiTietGioHang = chiTietGioHangService.saveChiTietGioHang(chiTietGioHang);
-                mClienCart.setTongSoLuong(mClienCart.getTongSoLuong() + soLuongSanPham);
-                mClienCart.setTongGioHang(mClienCart.getTongGioHang() + chiTietGioHang.getTongTienSanPham());
-                mClienCart = gioHangService.saveGioHang(mClienCart);
+                gioHang.setTongSoLuong(gioHang.getTongSoLuong() + soLuongSanPham);
+                gioHang.setTongGioHang(gioHang.getTongGioHang() + chiTietGioHang.getTongTienSanPham());
+                gioHang = gioHangService.saveGioHang(gioHang);
                 mMsg = "Thêm " + sanPham.getTen() + " vào giỏ hàng thành công!";
             }
-            mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
@@ -113,21 +111,22 @@ public class GioHangController {
     // Update coupon
     @RequestMapping(value = EDIT_VIEW + COUPON_VIEW, method = { GET, PUT })
     public String cartEditCoupon(String couponCode) {
-        // check current account still valid
-        if (!isValidAccount()) {
+        var khachHang = authenticationUtil.getAccount();
+        // Check current account still valid
+        if (khachHang == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
+            var gioHang = gioHangService.getGioHang(khachHang.getId());
             var coupon = COUPON_MAP.get(couponCode);
             mIsMsgShow = true;
             // check coupon
             if (coupon == null) {
                 mMsg = "Mã giảm giá chưa chính xác!";
             } else {
-                mClienCart.setGiamGia(coupon);
-                mClienCart = gioHangService.saveGioHang(mClienCart);
+                gioHang.setGiamGia(coupon);
+                gioHang = gioHangService.saveGioHang(gioHang);
                 mMsg = "Áp dụng giảm giá thành công!";
             }
-            mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
@@ -135,16 +134,17 @@ public class GioHangController {
     // Update ship fee
     @RequestMapping(value = EDIT_VIEW + SHIP_FEE_VIEW, method = { GET, PUT })
     public String cartEditShipFee(int id, String huyenQuan) {
+        var khachHang = authenticationUtil.getAccount();
         // Check current account still valid
-        if (!isValidAccount()) {
+        if (khachHang == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            mClienCart.setHuyenQuan(huyenQuan);
-            mClienCart.setIdTinhThanh(id);
-            mClienCart = gioHangService.saveGioHang(mClienCart);
+            var gioHang = gioHangService.getGioHang(khachHang.getId());
+            gioHang.setHuyenQuan(huyenQuan);
+            gioHang.setIdTinhThanh(id);
+            gioHang = gioHangService.saveGioHang(gioHang);
             mIsMsgShow = true;
             mMsg = "Cập nhật  địa chỉ giao hàng cho giỏ hàng thành công!";
-            mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
@@ -152,27 +152,28 @@ public class GioHangController {
     // Update cart
     @RequestMapping(value = SAVE_VIEW, method = { GET, PUT })
     public String cartSave(int[] productSize) {
-        // check current account still valid
-        if (!isValidAccount()) {
+        var khachHang = authenticationUtil.getAccount();
+        // Check current account still valid
+        if (khachHang == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
+            var gioHang = gioHangService.getGioHang(khachHang.getId());
             var tongSoLuong = 0;
             var tongGioHang = 0;
             var index = 0;
             // update chi_tiet_gio_hang
-            for (var item : mClienCart.getDsChiTietGioHang()) {
+            for (var item : gioHang.getDsChiTietGioHang()) {
                 item.setSoLuongSanPham(productSize[index]);
                 item = chiTietGioHangService.saveChiTietGioHang(item);
                 tongSoLuong += productSize[index];
                 tongGioHang += item.getTongTienSanPham();
                 index++;
             }
-            mClienCart.setTongSoLuong(tongSoLuong);
-            mClienCart.setTongGioHang(tongGioHang);
-            mClienCart = gioHangService.saveGioHang(mClienCart);
+            gioHang.setTongSoLuong(tongSoLuong);
+            gioHang.setTongGioHang(tongGioHang);
+            gioHang = gioHangService.saveGioHang(gioHang);
             mIsMsgShow = true;
             mMsg = "Cập nhật giỏ hàng thành công!";
-            mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
@@ -180,34 +181,23 @@ public class GioHangController {
     // Delete chi_tiet_gio_hang
     @RequestMapping(value = DELETE_VIEW + PRODUCT_VIEW, method = { GET, DELETE })
     public String cartDeleteProduct(int id) {
-        // check current account still valid
-        if (!isValidAccount()) {
+        var khachHang = authenticationUtil.getAccount();
+        // Check current account still valid
+        if (khachHang == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var chiTietGioHang = new ChiTietGioHangId(mCurrentAccount.getId(), id);
-            mClienCart.setTongGioHang(mClienCart.getTongGioHang()
+            var idKhachHang = khachHang.getId();
+            var gioHang = gioHangService.getGioHang(idKhachHang);
+            var chiTietGioHang = new ChiTietGioHangId(idKhachHang, id);
+            gioHang.setTongGioHang(gioHang.getTongGioHang()
                     - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getTongTienSanPham());
-            mClienCart.setTongSoLuong(mClienCart.getTongSoLuong()
+            gioHang.setTongSoLuong(gioHang.getTongSoLuong()
                     - chiTietGioHangService.getChiTietGioHang(chiTietGioHang).getSoLuongSanPham());
-            mClienCart = gioHangService.saveGioHang(mClienCart);
+            gioHang = gioHangService.saveGioHang(gioHang);
             chiTietGioHangService.deleteChiTietGioHang(chiTietGioHang);
             mIsMsgShow = true;
             mMsg = sanPhamService.getSanPham(id).getTen() + " đã được xóa khỏi giỏ hàng thành công!";
-            mIsByPass = true;
             return REDIRECT_PREFIX + CART_VIEW;
-        }
-    }
-
-    // Check valid account
-    private boolean isValidAccount() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            mCurrentAccount = authenticationUtil.getAccount();
-            var result = mCurrentAccount != null;
-            mClienCart = result ? gioHangService.getGioHang(mCurrentAccount.getId()) : new GioHang();
-            return result;
         }
     }
 }

@@ -71,9 +71,11 @@
                                         Họ tên
                                     </b>
                                 </label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" name="hoTen" id="Name" type="text"
-                                        th:value="${khachHang?.hoTen}" placeholder="Nhập họ và tên" required>
+                                <div th:switch="${login}" class="col-sm-8">
+                                    <input th:case="true" class="form-control" name="hoTen" id="Name" type="text"
+                                        th:value="${client?.hoTen}" readonly>
+                                    <input th:case="false" class="form-control" name="hoTen" id="Name" type="text"
+                                        placeholder="Nhập họ và tên" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -82,9 +84,11 @@
                                         Email
                                     </b>
                                 </label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" name="email" id="contact-email" type="email"
-                                        th:value="${khachHang?.email}" placeholder="Nhập thư điện tử" required>
+                                <div th:switch="${login}" class="col-sm-8">
+                                    <input th:case="true" class="form-control" name="email" id="contact-email"
+                                        type="email" th:value="${client.email}" readonly>
+                                    <input th:case="false" class="form-control" name="email" id="contact-email"
+                                        type="email" placeholder="Nhập thư điện tử" required>
                                 </div>
                             </div>
                             <div class="form-group">
