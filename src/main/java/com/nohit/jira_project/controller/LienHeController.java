@@ -9,6 +9,7 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
@@ -28,9 +29,6 @@ public class LienHeController {
     @Autowired
     private AuthenticationUtil authenticationUtil;
 
-    @Autowired
-    private StringUtil stringUtil;
-
     // Fields
     private String mMsg;
     private boolean mIsMsgShow;
@@ -40,8 +38,10 @@ public class LienHeController {
     public ModelAndView contact() {
         var mav = new ModelAndView(CONTACT_TEMP);
         var khachHang = authenticationUtil.getAccount();
-        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("login", khachHang != null);
+        mav.addObject(TITLE_PARAM, LIEN_HE);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject(LOGIN_PARAM, khachHang != null);
+        mav.addObject(CLIENT_PARAM, khachHang);
         mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
@@ -58,13 +58,13 @@ public class LienHeController {
     // Add thu_phan_hoi
     @PostMapping(SUB_VIEW)
     public String subcribe(Subcribe subcribe) {
-        var trueEmail = stringUtil.removeSpCharsBeginAndEnd(subcribe.getEmail()).toLowerCase();
+        var email = subcribe.getEmail();
         mIsMsgShow = true;
         // check email is already exist
-        if (subcribeService.getSubcribe(trueEmail) != null) {
+        if (subcribeService.getSubcribe(email) != null) {
             mMsg = "Email này đã được đăng ký!";
         } else {
-            subcribe.setEmail(trueEmail);
+            subcribe.setEmail(email);
             subcribeService.saveSubcribe(subcribe);
             mMsg = "Đăng ký nhận thông báo thành công!";
         }

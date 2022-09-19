@@ -7,6 +7,8 @@ import org.springframework.web.servlet.*;
 
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
+import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
 import static com.nohit.jira_project.constant.ViewConstant.*;
 
@@ -21,11 +23,12 @@ public class GioiThieuController {
 
     // Load about
     @GetMapping("")
-    public ModelAndView contact() {
+    public ModelAndView about() {
         var mav = new ModelAndView(ABOUT_TEMP);
         var khachHang = authenticationUtil.getAccount();
-        mav.addObject("cart", applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject("login", khachHang != null);
+        mav.addObject(TITLE_PARAM, GIOI_THIEU);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
+        mav.addObject(LOGIN_PARAM, khachHang != null);
         return mav;
     }
 }
