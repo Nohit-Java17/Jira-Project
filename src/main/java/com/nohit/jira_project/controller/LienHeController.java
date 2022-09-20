@@ -21,7 +21,7 @@ public class LienHeController {
     private ThuPhanHoiService thuPhanHoiService;
 
     @Autowired
-    private SubcribeService subcribeService;
+    private TheoDoiService theoDoiService;
 
     @Autowired
     private ApplicationUtil applicationUtil;
@@ -37,11 +37,11 @@ public class LienHeController {
     @GetMapping("")
     public ModelAndView contact() {
         var mav = new ModelAndView(CONTACT_TEMP);
-        var khachHang = authenticationUtil.getAccount();
+        var client = authenticationUtil.getAccount();
         mav.addObject(TITLE_PARAM, LIEN_HE);
-        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject(LOGIN_PARAM, khachHang != null);
-        mav.addObject(CLIENT_PARAM, khachHang);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
+        mav.addObject(CLIENT_PARAM, client);
         mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
@@ -56,16 +56,16 @@ public class LienHeController {
     }
 
     // Add thu_phan_hoi
-    @PostMapping(SUB_VIEW)
-    public String subcribe(Subcribe subcribe) {
-        var email = subcribe.getEmail();
+    @PostMapping(SUBCRIBE_VIEW)
+    public String subcribe(TheoDoi theoDoi) {
+        var email = theoDoi.getEmail();
         mIsMsgShow = true;
         // check email is already exist
-        if (subcribeService.getSubcribe(email) != null) {
+        if (theoDoiService.getTheoDoi(email) != null) {
             mMsg = "Email này đã được đăng ký!";
         } else {
-            subcribe.setEmail(email);
-            subcribeService.saveSubcribe(subcribe);
+            theoDoi.setEmail(email);
+            theoDoiService.saveTheoDoi(theoDoi);
             mMsg = "Đăng ký nhận thông báo thành công!";
         }
         return REDIRECT_PREFIX + CONTACT_VIEW;

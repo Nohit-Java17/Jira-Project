@@ -34,7 +34,6 @@ public class ChiTietDonHangServiceImpl implements ChiTietDonHangService {
 
     @Override
     public ChiTietDonHang saveChiTietDonHang(ChiTietDonHang chiTietDonHang) {
-        chiTietDonHang.setTongTienSanPham(chiTietDonHang.getSoLuongSanPham() * chiTietDonHang.getGiaBanSanPham());
         log.info("Saving chi_tiet_don_hang with id: {}", chiTietDonHang.getId());
         return chiTietDonHangRepository.save(chiTietDonHang);
     }

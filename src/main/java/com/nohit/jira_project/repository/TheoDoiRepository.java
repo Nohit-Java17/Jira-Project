@@ -6,6 +6,6 @@ import org.springframework.stereotype.*;
 import com.nohit.jira_project.model.*;
 
 @Repository
-public interface SubcribeRepository extends JpaRepository<Subcribe, Integer> {
-    public Subcribe findByEmail(String email);
+public interface TheoDoiRepository extends JpaRepository<TheoDoi, Integer> {
+    public TheoDoi findByEmail(String email);
 }

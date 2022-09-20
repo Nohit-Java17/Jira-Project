@@ -46,10 +46,10 @@ public class DonHang {
     @NonNull
     @Column(name = "phuong_thuc_thanh_toan")
     private String phuongThucThanhToan;
-    
+
     @Column(name = "id_khach_hang")
     private int idKhachHang;
-    
+
     @Column(name = "id_nguoi_nhan")
     private int idNguoiNhan;
 

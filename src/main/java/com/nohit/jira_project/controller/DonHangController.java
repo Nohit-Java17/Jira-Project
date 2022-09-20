@@ -33,15 +33,15 @@ public class DonHangController {
     // Load order
     @GetMapping(FIND_VIEW)
     public ModelAndView orderFind(int id) {
-        var khachHang = authenticationUtil.getAccount();
+        var client = authenticationUtil.getAccount();
         // check current account still valid
-        if (khachHang == null) {
+        if (client == null) {
             return new ModelAndView(REDIRECT_PREFIX + LOGOUT_VIEW);
         } else {
             var mav = new ModelAndView(ORDER_TEMP);
             mav.addObject(TITLE_PARAM, DON_HANG);
-            mav.addObject(CART_PARAM, gioHangService.getGioHang(khachHang.getId()));
-            mav.addObject(LOGIN_PARAM, khachHang != null);
+            mav.addObject(CART_PARAM, gioHangService.getGioHang(client.getId()));
+            mav.addObject(LOGIN_PARAM, client != null);
             mav.addObject(ORDER_PARAM, donHangService.getDonHang(id));
             return mav;
         }

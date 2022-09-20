@@ -174,10 +174,10 @@ CREATE TABLE
         PRIMARY KEY (id)
     );
 
--- create table subcribe
+-- create table theo_doi
 
 CREATE TABLE
-    IF NOT EXISTS subcribe(
+    IF NOT EXISTS theo_doi(
         id INT NOT NULL AUTO_INCREMENT,
         thu_dien_tu NVARCHAR(50) NOT NULL,
         PRIMARY KEY (id)
@@ -634,6 +634,6 @@ VALUES (
         'Nhân viên tư vấn chưa tận tình.'
     );
 
--- add data to subcribe
+-- add data to theo_doi
 
-INSERT INTO subcribe(thu_dien_tu) VALUES ('nguyenvana@gmail.com');
+INSERT INTO theo_doi(thu_dien_tu) VALUES ('nguyenvana@gmail.com');

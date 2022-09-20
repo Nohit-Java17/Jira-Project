@@ -6,12 +6,12 @@ import lombok.*;
 
 import static javax.persistence.GenerationType.*;
 
-@Entity(name = "subcribe")
+@Entity(name = "theo_doi")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Subcribe {
+public class TheoDoi {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")

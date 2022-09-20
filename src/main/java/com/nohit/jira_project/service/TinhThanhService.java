@@ -12,5 +12,4 @@ public interface TinhThanhService {
     public TinhThanh saveTinhThanh(TinhThanh tinhThanh);
 
     public void deleteTinhThanh(int id);
-
 }

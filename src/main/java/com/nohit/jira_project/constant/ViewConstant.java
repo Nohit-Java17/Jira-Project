@@ -18,7 +18,7 @@ public class ViewConstant {
     public static final String PROFILE_VIEW = "/profile";
     public static final String REGISTER_VIEW = "/register";
     public static final String LOGOUT_VIEW = "/logout";
-    public static final String SUB_VIEW = "/subcribe";
+    public static final String SUBCRIBE_VIEW = "/subcribe";
     public static final String API_VIEW = "/api";
     public static final String TOKEN_VIEW = "/token";
     public static final String REFRESH_VIEW = "/refresh";

@@ -119,8 +119,8 @@
                                                         </label>
                                                         <select class="country_to_state country_select"
                                                             id="billing_country" name="idTinhThanh">
-                                                            <option th:each="item : ${provinces}"
-                                                                th:value="${item.id}" th:text="${item.ten}"
+                                                            <option th:each="item : ${provinces}" th:value="${item.id}"
+                                                                th:text="${item.ten}"
                                                                 th:selected="${item.id}==${client.idTinhThanh}">
                                                             </option>
                                                         </select>
