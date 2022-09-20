@@ -202,8 +202,8 @@
                                                     </label>
                                                     <select class="country_to_state country_select"
                                                         id="shipping_country" name="idTinhThanh">
-                                                        <option th:each="item : ${provinces}"
-                                                            th:value="${item.id}" th:text="${item.ten}"
+                                                        <option th:each="item : ${provinces}" th:value="${item.id}"
+                                                            th:text="${item.ten}"
                                                             th:selected="${item.id}==${defaultProvince}">
                                                         </option>
                                                     </select>
@@ -314,7 +314,8 @@
                                         <ul class="payment_methods methods">
                                             <li class="payment_method_bacs">
                                                 <input type="radio" data-order_button_text="" value="Chuyển khoản"
-                                                    name="paymentMethod" class="input-radio" id="payment_method_bacs">
+                                                    name="phuongThucThanhToan" class="input-radio"
+                                                    id="payment_method_bacs">
                                                 <label style="cursor:pointer" for="payment_method_bacs">
                                                     Chuyển khoản
                                                 </label>

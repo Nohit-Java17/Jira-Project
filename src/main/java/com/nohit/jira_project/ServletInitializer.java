@@ -1,11 +1,11 @@
 package com.nohit.jira_project;
 
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.boot.builder.*;
+import org.springframework.boot.web.servlet.support.*;
 
 public class ServletInitializer extends SpringBootServletInitializer {
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(JiraProjectApplication.class);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(JiraProjectApplication.class);
+    }
 }

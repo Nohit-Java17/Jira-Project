@@ -12,5 +12,4 @@ public interface ChiTietGioHangService {
     public ChiTietGioHang saveChiTietGioHang(ChiTietGioHang chiTietGioHang);
 
     public void deleteChiTietGioHang(ChiTietGioHangId id);
-
 }

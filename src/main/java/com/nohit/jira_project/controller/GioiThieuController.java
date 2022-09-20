@@ -25,10 +25,10 @@ public class GioiThieuController {
     @GetMapping("")
     public ModelAndView about() {
         var mav = new ModelAndView(ABOUT_TEMP);
-        var khachHang = authenticationUtil.getAccount();
+        var client = authenticationUtil.getAccount();
         mav.addObject(TITLE_PARAM, GIOI_THIEU);
-        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject(LOGIN_PARAM, khachHang != null);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
         return mav;
     }
 }

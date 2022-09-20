@@ -29,10 +29,10 @@ public class IndexController {
     @GetMapping("")
     public ModelAndView index() {
         var mav = new ModelAndView(INDEX_TEMP);
-        var khachHang = authenticationUtil.getAccount();
+        var client = authenticationUtil.getAccount();
         mav.addObject(TITLE_PARAM, TRANG_CHU);
-        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject(LOGIN_PARAM, khachHang != null);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
         mav.addObject(NEW_PRODUCTS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 6));
         mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 3));
         mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));

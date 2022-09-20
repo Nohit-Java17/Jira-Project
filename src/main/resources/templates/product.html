@@ -51,8 +51,8 @@
                                 <div class="form-group">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="sort" th:checked="${radioCheck==0}" value="">Tất
-                                            cả
+                                            <input type="radio" name="sort" th:checked="${radioCheck==0}"
+                                                value="all">Tất cả
                                         </label>
                                     </div>
                                     <div class="radio">
@@ -108,8 +108,7 @@
                                         th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         Discount
                                     </ins>
-                                    <del
-                                        th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                                    <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                                         Price
                                     </del>
                                 </div>

@@ -29,6 +29,9 @@ public class ApplicationController {
     private GioHangService gioHangService;
 
     @Autowired
+    private CreditCardService creditCardService;
+
+    @Autowired
     private AuthenticationUtil authenticationUtil;
 
     @Autowired
@@ -68,6 +71,7 @@ public class ApplicationController {
             khachHang.setVaiTro(DEFAULT_ROLE);
             khachHang = khachHangService.saveKhachHang(khachHang);
             gioHangService.createGioHang(khachHang);
+            creditCardService.createCreditCard(khachHang);
             mMsg = "Tài khoản đã được đăng ký thành công!";
             return REDIRECT_PREFIX + LOGIN_VIEW;
         }

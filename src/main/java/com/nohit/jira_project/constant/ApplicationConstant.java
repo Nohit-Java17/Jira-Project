@@ -44,6 +44,8 @@ public class ApplicationConstant {
         public static final String DANG_KY = "Đăng ký";
         public static final String DANG_NHAP = "Đăng nhập";
         public static final String MAT_KHAU = "Mật khẩu";
+        public static final String THONG_TIN = "Thông tin";
+        public static final String LICH_SU = "Lịch sử";
         public static final String DON_HANG = "Đơn hàng";
     }
 
@@ -54,6 +56,14 @@ public class ApplicationConstant {
             "Máy tính bảng", 3,
             "Điện thoại di động", 4,
             "Thiết bị ngoại vi", 5);
+
+    public static final Map<String, Integer> PRODUCTS_MAP = of(
+            "all", 0,
+            "topSale", 1,
+            "newest", 2,
+            "discount", 3,
+            "ascendingPrice", 4,
+            "descendingPrice", 5);
 
     public static final Map<String, Integer> COUPON_MAP = of(
             "nohit", 10000,

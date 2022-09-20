@@ -43,16 +43,16 @@ public class ChiTietSanPhamController {
     @GetMapping(FIND_VIEW)
     public ModelAndView detailFind(int id) {
         var mav = new ModelAndView(DETAIL_TEMP);
-        var khachHang = authenticationUtil.getAccount();
-        var sanPham = sanPhamService.getSanPham(id);
+        var client = authenticationUtil.getAccount();
+        var product = sanPhamService.getSanPham(id);
         mav.addObject(TITLE_PARAM, CHI_TIET);
-        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject(LOGIN_PARAM, khachHang != null);
-        mav.addObject(PRODUCT_PARAM, sanPham);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
+        mav.addObject(PRODUCT_PARAM, product);
         mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mav.addObject(LIMIT_PARAM, sanPham.getTonKho());
+        mav.addObject(LIMIT_PARAM, product.getTonKho());
         mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
         return mav;
     }
@@ -60,17 +60,17 @@ public class ChiTietSanPhamController {
     // Load search
     @GetMapping(SEARCH_VIEW)
     public ModelAndView detailSearch(String name) {
-        var khachHang = authenticationUtil.getAccount();
-        var sanPham = sanPhamService.getSanPham(name);
-        var mav = sanPham == null ? new ModelAndView(BLANK_TEMP) : new ModelAndView(DETAIL_TEMP);
+        var client = authenticationUtil.getAccount();
+        var product = sanPhamService.getSanPham(name);
+        var mav = product == null ? new ModelAndView(BLANK_TEMP) : new ModelAndView(DETAIL_TEMP);
         mav.addObject(TITLE_PARAM, CHI_TIET);
-        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(khachHang));
-        mav.addObject(LOGIN_PARAM, khachHang != null);
-        mav.addObject(PRODUCT_PARAM, sanPham);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
+        mav.addObject(PRODUCT_PARAM, product);
         mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
         mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
         mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 4));
-        mav.addObject(LIMIT_PARAM, sanPham.getTonKho());
+        mav.addObject(LIMIT_PARAM, product.getTonKho());
         return mav;
     }
 
@@ -81,20 +81,20 @@ public class ChiTietSanPhamController {
         if (authenticationUtil.getAccount() == null) {
             return REDIRECT_PREFIX + LOGIN_VIEW;
         } else {
-            var sanPham = nhanXet.getSanPham();
-            var dsNhanXet = sanPham.getDsNhanXet();
-            var dsNhanXetSize = dsNhanXet.size();
-            var danhGia = 0;
+            var product = nhanXet.getSanPham();
+            var votes = product.getDsNhanXet();
+            var votesSize = votes.size();
+            var rate = 0;
             // get all danh_gia of product
-            for (var i = 0; i < dsNhanXetSize; i++) {
-                danhGia += dsNhanXet.get(i).getDanhGia();
+            for (var i = 0; i < votesSize; i++) {
+                rate += votes.get(i).getDanhGia();
             }
-            sanPham.setDanhGia(round((danhGia + nhanXet.getDanhGia()) / (dsNhanXetSize + 1)));
-            sanPham = sanPhamService.saveSanPham(sanPham);
+            product.setDanhGia(round((rate + nhanXet.getDanhGia()) / (votesSize + 1)));
+            product = sanPhamService.saveSanPham(product);
             nhanXet = nhanXetService.saveNhanXet(nhanXet);
             mIsMsgShow = true;
             mMsg = "Nhận xét sản phẩm thành công!";
-            return REDIRECT_PREFIX + DETAIL_VIEW + FIND_VIEW + "?id=" + sanPham.getId();
+            return REDIRECT_PREFIX + DETAIL_VIEW + FIND_VIEW + "?id=" + product.getId();
         }
     }
 }
