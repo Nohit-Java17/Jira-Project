@@ -142,6 +142,7 @@ public class ThanhToanController {
                     order.setIdNguoiNhan(nguoiNhan.getId());
                     order = donHangService.saveDonHang(order);
                     var idCart = cart.getId();
+                    // update cart detail
                     for (var item : cart.getDsChiTietGioHang()) {
                         var orderDetail = new ChiTietDonHang();
                         var product = item.getSanPham();

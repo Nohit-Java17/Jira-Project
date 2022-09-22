@@ -278,9 +278,9 @@ VALUES (
     ), (
         'Chuột gaming không dây Logitech G903 Hero',
         '191004344',
-        '- Chuột chơi game không dây Lightspeed G903 
-- Kết nối không dây Lightspeed  
-- Cảm biến HERO 16K DPI tối đa lên đến 16.000 
+        '- Chuột chơi game không dây Lightspeed G903
+- Kết nối không dây Lightspeed
+- Cảm biến HERO 16K DPI tối đa lên đến 16.000
 - Thiết kế đối xứng, nút bấm có thể lập trình lên đến 11 nút',
         3790000,
         801000,
@@ -381,7 +381,7 @@ VALUES (
 - Màn hình: 17.3" IPS (1920 x 1080), 360Hz
 - RAM: 2 x 8GB DDR4 3200MHz
 - Đồ họa: NVIDIA GeForce RTX 3070Ti 6GB GDDR6 / Intel Iris Xe Graphics
-- Lưu trữ: 1TB SSD M.2 NVMe /
+- Lưu trữ: 1TB SSD M.2 NVMe
 - Hệ điều hành: Windows 11 Home
 - Pin: 4 cell 65 Wh Pin liền
 - Khối lượng: 2.9 kg',
