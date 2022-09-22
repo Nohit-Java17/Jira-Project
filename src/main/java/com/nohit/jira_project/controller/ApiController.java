@@ -35,7 +35,6 @@ public class ApiController {
         var header = request.getHeader(AUTHORIZATION);
         // Check token format in authorization header
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
-            // Get token from authorization header
             try {
                 var refreshToken = header.substring(TOKEN_PREFIX.length());
                 var algorithm = HMAC256(SECRET_KEY.getBytes());
@@ -46,13 +45,11 @@ public class ApiController {
                                 .withExpiresAt(new Date(currentTimeMillis() + EXPIRATION_TIME))
                                 .withIssuer(request.getRequestURL().toString())
                                 .withClaim(ROLE_CLAIM_KEY, ROLE_PREFIX + user.getVaiTro().toUpperCase())
-
                                 .sign(algorithm));
                 tokens.put(REFRESH_TOKEN_KEY, refreshToken);
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             } catch (Exception e) {
-                // Throw Exception if Token is not valid or have no Token
                 var errorMsg = e.getMessage();
                 response.setHeader(ERROR_HEADER_KEY, errorMsg);
                 response.setStatus(FORBIDDEN.value());
