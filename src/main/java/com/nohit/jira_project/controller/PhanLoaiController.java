@@ -8,6 +8,7 @@ import org.springframework.web.servlet.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.common.Bean.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
@@ -40,10 +41,11 @@ public class PhanLoaiController {
         mav.addObject(PRODUCTS_PARAM,
                 products.subList(0, maxProducts < DEFAULT_SIZE_PAGE ? maxProducts : DEFAULT_SIZE_PAGE));
         mav.addObject(RADIO_CHECK_PARAM, DEFAULT_CATEGORY);
-        mav.addObject(MAX_SIZE_PARAM, (products.size() - 1) / DEFAULT_SIZE_PAGE + 1);
+        mav.addObject(MAX_SIZE_PARAM, (maxProducts - 1) / DEFAULT_SIZE_PAGE + 1);
         mav.addObject(VIEW_PARAM, PAGE_VIEW + "?page=");
         mav.addObject(PREVIOUS_PARAM, PAGE_VIEW + "?page=" + 1);
         mav.addObject(NEXT_PARAM, PAGE_VIEW + "?page=" + (2 > maxSize ? maxSize : 2));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -68,6 +70,7 @@ public class PhanLoaiController {
         mav.addObject(VIEW_PARAM, PAGE_VIEW + "?page=");
         mav.addObject(PREVIOUS_PARAM, PAGE_VIEW + "?page=" + (previous < 1 ? 1 : previous));
         mav.addObject(NEXT_PARAM, PAGE_VIEW + "?page=" + (next > maxSize ? maxSize : next));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -85,11 +88,12 @@ public class PhanLoaiController {
         mav.addObject(PRODUCTS_PARAM,
                 products.subList(0, maxProducts < DEFAULT_SIZE_PAGE ? maxProducts : DEFAULT_SIZE_PAGE));
         mav.addObject(RADIO_CHECK_PARAM, CATEGORIES_MAP.get(filter));
-        mav.addObject(MAX_SIZE_PARAM, (products.size() - 1) / DEFAULT_SIZE_PAGE + 1);
+        mav.addObject(MAX_SIZE_PARAM, (maxProducts - 1) / DEFAULT_SIZE_PAGE + 1);
         mav.addObject(VIEW_PARAM, FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=");
         mav.addObject(PREVIOUS_PARAM, FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + 1);
         mav.addObject(NEXT_PARAM,
                 FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + (2 > maxSize ? maxSize : 2));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -116,6 +120,7 @@ public class PhanLoaiController {
                 FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + (previous < 1 ? 1 : previous));
         mav.addObject(NEXT_PARAM,
                 FILTER_VIEW + PAGE_VIEW + "?filter=" + filter + "&page=" + (next > maxSize ? maxSize : next));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 }

@@ -13,6 +13,7 @@ import com.nohit.jira_project.util.*;
 
 import lombok.*;
 
+import static com.nohit.jira_project.common.Bean.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
@@ -41,10 +42,6 @@ public class GioHangController {
     @Autowired
     private ApplicationUtil applicationUtil;
 
-    // Fields
-    private String mMsg;
-    private boolean mIsMsgShow;
-
     // Load cart
     @GetMapping("")
     public ModelAndView cart() {
@@ -71,7 +68,7 @@ public class GioHangController {
             mav.addObject(COUPON_PARAM, productsCount < 1 ? 0 : cart.getGiamGia());
             mav.addObject(SHIPFEE_PARAM, productsCount < 1 ? 0 : cart.getTinhThanh().getChiPhiVanChuyen());
             mav.addObject(LIMITS_PARAM, inventories);
-            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
+            _isMsgShow = applicationUtil.showMessageBox(mav);
             return mav;
         }
     }
@@ -84,26 +81,31 @@ public class GioHangController {
         if (client == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var cart = client.getGioHang();
+            var cart = applicationUtil.getOrDefaultGioHang(client);
             var product = sanPhamService.getSanPham(id);
-            var idCartDetail = new ChiTietGioHangId(client.getId(), id);
-            mIsMsgShow = true;
-            // chech chi_tiet_gio_hang exist
-            if (chiTietGioHangService.getChiTietGioHang(idCartDetail) != null) {
-                mMsg = product.getTen() + " đã tồn tại trong giỏ hàng!";
+            _isMsgShow = true;
+            // check if product is exist
+            if (product == null || product.getTonKho() < 1) {
+                _msg = "Sản phẩm không còn tồn tại!";
+                return REDIRECT_PREFIX + PRODUCT_VIEW;
             } else {
-                var cartDetail = new ChiTietGioHang();
-                var price = product.getGiaGoc() - product.getKhuyenMai();
-                cartDetail.setId(idCartDetail);
-                cartDetail.setSoLuongSanPham(soLuongSanPham);
-                cartDetail.setGiaBanSanPham(price);
-                cartDetail = chiTietGioHangService.saveChiTietGioHang(cartDetail);
-                cart.setTongSoLuong(cart.getTongSoLuong() + soLuongSanPham);
-                cart.setTongGioHang(cart.getTongGioHang() + cartDetail.getTongTienSanPham());
-                cart = gioHangService.saveGioHang(cart);
-                mMsg = "Thêm " + product.getTen() + " vào giỏ hàng thành công!";
+                var idCartDetail = new ChiTietGioHangId(client.getId(), id);
+                // chech chi_tiet_gio_hang exist
+                if (chiTietGioHangService.getChiTietGioHang(idCartDetail) != null) {
+                    _msg = "Sản phẩm đã tồn tại trong giỏ hàng!";
+                } else {
+                    var cartDetail = new ChiTietGioHang();
+                    cartDetail.setId(idCartDetail);
+                    cartDetail.setSoLuongSanPham(soLuongSanPham);
+                    cartDetail.setGiaBanSanPham(product.getGiaGoc() - product.getKhuyenMai());
+                    cartDetail = chiTietGioHangService.saveChiTietGioHang(cartDetail);
+                    cart.setTongSoLuong(cart.getTongSoLuong() + soLuongSanPham);
+                    cart.setTongGioHang(cart.getTongGioHang() + cartDetail.getTongTienSanPham());
+                    cart = gioHangService.saveGioHang(cart);
+                    _msg = "Thêm sản phẩm vào giỏ hàng thành công!";
+                }
+                return REDIRECT_PREFIX + CART_VIEW;
             }
-            return REDIRECT_PREFIX + CART_VIEW;
         }
     }
 
@@ -115,16 +117,16 @@ public class GioHangController {
         if (client == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var cart = client.getGioHang();
+            var cart = applicationUtil.getOrDefaultGioHang(client);
             var coupon = COUPON_MAP.get(maGiamGia);
-            mIsMsgShow = true;
+            _isMsgShow = true;
             // check coupon
             if (coupon == null) {
-                mMsg = "Mã giảm giá chưa chính xác!";
+                _msg = "Mã giảm giá chưa chính xác!";
             } else {
                 cart.setGiamGia(coupon);
                 cart = gioHangService.saveGioHang(cart);
-                mMsg = "Áp dụng giảm giá thành công!";
+                _msg = "Áp dụng giảm giá thành công!";
             }
             return REDIRECT_PREFIX + CART_VIEW;
         }
@@ -138,12 +140,12 @@ public class GioHangController {
         if (client == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var cart = client.getGioHang();
+            var cart = applicationUtil.getOrDefaultGioHang(client);
             cart.setHuyenQuan(huyenQuan);
             cart.setIdTinhThanh(id);
             cart = gioHangService.saveGioHang(cart);
-            mIsMsgShow = true;
-            mMsg = "Cập nhật  địa chỉ giao hàng cho giỏ hàng thành công!";
+            _isMsgShow = true;
+            _msg = "Cập nhật địa chỉ giao hàng cho giỏ hàng thành công!";
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
@@ -156,7 +158,7 @@ public class GioHangController {
         if (client == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var cart = client.getGioHang();
+            var cart = applicationUtil.getOrDefaultGioHang(client);
             var productsCount = 0;
             var cartTotal = 0;
             var index = 0;
@@ -171,8 +173,8 @@ public class GioHangController {
             cart.setTongSoLuong(productsCount);
             cart.setTongGioHang(cartTotal);
             cart = gioHangService.saveGioHang(cart);
-            mIsMsgShow = true;
-            mMsg = "Cập nhật giỏ hàng thành công!";
+            _isMsgShow = true;
+            _msg = "Cập nhật giỏ hàng thành công!";
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }
@@ -185,16 +187,15 @@ public class GioHangController {
         if (client == null) {
             return REDIRECT_PREFIX + LOGOUT_VIEW;
         } else {
-            var cart = client.getGioHang();
-            var cartDetail = new ChiTietGioHangId(client.getId(), id);
-            cart.setTongGioHang(
-                    cart.getTongGioHang() - chiTietGioHangService.getChiTietGioHang(cartDetail).getTongTienSanPham());
-            cart.setTongSoLuong(
-                    cart.getTongSoLuong() - chiTietGioHangService.getChiTietGioHang(cartDetail).getSoLuongSanPham());
+            var cart = applicationUtil.getOrDefaultGioHang(client);
+            var idCartDetail = new ChiTietGioHangId(client.getId(), id);
+            var cartDetail = chiTietGioHangService.getChiTietGioHang(idCartDetail);
+            cart.setTongGioHang(cart.getTongGioHang() - cartDetail.getTongTienSanPham());
+            cart.setTongSoLuong(cart.getTongSoLuong() - cartDetail.getSoLuongSanPham());
             cart = gioHangService.saveGioHang(cart);
-            chiTietGioHangService.deleteChiTietGioHang(cartDetail);
-            mIsMsgShow = true;
-            mMsg = sanPhamService.getSanPham(id).getTen() + " đã được xóa khỏi giỏ hàng thành công!";
+            chiTietGioHangService.deleteChiTietGioHang(idCartDetail);
+            _isMsgShow = true;
+            _msg = "Sản phẩm đã được xóa khỏi giỏ hàng thành công!";
             return REDIRECT_PREFIX + CART_VIEW;
         }
     }

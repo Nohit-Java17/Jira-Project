@@ -69,6 +69,16 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
+    public void updateTonKho(int id, int tonKho) {
+        log.info("Update ton_kho san_pham with id: {}", id);
+    }
+
+    @Override
+    public void updateDanhGia(int id, int danhGia) {
+        log.info("Update danh_gia san_pham with id: {}", id);
+    }
+
+    @Override
     public void deleteSanPham(int id) {
         log.info("Deleting san_pham with id: {}", id);
         sanPhamRepository.deleteById(id);

@@ -11,6 +11,7 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.common.Bean.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
@@ -43,10 +44,11 @@ public class SanPhamController {
         mav.addObject(PRODUCTS_PARAM,
                 products.subList(0, maxProducts < DEFAULT_SIZE_PAGE ? maxProducts : DEFAULT_SIZE_PAGE));
         mav.addObject(RADIO_CHECK_PARAM, DEFAULT_PRODUCT);
-        mav.addObject(MAX_SIZE_PARAM, (products.size() - 1) / DEFAULT_SIZE_PAGE + 1);
+        mav.addObject(MAX_SIZE_PARAM, (maxProducts - 1) / DEFAULT_SIZE_PAGE + 1);
         mav.addObject(VIEW_PARAM, PAGE_VIEW + "?page=");
         mav.addObject(PREVIOUS_PARAM, PAGE_VIEW + "?page=" + 1);
         mav.addObject(NEXT_PARAM, PAGE_VIEW + "?page=" + (2 > maxSize ? maxSize : 2));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -71,6 +73,7 @@ public class SanPhamController {
         mav.addObject(VIEW_PARAM, PAGE_VIEW + "?page=");
         mav.addObject(PREVIOUS_PARAM, PAGE_VIEW + "?page=" + (previous < 1 ? 1 : previous));
         mav.addObject(NEXT_PARAM, PAGE_VIEW + "?page=" + (next > maxSize ? maxSize : next));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -88,10 +91,11 @@ public class SanPhamController {
         mav.addObject(PRODUCTS_PARAM,
                 products.subList(0, maxProducts < DEFAULT_SIZE_PAGE ? maxProducts : DEFAULT_SIZE_PAGE));
         mav.addObject(RADIO_CHECK_PARAM, PRODUCTS_MAP.get(sort));
-        mav.addObject(MAX_SIZE_PARAM, (products.size() - 1) / DEFAULT_SIZE_PAGE + 1);
+        mav.addObject(MAX_SIZE_PARAM, (maxProducts - 1) / DEFAULT_SIZE_PAGE + 1);
         mav.addObject(VIEW_PARAM, SORT_VIEW + PAGE_VIEW + "?sort=" + sort + "&page=");
         mav.addObject(PREVIOUS_PARAM, SORT_VIEW + PAGE_VIEW + "?sort=" + sort + "&page=" + 1);
         mav.addObject(NEXT_PARAM, SORT_VIEW + PAGE_VIEW + "?sort=" + sort + "&page=" + (2 > maxSize ? maxSize : 2));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -118,6 +122,7 @@ public class SanPhamController {
                 SORT_VIEW + PAGE_VIEW + "?sort=" + sort + "&page=" + (previous < 1 ? 1 : previous));
         mav.addObject(NEXT_PARAM,
                 SORT_VIEW + PAGE_VIEW + "?sort=" + sort + "&page=" + (next > maxSize ? maxSize : next));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 

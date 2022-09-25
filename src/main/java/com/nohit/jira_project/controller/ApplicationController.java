@@ -1,9 +1,5 @@
 package com.nohit.jira_project.controller;
 
-import java.io.*;
-
-import javax.mail.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +9,7 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
-import static com.nohit.jira_project.constant.ApplicationConstant.*;
+import static com.nohit.jira_project.common.Bean.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
@@ -23,13 +19,10 @@ import static com.nohit.jira_project.constant.ViewConstant.*;
 @RequestMapping("")
 public class ApplicationController {
     @Autowired
-    private KhachHangService khachHangService;
+    private SanPhamService sanPhamService;
 
     @Autowired
-    private GioHangService gioHangService;
-
-    @Autowired
-    private CreditCardService creditCardService;
+    private TheoDoiService theoDoiService;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
@@ -37,98 +30,80 @@ public class ApplicationController {
     @Autowired
     private ApplicationUtil applicationUtil;
 
-    // Fields
-    private String mMsg;
-    private boolean mIsMsgShow;
-    private boolean mIsByPass;
-
-    // Load register
-    @GetMapping(REGISTER_VIEW)
-    public ModelAndView register() {
-        // check login
-        if (!isDirect()) {
-            return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
-        } else {
-            var mav = new ModelAndView(REGISTER_TEMP);
-            mav.addObject(TITLE_PARAM, DANG_KY);
-            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
-            mIsByPass = false;
-            return mav;
-        }
-    }
-
-    // Register
-    @PostMapping(REGISTER_VIEW)
-    public String register(KhachHang khachHang) {
-        mIsMsgShow = true;
-        mIsByPass = true;
-        // check email is already exist
-        if (khachHangService.getKhachHang(khachHang.getEmail()) != null) {
-            mMsg = "Email này đã được đăng ký!";
-            return REDIRECT_PREFIX + REGISTER_VIEW;
-        } else {
-            khachHang.setIdTinhThanh(DEFAULT_PROVINCE);
-            khachHang.setVaiTro(DEFAULT_ROLE);
-            khachHang = khachHangService.saveKhachHang(khachHang);
-            gioHangService.createGioHang(khachHang);
-            creditCardService.createCreditCard(khachHang);
-            mMsg = "Tài khoản đã được đăng ký thành công!";
-            return REDIRECT_PREFIX + LOGIN_VIEW;
-        }
-    }
-
     // Load login
     @GetMapping(LOGIN_VIEW)
     public ModelAndView login(boolean error) {
         // check login
-        if (!isDirect()) {
+        if (authenticationUtil.getAccount() != null) {
             return new ModelAndView(REDIRECT_PREFIX + INDEX_VIEW);
         } else {
             var mav = new ModelAndView(LOGIN_TEMP);
             // login failed
             if (error) {
-                mIsMsgShow = true;
-                mMsg = "Tài khoản đăng nhập chưa đúng!";
+                _isMsgShow = true;
+                _msg = "Tài khoản đăng nhập chưa đúng!";
             }
             mav.addObject(TITLE_PARAM, DANG_NHAP);
-            mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
-            mIsByPass = false;
+            _isMsgShow = applicationUtil.showMessageBox(mav);
             return mav;
         }
     }
 
-    // Load password-reset
-    @GetMapping(PASSWORD_RESET_VIEW)
-    public ModelAndView resetPassword() {
-        var mav = new ModelAndView(PASSWORD_RESET_TEMP);
-        mav.addObject(TITLE_PARAM, MAT_KHAU);
-        mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
+    // Load dashboard
+    @GetMapping(value = { INDEX_VIEW, "/", "" })
+    public ModelAndView index() {
+        var mav = new ModelAndView(INDEX_TEMP);
+        var client = authenticationUtil.getAccount();
+        var newestProducts = sanPhamService.getDsSanPhamNewest();
+        mav.addObject(TITLE_PARAM, TRANG_CHU);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
+        mav.addObject(NEW_PRODUCTS_PARAM, newestProducts.subList(0, 6));
+        mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 3));
+        mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject(TOP_NEWS_PARAM, newestProducts.subList(0, 3));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
-    // Reset password
-    @PostMapping(PASSWORD_RESET_VIEW)
-    public String resetPassword(String email) throws UnsupportedEncodingException, MessagingException {
-        mIsMsgShow = true;
+    // Add thu_phan_hoi
+    @PostMapping(SUBCRIBE_VIEW)
+    public String subcribe(TheoDoi theoDoi) {
+        _isMsgShow = true;
         // check email is already exist
-        if (khachHangService.getKhachHang(email) == null) {
-            mMsg = "Email này chưa được đăng ký!";
-            return REDIRECT_PREFIX + PASSWORD_RESET_VIEW;
+        if (theoDoiService.getTheoDoi(theoDoi.getEmail()) != null) {
+            _msg = "Email này đã được đăng ký!";
         } else {
-            khachHangService.resetPassword(email);
-            mMsg = "Mật khẩu mới đã được gửi về địa chỉ email " + email + " thành công!";
-            mIsByPass = true;
-            return REDIRECT_PREFIX + LOGIN_VIEW;
+            theoDoiService.saveTheoDoi(theoDoi);
+            _msg = "Đăng ký nhận thông báo thành công!";
+        }
+        return REDIRECT_PREFIX + INDEX_VIEW;
+    }
+
+    // Load search
+    @GetMapping(SEARCH_VIEW)
+    public String search(String ten) {
+        var product = sanPhamService.getSanPham(ten);
+        // check if product is exist
+        if (product == null || product.getTonKho() < 1) {
+            return REDIRECT_PREFIX + BLANK_VIEW;
+        } else {
+            return REDIRECT_PREFIX + DETAIL_VIEW + FIND_VIEW + "?id=" + product.getId();
         }
     }
 
-    // Check direct
-    private boolean isDirect() {
-        // check bypass
-        if (mIsByPass) {
-            return true;
-        } else {
-            return authenticationUtil.getAccount() == null;
-        }
+    // Load blank
+    @GetMapping(BLANK_VIEW)
+    public ModelAndView blank() {
+        var mav = new ModelAndView(BLANK_TEMP);
+        var client = authenticationUtil.getAccount();
+        mav.addObject(TITLE_PARAM, CHI_TIET);
+        mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
+        mav.addObject(LOGIN_PARAM, client != null);
+        mav.addObject(TOP_DISCOUNTS_PARAM, sanPhamService.getDsSanPhamDescendingDiscount().subList(0, 3));
+        mav.addObject(TOP_NEWS_PARAM, sanPhamService.getDsSanPhamNewest().subList(0, 3));
+        mav.addObject(TOP_SALES_PARAM, sanPhamService.getDsSanPhamTopSale().subList(0, 4));
+        _isMsgShow = applicationUtil.showMessageBox(mav);
+        return mav;
     }
 }

@@ -3,8 +3,8 @@
         <h2 class="sidebar-title">
             Tra cứu
         </h2>
-        <form th:action="@{/detail/search}" method="get">
-            <input type="text" placeholder="Nhập vào tên sản phẩm..." name="name" required>
+        <form th:action="@{/search}" method="get">
+            <input type="text" placeholder="Nhập vào tên sản phẩm..." name="ten" required>
             <input class="btn-search" type="submit" value="Tìm kiếm">
         </form>
     </div>
@@ -12,19 +12,19 @@
         <h2 class="sidebar-title">
             Sản phẩm
         </h2>
-        <div th:each="item: ${topDiscounts}" class="thubmnail-recent">
-            <img th:src="@{${'/img/' + item.album + '/1.jpg'}}" class="recent-thumb" alt="">
+        <div th:each="product : ${topDiscounts}" class="thubmnail-recent">
+            <img th:src="@{${'/img/' + product.album + '/1.jpg'}}" class="recent-thumb" alt="">
             <h2>
-                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
+                <a th:text="${product.ten}" th:href="@{/detail/find(id=${product.id})}">
                     Name
                 </a>
             </h2>
             <div class="product-sidebar-price">
-                <ins th:text="${#numbers.formatDecimal(item.giaGoc-item.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                <ins th:text="${#numbers.formatDecimal(product.giaGoc-product.khuyenMai, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                     Discount
                 </ins>
                 <br>
-                <del th:text="${#numbers.formatDecimal(item.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
+                <del th:text="${#numbers.formatDecimal(product.giaGoc, 0, 'COMMA', 0, 'POINT')+' ₫'}">
                     Price
                 </del>
             </div>
@@ -35,8 +35,8 @@
             Mới nhất
         </h2>
         <ul>
-            <li th:each="item : ${topNews}">
-                <a th:text="${item.ten}" th:href="@{/detail/find(id=${item.id})}">
+            <li th:each="product : ${topNews}">
+                <a th:text="${product.ten}" th:href="@{/detail/find(id=${product.id})}">
                     Name
                 </a>
             </li>
