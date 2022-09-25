@@ -7,6 +7,7 @@ import org.springframework.web.servlet.*;
 
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.common.Bean.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
@@ -29,6 +30,7 @@ public class GioiThieuController {
         mav.addObject(TITLE_PARAM, GIOI_THIEU);
         mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
         mav.addObject(LOGIN_PARAM, client != null);
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 }

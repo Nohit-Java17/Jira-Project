@@ -9,6 +9,7 @@ import com.nohit.jira_project.model.*;
 import com.nohit.jira_project.service.*;
 import com.nohit.jira_project.util.*;
 
+import static com.nohit.jira_project.common.Bean.*;
 import static com.nohit.jira_project.constant.ApplicationConstant.Menu.*;
 import static com.nohit.jira_project.constant.AttributeConstant.*;
 import static com.nohit.jira_project.constant.TemplateConstant.*;
@@ -21,17 +22,10 @@ public class LienHeController {
     private ThuPhanHoiService thuPhanHoiService;
 
     @Autowired
-    private TheoDoiService theoDoiService;
-
-    @Autowired
     private ApplicationUtil applicationUtil;
 
     @Autowired
     private AuthenticationUtil authenticationUtil;
-
-    // Fields
-    private String mMsg;
-    private boolean mIsMsgShow;
 
     // Load contact
     @GetMapping("")
@@ -42,7 +36,7 @@ public class LienHeController {
         mav.addObject(CART_PARAM, applicationUtil.getOrDefaultGioHang(client));
         mav.addObject(LOGIN_PARAM, client != null);
         mav.addObject(CLIENT_PARAM, client);
-        mIsMsgShow = applicationUtil.showMessageBox(mav, mIsMsgShow, mMsg);
+        _isMsgShow = applicationUtil.showMessageBox(mav);
         return mav;
     }
 
@@ -50,24 +44,8 @@ public class LienHeController {
     @PostMapping("")
     public String contact(ThuPhanHoi thuPhanHoi) {
         thuPhanHoiService.saveThuPhanHoi(thuPhanHoi);
-        mIsMsgShow = true;
-        mMsg = "Cảm ơn quý khách đã liên hệ với chúng tôi!";
-        return REDIRECT_PREFIX + CONTACT_VIEW;
-    }
-
-    // Add thu_phan_hoi
-    @PostMapping(SUBCRIBE_VIEW)
-    public String subcribe(TheoDoi theoDoi) {
-        var email = theoDoi.getEmail();
-        mIsMsgShow = true;
-        // check email is already exist
-        if (theoDoiService.getTheoDoi(email) != null) {
-            mMsg = "Email này đã được đăng ký!";
-        } else {
-            theoDoi.setEmail(email);
-            theoDoiService.saveTheoDoi(theoDoi);
-            mMsg = "Đăng ký nhận thông báo thành công!";
-        }
+        _isMsgShow = true;
+        _msg = "Cảm ơn quý khách đã liên hệ với chúng tôi!";
         return REDIRECT_PREFIX + CONTACT_VIEW;
     }
 }
