@@ -63,7 +63,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 
 ## EER Diagram
 <p align="center">
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/design/EER%20Diagram.png"></img>
+<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/design/EER%20Diagram.jpg"></img>
 </p>
 
 ### THÀNH VIÊN
