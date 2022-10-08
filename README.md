@@ -10,7 +10,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 
 ## HÌNH ẢNH DEMO
 <p align="center">
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/0.png"></img>
+<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/0.jpg"></img>
 </p>
 
 ## VIDEO DEMO
@@ -69,7 +69,7 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 ### THÀNH VIÊN
 Nhóm NOHIT gồm các thành viên:
 
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/2.png" align="right" width="21%" height="21%"></img>
+<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/2.jpg" align="right" width="21%" height="21%"></img>
 <div style="display:flex;">
 
 - Nguyễn Đặng Trường An (team lead)
@@ -81,7 +81,7 @@ Nhóm NOHIT gồm các thành viên:
 </div>
 
 ### TÍCH HỢP
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/1.png" align="left" width="3%" height="3%"></img>
+<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/1.jpg" align="left" width="3%" height="3%"></img>
 <div style="display:flex;">
 
 - Java JWT » 4.0.0
