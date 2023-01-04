@@ -10,6 +10,10 @@ CREATE DATABASE IF NOT EXISTS jira_project;
 
 USE jira_project;
 
+-- fix default
+
+SET @@auto_increment_increment=1;
+
 -- create table tinh_thanh
 
 CREATE TABLE
