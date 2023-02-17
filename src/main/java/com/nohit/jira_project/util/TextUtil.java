@@ -23,7 +23,7 @@ public class TextUtil {
             if (index != -1) {
                 var iStart = index + 1;
                 // Next character is not number
-                if (iStart < s.length() && !numberUtil.isNumeric(s.substring(iStart, iStart + 1))) {
+                if (iStart < s.length() && !numberUtil.isInt(s.substring(iStart, iStart + 1))) {
                     s = s.substring(0, index) + character + " " + s.substring(index + 1);
                 }
             }
