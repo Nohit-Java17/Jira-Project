@@ -2,19 +2,19 @@
 Trang web thương mại điện tử được thiết lập để phục vụ một phần hoặc toàn bộ quy trình của hoạt động mua bán hàng hóa hay cung ứng dịch vụ, từ trưng bày giới thiệu hàng hóa, dịch vụ đến giao kết hợp đồng, cung ứng dịch vụ, thanh toán và dịch vụ sau bán hàng.
 
 ## LINK DEMO
-<div align="center">
+<div align='center'>
 
 [Click vào đây để xem chi tiết](https://jira-project.herokuapp.com)
 
 </div>
 
 ## HÌNH ẢNH DEMO
-<p align="center">
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/0.jpg"></img>
+<p align='center'>
+<img src='pic/0.jpg'></img>
 </p>
 
 ## VIDEO DEMO
-<div align="center">
+<div align='center'>
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YXG24rEs8Q4/0.jpg)](https://youtu.be/YXG24rEs8Q4)
 
@@ -62,15 +62,15 @@ Trang web thương mại điện tử được thiết lập để phục vụ m
 ```
 
 ## EER Diagram
-<p align="center">
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/design/EER%20Diagram.jpg"></img>
+<p align='center'>
+<img src='design/EER%20Diagram.jpg'></img>
 </p>
 
 ### THÀNH VIÊN
 Nhóm NOHIT gồm các thành viên:
 
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/2.jpg" align="right" width="21%" height="21%"></img>
-<div style="display:flex;">
+<img src='pic/2.jpg' align='right' width='21%' height='21%'></img>
+<div style='display:flex;'>
 
 - Nguyễn Đặng Trường An (team lead)
 - Trần Gia Bảo (đã rời nhóm)
@@ -81,8 +81,8 @@ Nhóm NOHIT gồm các thành viên:
 </div>
 
 ### TÍCH HỢP
-<img src="https://raw.githubusercontent.com/Nohit-Java17/Jira-Project/main/pic/1.jpg" align="left" width="3%" height="3%"></img>
-<div style="display:flex;">
+<img src='pic/1.jpg' align='left' width='3%' height='3%'></img>
+<div style='display:flex;'>
 
 - Java JWT » 4.0.0
 
