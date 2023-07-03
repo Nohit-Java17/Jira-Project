@@ -1,14 +1,14 @@
 -- dispose db
 
-DROP DATABASE IF EXISTS jira_project;
+DROP DATABASE IF EXISTS ecommerce;
 
 -- create db
 
-CREATE DATABASE IF NOT EXISTS jira_project;
+CREATE DATABASE IF NOT EXISTS ecommerce;
 
 -- use db
 
-USE jira_project;
+USE ecommerce;
 
 -- fix default
 
